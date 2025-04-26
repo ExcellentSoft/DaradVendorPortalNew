@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Eye, EyeOff } from "lucide-react"; 
+import { Eye, EyeOff,Loader2 } from "lucide-react"; 
 import { useState } from "react";
 
 export default function LoginPage() {

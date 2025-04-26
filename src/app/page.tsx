@@ -1,157 +1,323 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import { Eye, EyeOff,Loader2 } from "lucide-react";
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
 
-  const isEmailEntered = email.trim() !== "";
+export default function Signup() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    businessName: "",
+    phone: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    agreed: false,
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  
-    if (!isEmailEntered) {
-      setError("Please enter a valid email.");
-      return;
-    }
-  
-    const requestData = {
-      email,
-    };
-  
-    try {
-      const response = await fetch(
-        "https://daradservice.azurewebsites.net/api/Vendor/Become-Vendor",
-        {
-          method: "POST",
-          headers: {
-            accept: "text/plain",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        }
-      );
-  
-      if (!response.ok) {
-        throw new Error("Something went wrong.");
-      }
-  
-      const data = await response.json();
-      // Handle success (e.g., redirect or show success message)
-      console.log(data);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("An unknown error occurred.");
-      }
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [apiMessage, setApiMessage] = useState<string | null>(null);
+
+  const [passwordChecks, setPasswordChecks] = useState({
+    hasLower: false,
+    hasUpper: false,
+    hasNumber: false,
+    hasSpecial: false,
+    hasLength: false,
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    const val = type === "checkbox" ? checked : value;
+
+    setFormData((prev) => ({ ...prev, [name]: val }));
+
+    if (name === "password" && typeof val === "string") {
+      validatePassword(val);
     }
   };
+
+  const validatePassword = (password: string) => {
+    setPasswordChecks({
+      hasLower: /[a-z]/.test(password),
+      hasUpper: /[A-Z]/.test(password),
+      hasNumber: /[0-9]/.test(password),
+      hasSpecial: /[^A-Za-z0-9]/.test(password),
+      hasLength: password.length >= 8,
+    });
+  };
+
+  const validate = () => {
+    const errs: Record<string, string> = {};
+
+    if (!formData.businessName) errs.businessName = "Business name is required";
+    if (!formData.phone || formData.phone.length < 10) errs.phone = "Enter a valid phone number";
+    if (!/\S+@\S+\.\S+/.test(formData.email)) errs.email = "Enter a valid email";
+    if (formData.password !== formData.confirmPassword)
+      errs.confirmPassword = "Passwords don’t match";
+
+    const passwordValid = Object.values(passwordChecks).every(Boolean);
+    if (!passwordValid) errs.password = "Password is not strong enough";
+
+    if (!formData.agreed) errs.agreed = "You must agree to the terms";
+
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+  
+    if (!validate()) return;
+  
+    setLoading(true);
+    try {
+      const response = await fetch(`${baseUrl}/api/Vendor/Signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          businessName: formData.businessName,
+          email: formData.email,
+          phoneNumber: formData.phone,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok && data.status === true) {
+        // Try to extract the real message
+        const innerMatch = data.data?.match(/Message\s=\s(.+?)\s*}/i);
+        const message = innerMatch ? innerMatch[1] : "Unknown error";
+
+        if (data.data.includes("Status = False")) {
+          setApiMessage(message); 
+        } else {
+          setApiMessage("Account Created Successfully!");
+          router.push('/verify-signup'); 
+        }
+      } else {
+        setApiMessage(data.message || "Unexpected error. Please try again.");
+      }
+    } catch (error){
+      console.error("Signup error:", error);
+      setApiMessage("Something went wrong. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
   
 
+  const isEmailEntered = formData.email.trim() !== "";
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="flex flex-col w-full max-w-[1280px] bg-[#FBFAFF] shadow-lg rounded-lg overflow-hidden pb-6">
-      <div className="flex flex-col md:flex-row w-full h-full md:h-[832px]">
+    <div className="relative min-h-screen w-full bg-[#FBFAFF] overflow-hidden">
+      {/* Header */}
+      <div className="bg-white top-0 p-6 w-full">
+        <div className="ml-16 flex">
+          <Image src="/logo.svg" alt="Darads Logo" width={40} height={40} />
+          <Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
+        </div>
+      </div>
+      {apiMessage && (
+  <div className={`mt-4 text-center text-lg font-bold ${apiMessage.includes("Successfully") ? "text-green-500" : "text-red-500"}`}>
+    {apiMessage}
+  </div>
+)}
+      {/* Main Content */}
+      <div className="w-full min-h-screen flex flex-col md:flex-row items-center md:gap-24 justify-center">
+        {/* Signup Form */}
 
-      <div className="flex flex-col w-full md:w-[760px]">
+        {/* Display the API response message */}
 
-            {/* Logo */}
-            <div className="flex bg-white p-8 w-[1280px]">
-              <Image src="/logo.svg" alt="Darads Logo" width={40} height={40} />
-              <Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
+
+        <div className="bg-white p-8 sm:p-10 rounded-lg shadow-md w-full h-[600px] max-w-[550px] border">
+          <h2 className="text-2xl font-semibold text-center text-gray-800">
+            Create Your <span className="text-purple-600">Vendors</span> Account
+          </h2>
+          <p className="text-sm text-center text-gray-600 mt-1">
+            Sell different products, manage your store, and get a custom domain to grow your business online.
+          </p>
+
+          <form className="space-y-8 mt-6" onSubmit={handleSubmit}>
+            {/* Business Name */}
+            <div className="flex flex-col gap-1">
+              <label className="text-sm text-gray-700">Business Name</label>
+              <input
+  name="businessName"
+  value={formData.businessName}
+  onChange={handleChange}
+  type="text"
+  placeholder="Business Name"
+  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
+/>
+
+              {errors.businessName && (
+                <p className="text-red-500 text-xs mt-1">{errors.businessName}</p>
+              )}
             </div>
 
-            {/* Form */}
-            <div className="flex flex-col items-center justify-center bg-white w-full md:w-[500px] h-full md:h-[600px] p-8 m-4 md:m-20 mx-auto">
-
-              <h2 className="text-[24px] font-bold text-gray-700 text-center" style={{ fontFamily: 'Urbanist, sans-serif' }}>
-                Join Thousands of Successful  <br /><span className="text-[#5604F6]">Vendors</span> in Nigeria
-              </h2>
-
-              {error && <p className="text-red-500 text-center">{error}</p>}
-
-              <form className="w-full flex flex-col items-center mt-6 max-w-[336px]" onSubmit={handleSubmit}>
-                <label className="block text-[#101928] w-full text-[16px] font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  Email
-                </label>
-
+            {/* Phone and Email */}
+            <div className="flex gap-2">
+              <div className="flex flex-col w-1/2 gap-1">
+                <label className="text-sm text-gray-700">Phone Number</label>
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 bg-[#5F04F6] text-white text-sm rounded-l-md border border-r-0 border-gray-300">
+                    +234
+                  </span>
+                  <input
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="09029717250"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
+                  />
+                </div>
+                {errors.phone && (
+                  <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+                )}
+              </div>
+              <div className="flex flex-col w-1/2 gap-1">
+                <label className="text-sm text-gray-700">Email Address</label>
                 <input
                   type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full max-w-[336px] px-4 py-4 mt-2 mb-4 rounded-lg bg-white z-10 relative focus:outline-none focus:bg-white"
-                  style={{
-                    border: "1px solid #1E015680",
-                    backgroundColor: "#ffffff",
-                    color: "#121212",
-                  }}
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
+              </div>
+            </div>
 
-                <button
-                  type="submit"
-                  className={`w-full max-w-[336px] mt-4 text-white py-4 mb-4 rounded-lg transition-colors duration-300 ${isEmailEntered ? "bg-[#5F04F6]" : "bg-[#5F04F680]"}`}
-                  disabled={!isEmailEntered}
+            {/* Passwords */}
+            <div className="flex gap-2">
+              {/* Password */}
+              <div className="flex flex-col w-1/2 gap-1 relative">
+                <label className="text-sm text-gray-700">Password</label>
+                <input
+  type={showPassword ? "text" : "password"}
+  name="password"
+  value={formData.password}
+  onChange={handleChange}
+  placeholder="••••••••"
+  autoComplete="new-password"
+  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
+/>
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                )}
+                <span
+                  className="absolute right-3 top-9 cursor-pointer text-gray-600"
+                  onClick={() => setShowPassword(!showPassword)}
                 >
-                  Continue
-                </button>
-              </form>
-
-              <p className="mt-4 text-center text-[#121212CC] mb-4 text-[14px] font-medium">
-  Already have an account? 
-  <Link href="/login" className="text-[#5604F6]">
-          Log In
-        </Link>
-</p>
-
-              <div className="m-4 flex items-center justify-center w-full max-w-[350px]">
-                <div className="h-px w-1/2 bg-[#121212CC] font-medium"></div>
-                <span className="px-2 text-[#121212CC] font-medium">OR</span>
-                <div className="h-px w-1/2 bg-[#121212CC] font-medium"></div>
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </span>
               </div>
 
-              <button className="w-full max-w-[350px] flex pl-6 mt-4 text-[16px] gap-2 text-[#121212CC] border py-4 rounded-lg font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
-                <Image src="/google.svg" alt="Google" width={20} height={20} />
-                Continue With Google
-              </button>
+              {/* Confirm Password */}
+              <div className="flex flex-col w-1/2 gap-1 relative">
+                <label className="text-sm text-gray-700">Confirm Password</label>
+                <input
+  type={showConfirmPassword ? "text" : "password"}
+  name="confirmPassword"
+  value={formData.confirmPassword}
+  onChange={handleChange}
+  placeholder="••••••••"
+  autoComplete="new-password"
+  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
+/>
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+                )}
+                <span
+                  className="absolute right-3 top-9 cursor-pointer text-gray-600"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </span>
+              </div>
             </div>
-          </div>
 
-          {/* Right Section */}
-          <div className="hidden md:block w-[520px] relative">
-
-            <Image
-              src="/intersect.svg"
-              alt="Happy vendor"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-r-lg"
-            />
-            <div
-              className="absolute bottom-4 left-4 p-4 rounded-lg shadow-md text-white"
-              style={{ backdropFilter: "blur(4px)", backgroundColor: "#00000040" }}
-            >
-              <p className="border-b text-[16px]">✅ Create & Manage Your Online Store</p>
-              <p className="border-b">✅ Get a Free Custom Domain</p>
-              <p className="border-b">✅ Earn More as You Sell Products</p>
+            {/* Terms */}
+            <div className="flex items-start gap-2 text-sm">
+              <input
+                type="checkbox"
+                name="agreed"
+                checked={formData.agreed}
+                onChange={handleChange}
+                className="mt-1 focus:ring-purple-500"
+              />
+              <p className="text-black">
+                I agree to the{" "}
+                <span className="text-purple-600 underline cursor-pointer">
+                  MyDarads Terms & Conditions
+                </span>
+              </p>
             </div>
-          </div>
+            {errors.agreed && <p className="text-red-500 text-xs mt-1">{errors.agreed}</p>}
+
+            {/* Submit Button */}
+            <button
+  type="submit"
+  disabled={!isEmailEntered || loading}
+  className={`w-full mt-4 text-white py-4 mb-4 rounded-lg transition-colors duration-300 flex items-center justify-center ${
+    isEmailEntered && !loading ? "bg-[#5F04F6]" : "bg-[#5F04F680] cursor-not-allowed"
+  }`}
+>
+  {loading ? (
+    <Loader2 className="h-5 w-5 animate-spin text-white" />
+  ) : (
+    "Start Selling For Free"
+  )}
+</button>
+
+
+          </form>
         </div>
 
-        {/* Footer */}
-        <div className="flex flex-col sm:flex-row justify-around items-center px-6 mt-4 gap-2">
-          <p className="text-gray-500 text-sm text-center sm:text-left">
-            © 2025 MyDarads. All rights reserved.
-          </p>
-          <p className="text-gray-500 text-sm text-center sm:text-right">
-            Developed by Kaybii Technologies
-          </p>
+        {/* Right Graphic Section */}
+        <div className="hidden md:block min-h-[600px] relative scale-[0.8]">
+          <div className="relative w-full flex justify-center mt-10">
+            <div className="absolute top-[-20px] left-[3px] w-36 h-24">
+              <Image src="/Subtract.svg" alt="Top graphic" fill className="object-contain" />
+            </div>
+            <div className="w-[400px] h-[651px] relative">
+              <Image src="/mann.svg" alt="Happy vendor" fill className="object-cover" />
+            </div>
+          </div>
+          <div className="absolute bottom-[-60px] right-[-60px] w-[100px] h-[100px]">
+            <Image src="/Ellipse.svg" alt="Bottom graphic" fill className="object-contain" />
+          </div>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="flex flex-col sm:flex-row justify-around items-center p-6 gap-2">
+        <p className="text-gray-500 text-sm text-center sm:text-left">
+          © 2025 MyDarads. All rights reserved.
+        </p>
+        <p className="text-gray-500 text-sm text-center sm:text-right">
+          Developed by Kaybii Technologies
+        </p>
       </div>
     </div>
   );
 }
+
