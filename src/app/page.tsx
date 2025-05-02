@@ -1,323 +1,269 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+
+import Link from "next/link";
+import axios from "axios";
 import { useState } from "react";
-import { Eye, EyeOff,Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export default function Signup() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const [loading, setLoading] = useState(false);
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    businessName: "",
-    phone: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    agreed: false,
-  });
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [apiMessage, setApiMessage] = useState<string | null>(null);
-
-  const [passwordChecks, setPasswordChecks] = useState({
-    hasLower: false,
-    hasUpper: false,
-    hasNumber: false,
-    hasSpecial: false,
-    hasLength: false,
-  });
-
+  const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    const val = type === "checkbox" ? checked : value;
-
-    setFormData((prev) => ({ ...prev, [name]: val }));
-
-    if (name === "password" && typeof val === "string") {
-      validatePassword(val);
-    }
+  const validateEmail = (email: string): boolean => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
   };
 
-  const validatePassword = (password: string) => {
-    setPasswordChecks({
-      hasLower: /[a-z]/.test(password),
-      hasUpper: /[A-Z]/.test(password),
-      hasNumber: /[0-9]/.test(password),
-      hasSpecial: /[^A-Za-z0-9]/.test(password),
-      hasLength: password.length >= 8,
-    });
-  };
-
-  const validate = () => {
-    const errs: Record<string, string> = {};
-
-    if (!formData.businessName) errs.businessName = "Business name is required";
-    if (!formData.phone || formData.phone.length < 10) errs.phone = "Enter a valid phone number";
-    if (!/\S+@\S+\.\S+/.test(formData.email)) errs.email = "Enter a valid email";
-    if (formData.password !== formData.confirmPassword)
-      errs.confirmPassword = "Passwords don’t match";
-
-    const passwordValid = Object.values(passwordChecks).every(Boolean);
-    if (!passwordValid) errs.password = "Password is not strong enough";
-
-    if (!formData.agreed) errs.agreed = "You must agree to the terms";
-
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
-    if (!validate()) return;
-  
+    setError("");
+    setSuccessMessage(""); 
+    setEmailError("");
+    setPasswordError("");
     setLoading(true);
+  
+    let isValid = true;
+  
+    if (!email) {
+      setEmailError("Hmm… that email doesn’t match our records.");
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError("Invalid email address");
+      isValid = false;
+    }
+  
+    if (!password) {
+      setPasswordError("Hmm… that password doesn’t look right. Please try again.");
+      isValid = false;
+    } else if (password.length < 6) {
+      setPasswordError("Your password is too short. It must be at least 6 characters.");
+      isValid = false;
+    }
+  
+    if (!isValid) {
+      setLoading(false);
+      return;
+    }
+  
     try {
-      const response = await fetch(`${baseUrl}/api/Vendor/Signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+      const response = await axios.post(
+        `${baseUrl}/api/Vendor/Vendor-Log`,
+        {
+          email,
+          passWord: password,
         },
-        body: JSON.stringify({
-          businessName: formData.businessName,
-          email: formData.email,
-          phoneNumber: formData.phone,
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
-        }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+        }
+      );
   
-      const data = await response.json();
+      console.log("Full API response:", response.data);
   
-      if (response.ok && data.status === true) {
-        // Try to extract the real message
-        const innerMatch = data.data?.match(/Message\s=\s(.+?)\s*}/i);
-        const message = innerMatch ? innerMatch[1] : "Unknown error";
-
-        if (data.data.includes("Status = False")) {
-          setApiMessage(message); 
+      const resData = response.data?.data;
+      const isAuthCodeSent = resData?.isAuthCodeSent;
+      const token = resData?.authToken;
+      const userId = resData?.aspNetUser?.id;
+  
+      console.log("Extracted userId:", userId);
+  
+      sessionStorage.setItem("userId", userId);
+  
+      const userEmail = resData?.aspNetUser?.email || email;
+  
+      if (isAuthCodeSent) {
+        setSuccessMessage("Login successful");
+        localStorage.setItem("token", token);
+        sessionStorage.setItem("userEmail", userEmail);
+        sessionStorage.setItem("userId", userId);
+  
+        console.log("User email saved:", userEmail);
+        console.log("Token saved:", token);
+  
+        setTimeout(() => {
+          router.push("/twostep");
+        }, 1500);
+      } else {
+        setError("Authentication failed or code not sent.");
+        console.log("Auth code not sent.");
+      }
+  
+    } catch (error: unknown) {
+      console.error("Login error:", error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          if (error.response.status === 401) {
+            setError("Invalid email or password. Please try again.");
+          } else if (error.response.data?.message) {
+            setError(error.response.data.message);
+          } else {
+            setError("An error occurred, please try again later.");
+          }
         } else {
-          setApiMessage("Account Created Successfully!");
-          router.push('/verify-signup'); 
+          setError("Network error. Please check your connection.");
         }
       } else {
-        setApiMessage(data.message || "Unexpected error. Please try again.");
+        setError("An unexpected error occurred.");
       }
-    } catch (error){
-      console.error("Signup error:", error);
-      setApiMessage("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
-
   
   
-
-  const isEmailEntered = formData.email.trim() !== "";
 
   return (
-    <div className="relative min-h-screen w-full bg-[#FBFAFF] overflow-hidden">
-      {/* Header */}
-      <div className="bg-white top-0 p-6 w-full">
-        <div className="ml-16 flex">
-          <Image src="/logo.svg" alt="Darads Logo" width={40} height={40} />
-          <Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
-        </div>
-      </div>
-      {apiMessage && (
-  <div className={`mt-4 text-center text-lg font-bold ${apiMessage.includes("Successfully") ? "text-green-500" : "text-red-500"}`}>
-    {apiMessage}
-  </div>
-)}
-      {/* Main Content */}
-      <div className="w-full min-h-screen flex flex-col md:flex-row items-center md:gap-24 justify-center">
-        {/* Signup Form */}
-
-        {/* Display the API response message */}
-
-
-        <div className="bg-white p-8 sm:p-10 rounded-lg shadow-md w-full h-[600px] max-w-[550px] border">
-          <h2 className="text-2xl font-semibold text-center text-gray-800">
-            Create Your <span className="text-purple-600">Vendors</span> Account
-          </h2>
-          <p className="text-sm text-center text-gray-600 mt-1">
-            Sell different products, manage your store, and get a custom domain to grow your business online.
-          </p>
-
-          <form className="space-y-8 mt-6" onSubmit={handleSubmit}>
-            {/* Business Name */}
-            <div className="flex flex-col gap-1">
-              <label className="text-sm text-gray-700">Business Name</label>
-              <input
-  name="businessName"
-  value={formData.businessName}
-  onChange={handleChange}
-  type="text"
-  placeholder="Business Name"
-  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
-/>
-
-              {errors.businessName && (
-                <p className="text-red-500 text-xs mt-1">{errors.businessName}</p>
-              )}
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+      <div className="flex flex-col w-full max-w-[1280px] bg-[#FBFAFF] shadow-lg rounded-lg overflow-hidden pb-6">
+        <div className="flex w-full h-[900px]">
+          <div className="flex flex-col w-full md:w-[760px]">
+            <div className="flex bg-white p-8 w-full">
+              <Image src="/logo.svg" alt="Darads Logo" width={40} height={40} />
+              <Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
             </div>
 
-            {/* Phone and Email */}
-            <div className="flex gap-2">
-              <div className="flex flex-col w-1/2 gap-1">
-                <label className="text-sm text-gray-700">Phone Number</label>
-                <div className="flex">
-                  <span className="inline-flex items-center px-3 bg-[#5F04F6] text-white text-sm rounded-l-md border border-r-0 border-gray-300">
-                    +234
-                  </span>
-                  <input
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="09029717250"
-                    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
-                  />
-                </div>
-                {errors.phone && (
-                  <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
-                )}
-              </div>
-              <div className="flex flex-col w-1/2 gap-1">
-                <label className="text-sm text-gray-700">Email Address</label>
+            {error && <div className="text-red-600 text-center">{error}</div>}
+            {successMessage && <div className="text-green-600 text-lg text-center">{successMessage}</div>}
+
+            <div className="flex flex-col items-center bg-white w-full max-w-[500px] p-8 m-4 md:m-20 rounded-lg shadow-md">
+              <h2 className="text-[24px] font-bold text-gray-700 text-center" style={{ fontFamily: "Urbanist, sans-serif" }}>
+                Welcome Back, <span className="text-[#5604F6]">Vendor.</span>
+              </h2>
+              <p className="text-center text-sm text-[#121212CC] mt-2">
+                Log in to manage your store, track orders, and <br />
+                grow your business online.
+              </p>
+
+              <form className="w-full flex flex-col items-center mt-6 max-w-[336px]" onSubmit={handleSubmit}>
+                <label className="block text-[#101928] w-full text-[16px] font-medium mb-1">Email</label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="you@example.com"
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`w-full px-4 py-4 mt-1 mb-1 rounded-lg bg-white text-black focus:outline-none ${
+                    emailError ? "border border-red-500" : "border border-[#1E015680]"
+                  }`}
                 />
-                {errors.email && (
-                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-                )}
-              </div>
-            </div>
+                <p className={`text-sm w-full ${emailError ? "text-red-500" : "text-[#121212B3]"} mb-4`}>
+                  {emailError || "We need your email to proceed"}
+                </p>
 
-            {/* Passwords */}
-            <div className="flex gap-2">
-              {/* Password */}
-              <div className="flex flex-col w-1/2 gap-1 relative">
-                <label className="text-sm text-gray-700">Password</label>
-                <input
-  type={showPassword ? "text" : "password"}
-  name="password"
-  value={formData.password}
-  onChange={handleChange}
-  placeholder="••••••••"
-  autoComplete="new-password"
-  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
-/>
-                {errors.password && (
-                  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
-                )}
-                <span
-                  className="absolute right-3 top-9 cursor-pointer text-gray-600"
-                  onClick={() => setShowPassword(!showPassword)}
+                <label className="block text-[#101928] w-full text-[16px] font-medium mb-1">Password</label>
+                <div className="mb-1 relative w-full">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className={`z-10 block text-black w-full rounded-lg p-4 focus:outline-none ${
+                      passwordError ? "border border-red-500" : "border border-[#E3E5E5]"
+                    }`}
+                  />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-4 text-gray-500">
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+                <p className={`text-sm w-full ${passwordError ? "text-red-500" : "text-[#121212B3]"} mb-4`}>
+                  {passwordError || "Password can’t be empty—enter yours."}
+                </p>
+
+                <Link href="/forgotpassword" className="text-sm text-right w-full text-[#5604F6] mb-4">
+                  Forgot password?
+                </Link>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full max-w-[336px] text-white py-4 rounded-lg transition-colors duration-300 ${
+                    email && password ? "bg-[#5F04F6]" : "bg-[#5F04F680]"
+                  } flex items-center justify-center`}
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </span>
+                  {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Login"}
+                </button>
+              </form>
+
+              <p className="mt-4 text-center text-[#121212CC] mb-4 text-[14px] font-medium">
+  Don’t have an account?{" "}
+  <Link href="/" className="text-[#5604F6]">
+    Sign Up
+  </Link>
+</p>
+
+
+              <div className="m-4 flex items-center justify-center w-full max-w-[350px]">
+                <div className="h-px w-1/2 bg-[#121212CC]"></div>
+                <span className="px-2 text-[#121212CC] font-medium">OR</span>
+                <div className="h-px w-1/2 bg-[#121212CC]"></div>
               </div>
 
-              {/* Confirm Password */}
-              <div className="flex flex-col w-1/2 gap-1 relative">
-                <label className="text-sm text-gray-700">Confirm Password</label>
-                <input
-  type={showConfirmPassword ? "text" : "password"}
-  name="confirmPassword"
-  value={formData.confirmPassword}
-  onChange={handleChange}
-  placeholder="••••••••"
-  autoComplete="new-password"
-  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-purple-500 focus:outline-none text-black"
-/>
-                {errors.confirmPassword && (
-                  <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
-                )}
-                <span
-                  className="absolute right-3 top-9 cursor-pointer text-gray-600"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </span>
-              </div>
-            </div>
-
-            {/* Terms */}
-            <div className="flex items-start gap-2 text-sm">
-              <input
-                type="checkbox"
-                name="agreed"
-                checked={formData.agreed}
-                onChange={handleChange}
-                className="mt-1 focus:ring-purple-500"
-              />
-              <p className="text-black">
-                I agree to the{" "}
-                <span className="text-purple-600 underline cursor-pointer">
-                  MyDarads Terms & Conditions
-                </span>
-              </p>
-            </div>
-            {errors.agreed && <p className="text-red-500 text-xs mt-1">{errors.agreed}</p>}
-
-            {/* Submit Button */}
-            <button
-  type="submit"
-  disabled={!isEmailEntered || loading}
-  className={`w-full mt-4 text-white py-4 mb-4 rounded-lg transition-colors duration-300 flex items-center justify-center ${
-    isEmailEntered && !loading ? "bg-[#5F04F6]" : "bg-[#5F04F680] cursor-not-allowed"
-  }`}
->
-  {loading ? (
-    <Loader2 className="h-5 w-5 animate-spin text-white" />
-  ) : (
-    "Start Selling For Free"
-  )}
-</button>
-
-
-          </form>
-        </div>
-
-        {/* Right Graphic Section */}
-        <div className="hidden md:block min-h-[600px] relative scale-[0.8]">
-          <div className="relative w-full flex justify-center mt-10">
-            <div className="absolute top-[-20px] left-[3px] w-36 h-24">
-              <Image src="/Subtract.svg" alt="Top graphic" fill className="object-contain" />
-            </div>
-            <div className="w-[400px] h-[651px] relative">
-              <Image src="/mann.svg" alt="Happy vendor" fill className="object-cover" />
+              <button className="w-full max-w-[350px] flex items-center justify-start gap-3 pl-6 mt-4 text-[16px] text-[#121212CC] border py-4 rounded-lg font-medium">
+                <Image src="/google.svg" alt="Google" width={20} height={20} />
+                Continue With Google
+              </button>
             </div>
           </div>
-          <div className="absolute bottom-[-60px] right-[-60px] w-[100px] h-[100px]">
-            <Image src="/Ellipse.svg" alt="Bottom graphic" fill className="object-contain" />
+
+          <div className="w-[520px] relative hidden md:block">
+            <Image src="/female.svg" alt="Happy vendor" layout="fill" objectFit="cover" className="rounded-r-lg" />
           </div>
         </div>
-      </div>
 
-      {/* Footer */}
-      <div className="flex flex-col sm:flex-row justify-around items-center p-6 gap-2">
-        <p className="text-gray-500 text-sm text-center sm:text-left">
-          © 2025 MyDarads. All rights reserved.
-        </p>
-        <p className="text-gray-500 text-sm text-center sm:text-right">
-          Developed by Kaybii Technologies
-        </p>
+        <div className="flex flex-col sm:flex-row justify-around items-center px-6 mt-4 gap-2">
+          <p className="text-gray-500 text-sm text-center sm:text-left">© 2025 MyDarads. All rights reserved.</p>
+          <p className="text-gray-500 text-sm text-center sm:text-right">Developed by Kaybii Technologies</p>
+        </div>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
