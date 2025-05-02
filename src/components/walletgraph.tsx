@@ -5,10 +5,8 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { ArrowRight, ArrowDownUp } from 'lucide-react';
 import Image from "next/image";
 
 

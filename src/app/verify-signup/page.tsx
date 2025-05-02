@@ -46,8 +46,9 @@ const [success, setSuccess] = useState("");
       } else {
         setError("Verification failed. Please try again.");
       }
-    } catch (err) {
+    } catch {
       setError("An error occurred. Please try again later.");
+        
     } finally {
       setLoading(false);
     }

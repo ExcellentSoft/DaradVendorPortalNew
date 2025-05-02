@@ -68,45 +68,39 @@ export default function LoginPage() {
   
 
   const handleResendCode = async () => {
+    if (resendCooldown > 0) return;
+  
     setError("");
     setMessage("");
+  
     const userId = sessionStorage.getItem("userId");
-
     if (!userId) {
       setError("User ID not found. Please log in again.");
       return;
     }
-
+  
     try {
-      const response = await fetch(
-        `${baseUrl}/api/Vendor/Verify-two-factor?UserId=${userId}&code=${otp}`,
-        {
-          method: "GET",
-        }
-      );
-    
-      const text = await response.text(); // Get raw response
-      let data;
-    
-      try {
-        data = JSON.parse(text); // Try to parse it
-      } catch (parseError) {
-        // If parsing fails, treat as plain text
-        data = { message: text };
-      }
-    
+      const response = await fetch(`${baseUrl}/api/Vendor/Verify-two-factor?UserId=${userId}&code=${otp}`, {
+        method: "GET",
+      });
+  
+      const contentType = response.headers.get("content-type");
+      const data = contentType?.includes("application/json")
+        ? await response.json()
+        : { message: await response.text() };
+  
       if (response.ok && data.status !== false) {
-        console.log("Verification success:", data);
-        // router.push("/dashboard"); or continue flow
+        setMessage("Code resent successfully.");
+        setResendCooldown(30); // Start a 30-second cooldown
       } else {
-        setError(data?.message || "Invalid OTP. Please try again.");
+        setError(data?.message || "Failed to resend code.");
       }
-    } catch (error) {
-      setError("An error occurred while verifying the OTP.");
-      console.error(error);
+    } catch (err) {
+      setError("An error occurred.");
+      console.error(err);
     }
-    
   };
+  
 
   return (
     <div className="relative min-h-screen w-full bg-[#FBFAFF] p-6">
