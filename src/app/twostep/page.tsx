@@ -1,50 +1,111 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function LoginPage() {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0); 
 
   const isOtpEntered = otp.trim() !== "";
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (resendCooldown > 0) {
+      timer = setTimeout(() => setResendCooldown((prev) => prev - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [resendCooldown]);
 
-    if (isOtpEntered) {
-      setError("Please enter a valid email.");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setMessage("");
+    setLoading(true);
+  
+    const userId = sessionStorage.getItem("userId");
+  
+    if (!userId) {
+      setError("User ID not found. Please log in again.");
+      setLoading(false);
+      return;
+    }
+  
+    try {
+      const response = await fetch(`${baseUrl}/api/Vendor/Verify-two-factor`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          UserId: userId,
+          code: otp,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok && data?.status !== false) {
+        console.log("Verification success:", data);
+        setMessage("OTP verified successfully!");
+        // router.push("/dashboard") or similar
+      } else {
+        setError(data?.message || "Verification failed. Please try again.");
+      }
+    } catch (error) {
+      setError("An error occurred while verifying the OTP.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  
+
+  const handleResendCode = async () => {
+    setError("");
+    setMessage("");
+    const userId = sessionStorage.getItem("userId");
+
+    if (!userId) {
+      setError("User ID not found. Please log in again.");
       return;
     }
 
-    const requestData = { otp };
-
     try {
       const response = await fetch(
-        "https://daradservice.azurewebsites.net/api/Vendor/Become-Vendor",
+        `${baseUrl}/api/Vendor/Verify-two-factor?UserId=${userId}&code=${otp}`,
         {
-          method: "POST",
-          headers: {
-            accept: "text/plain",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
+          method: "GET",
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Something went wrong.");
+    
+      const text = await response.text(); // Get raw response
+      let data;
+    
+      try {
+        data = JSON.parse(text); // Try to parse it
+      } catch (parseError) {
+        // If parsing fails, treat as plain text
+        data = { message: text };
       }
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message);
+    
+      if (response.ok && data.status !== false) {
+        console.log("Verification success:", data);
+        // router.push("/dashboard"); or continue flow
       } else {
-        setError("An unknown error occurred.");
+        setError(data?.message || "Invalid OTP. Please try again.");
       }
+    } catch (error) {
+      setError("An error occurred while verifying the OTP.");
+      console.error(error);
     }
+    
   };
 
   return (
@@ -64,7 +125,9 @@ export default function LoginPage() {
           <p className="text-center text-[16px] text-[#121212CC] mt-2">
             A one-time code has been sent to your registered email/phone. Please enter the code below.
           </p>
-          {error && <p className="text-red-500 text-center">{error}</p>}
+          {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+
+          {message && <p className="text-green-600 text-center mt-2">{message}</p>}
 
           <form
             className="w-full flex flex-col items-center mt-6"
@@ -82,20 +145,35 @@ export default function LoginPage() {
               className="w-full px-4 py-3 mb-4 rounded-lg border border-[#D0D5DD] bg-white text-[#121212] focus:outline-none"
             />
 
-            <div className="flex justify-between w-full text-sm text-[#121212CC] mb-4">
-              <p>00:24</p>
-              <p>Resend Code</p>
-            </div>
+<div className="flex justify-between w-full text-sm text-[#121212CC] mb-4">
+  {resendCooldown > 0 ? (
+    <p>{`00:${resendCooldown.toString().padStart(2, '0')}`}</p>
+  ) : (
+    <div />
+  )}
+  <button
+    type="button"
+    onClick={handleResendCode}
+    disabled={resendCooldown > 0}
+    className={`${
+      resendCooldown === 0
+        ? "text-[#5F04F6] hover:underline cursor-pointer"
+        : "text-gray-400 cursor-not-allowed"
+    }`}
+  >
+    Resend Code
+  </button>
+</div>
+
 
             <button
               type="submit"
               className={`w-full text-white py-3 rounded-lg transition duration-300 ${
                 isOtpEntered ? "bg-[#5F04F6]" : "bg-[#5F04F680]"
               }`}
-              disabled={!isOtpEntered}
-              
+              disabled={!isOtpEntered || loading}
             >
-              Verify OTP
+              {loading ? "Verifying..." : "Verify OTP"}
             </button>
           </form>
         </div>
