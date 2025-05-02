@@ -37,7 +37,8 @@ export default function Home() {
       <p className="text-gray-500 text-sm">Daily Sales Stats</p>
       <p className="font-medium">₦150,000 Sales Today</p>
     </div>
-    <img src="/Line.svg" alt="trend" className="w-24" />
+    <Image src="/Line.svg" alt="trend" width={96} height={24} />
+
   </div>
 
   {/* Pending Withdrawal */}
@@ -97,7 +98,8 @@ export default function Home() {
           <p className="font-medium">12 transactions today</p>
          
         </div>
-        <img src="/Line.svg" alt="trend" className=" w-24 " />
+        <Image src="/Line.svg" alt="trend" width={96} height={24} />
+
         <div>
         </div>
          

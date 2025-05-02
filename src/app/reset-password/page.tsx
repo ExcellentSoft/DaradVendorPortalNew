@@ -1,11 +1,20 @@
 "use client";
 
 import Image from "next/image";
+import { useState,useEffect } from "react";
 import { Eye, EyeOff,Loader2 } from "lucide-react"; 
-import { useState } from "react";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const storedEmail = sessionStorage.getItem("resetEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+  }, []);
+
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     password: "",
@@ -36,12 +45,14 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!formData.password || !formData.confirmPassword) {
       setErrors({
         password: !formData.password ? "Password is required" : "",
         confirmPassword: !formData.confirmPassword ? "Confirm password is required" : "",
       });
+      setIsLoading(false);
       return;
     }
 
@@ -50,6 +61,7 @@ export default function LoginPage() {
         ...prev,
         confirmPassword: "Passwords do not match",
       }));
+      setIsLoading(false);
       return;
     }
 
@@ -171,14 +183,15 @@ export default function LoginPage() {
               </div>
 
               <button
-                type="submit"
-                className={`w-full max-w-[470px] mt-4 text-white py-3 mb-4 rounded-lg transition-colors duration-300 ${
-                  isEmailEntered ? "bg-[#5F04F6]" : "bg-[#5F04F680]"
-                }`}
-                disabled={!isEmailEntered}
-              >
-                Reset Password
-              </button>
+  type="submit"
+  className={`w-full max-w-[470px] mt-4 text-white py-3 mb-4 rounded-lg transition-colors duration-300 flex items-center justify-center ${
+    isEmailEntered ? "bg-[#5F04F6]" : "bg-[#5F04F680]"
+  }`}
+  disabled={!isEmailEntered || isLoading}
+>
+  {isLoading ? <Loader2 className="animate-spin" size={20} /> : "Reset Password"}
+</button>
+
             </form>
           </div>
         </div>
