@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -10,11 +11,17 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [resendCooldown, setResendCooldown] = useState(0); 
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   const isOtpEntered = otp.trim() !== "";
 
   useEffect(() => {
+    // Check sessionStorage for stored OTP when the component loads
+    const storedOtp = sessionStorage.getItem("otp");
+    if (storedOtp) {
+      setOtp(storedOtp);
+    }
+
     let timer: NodeJS.Timeout;
     if (resendCooldown > 0) {
       timer = setTimeout(() => setResendCooldown((prev) => prev - 1), 1000);
@@ -27,80 +34,88 @@ export default function LoginPage() {
     setError("");
     setMessage("");
     setLoading(true);
-  
+
     const userId = sessionStorage.getItem("userId");
-  
     if (!userId) {
       setError("User ID not found. Please log in again.");
       setLoading(false);
       return;
     }
-  
+
+    const navigate = useNavigate();
+
     try {
-      const response = await fetch(`${baseUrl}/api/Vendor/Verify-two-factor`, {
+      const url = new URL(`${baseUrl}/api/Vendor/Verify-two-factor`);
+      url.searchParams.set("UserId", userId);
+      url.searchParams.set("code", otp);
+
+      const response = await fetch(url.toString(), {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Accept": "text/plain",
         },
-        body: JSON.stringify({
-          UserId: userId,
-          code: otp,
-        }),
       });
-  
+
       const data = await response.json();
-  
-      if (response.ok && data?.status !== false) {
-        console.log("Verification success:", data);
+
+      if (response.ok && data?.status) {
         setMessage("OTP verified successfully!");
-        // router.push("/dashboard") or similar
+        navigate("/dashboard");
       } else {
         setError(data?.message || "Verification failed. Please try again.");
       }
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       setError("An error occurred while verifying the OTP.");
-      console.error(error);
     } finally {
       setLoading(false);
     }
   };
-  
-  
 
   const handleResendCode = async () => {
     if (resendCooldown > 0) return;
-  
     setError("");
     setMessage("");
-  
+
     const userId = sessionStorage.getItem("userId");
     if (!userId) {
       setError("User ID not found. Please log in again.");
       return;
     }
-  
+
     try {
-      const response = await fetch(`${baseUrl}/api/Vendor/Verify-two-factor?UserId=${userId}&code=${otp}`, {
-        method: "GET",
+      const url = new URL(`${baseUrl}/api/Vendor/Resend-Code`);
+      url.searchParams.set("UserId", userId);
+
+      const response = await fetch(url.toString(), {
+        method: "POST",
+        headers: {
+          "Accept": "text/plain", // Corrected header
+        },
       });
-  
-      const contentType = response.headers.get("content-type");
-      const data = contentType?.includes("application/json")
+
+      const data = response.headers.get("content-type")?.includes("application/json")
         ? await response.json()
         : { message: await response.text() };
-  
-      if (response.ok && data.status !== false) {
+
+      if (response.ok && data.status) {
         setMessage("Code resent successfully.");
-        setResendCooldown(30); // Start a 30-second cooldown
+        setResendCooldown(30);
       } else {
         setError(data?.message || "Failed to resend code.");
       }
     } catch (err) {
-      setError("An error occurred.");
       console.error(err);
+      setError("An error occurred.");
     }
   };
-  
+
+  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setOtp(value);
+    // Store OTP in sessionStorage
+    sessionStorage.setItem("otp", value);
+  };
 
   return (
     <div className="relative min-h-screen w-full bg-[#FBFAFF] p-6">
@@ -135,30 +150,29 @@ export default function LoginPage() {
               type="text"
               placeholder="Enter your OTP"
               value={otp}
-              onChange={(e) => setOtp(e.target.value)}
+              onChange={handleOtpChange}
               className="w-full px-4 py-3 mb-4 rounded-lg border border-[#D0D5DD] bg-white text-[#121212] focus:outline-none"
             />
 
-<div className="flex justify-between w-full text-sm text-[#121212CC] mb-4">
-  {resendCooldown > 0 ? (
-    <p>{`00:${resendCooldown.toString().padStart(2, '0')}`}</p>
-  ) : (
-    <div />
-  )}
-  <button
-    type="button"
-    onClick={handleResendCode}
-    disabled={resendCooldown > 0}
-    className={`${
-      resendCooldown === 0
-        ? "text-[#5F04F6] hover:underline cursor-pointer"
-        : "text-gray-400 cursor-not-allowed"
-    }`}
-  >
-    Resend Code
-  </button>
-</div>
-
+            <div className="flex justify-between w-full text-sm text-[#121212CC] mb-4">
+              {resendCooldown > 0 ? (
+                <p>{`00:${resendCooldown.toString().padStart(2, '0')}`}</p>
+              ) : (
+                <div />
+              )}
+              <button
+                type="button"
+                onClick={handleResendCode}
+                disabled={resendCooldown > 0}
+                className={`${
+                  resendCooldown === 0
+                    ? "text-[#5F04F6] hover:underline cursor-pointer"
+                    : "text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                Resend Code
+              </button>
+            </div>
 
             <button
               type="submit"
