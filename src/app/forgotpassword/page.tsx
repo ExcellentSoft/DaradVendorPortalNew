@@ -29,6 +29,9 @@ export default function ForgotPasswordPage() {
       return;
     }
   
+    // Save the email to sessionStorage
+    sessionStorage.setItem("userEmail", email);
+  
     setLoading(true);
   
     try {
