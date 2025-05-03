@@ -9,22 +9,26 @@ export default function AddBankDetails() {
   const [error, setError] = useState("");
   const [showPin, setShowPin] = useState(false);
   const [showConfirmPin, setShowConfirmPin] = useState(false);
+  const [bankOptions, setBankOptions] = useState<string[]>([]);
 
   const isEmailEntered = email.trim() !== "";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     if (!isEmailEntered) {
       setError("Please enter a valid email.");
       return;
     }
-
-    const requestData = {
-      email,
-    };
-
+  
     try {
+      // Fetch the bank details using the entered email
+      await fetchBankDetails(email);
+  
+      const requestData = {
+        email,
+      };
+  
       const response = await fetch(
         "https://daradservice.azurewebsites.net/api/Vendor/Become-Vendor",
         {
@@ -36,11 +40,11 @@ export default function AddBankDetails() {
           body: JSON.stringify(requestData),
         }
       );
-
+  
       if (!response.ok) {
         throw new Error("Something went wrong.");
       }
-
+  
       const data = await response.json();
       console.log(data);
     } catch (error: unknown) {
@@ -51,6 +55,37 @@ export default function AddBankDetails() {
       }
     }
   };
+  
+
+
+
+  const fetchBankDetails = async (userEmail: string) => {
+    try {
+      const response = await fetch(
+        `https://daradsvendorapi-h9cpe0fzhrb4cqa7.eastus-01.azurewebsites.net/api/Vendor/BankAccount/${encodeURIComponent(userEmail)}`,
+        {
+          method: "GET",
+          headers: {
+            accept: "text/plain",
+          },
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch bank details.");
+      }
+  
+      const bankData = await response.json();
+  
+      // Assuming bankData is an array of bank objects with a 'bankName' property
+      const bankNames = bankData.map((bank: any) => bank.bankName);
+      setBankOptions(bankNames);
+    } catch (err) {
+      console.error(err);
+      setError("Unable to fetch bank details.");
+    }
+  };
+  
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
@@ -77,13 +112,15 @@ export default function AddBankDetails() {
                 {/* Bank Name */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Bank Name</label>
-                  <select
-                    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  >
-                    <option>Select your bank</option>
-                    <option>Bank A</option>
-                    <option>Bank B</option>
-                  </select>
+                  <select className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+  <option>Select your bank</option>
+  {bankOptions.map((bank, index) => (
+    <option key={index} value={bank}>
+      {bank}
+    </option>
+  ))}
+</select>
+
                   <p className="text-xs text-gray-500 mt-1">Select your bank to proceed.</p>
                 </div>
 

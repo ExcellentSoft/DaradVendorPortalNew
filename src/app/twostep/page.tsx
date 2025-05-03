@@ -6,46 +6,53 @@ import { useState } from "react";
 export default function LoginPage() {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const isOtpEntered = otp.trim() !== "";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (isOtpEntered) {
-      setError("Please enter a valid email.");
+  
+  const handleVerify = async () => {
+    if (!otp) return setError(true);
+  
+    const userId = sessionStorage.getItem('userId');
+    if (!userId) {
+      setError(true);
+      console.error('UserId not found in sessionStorage');
       return;
     }
-
-    const requestData = { otp };
-
+  
     try {
+      setLoading(true);
       const response = await fetch(
-        "https://daradservice.azurewebsites.net/api/Vendor/Become-Vendor",
+        `${baseUrl}/api/Vendor/Verify-two-factor?UserId=${userId}&code=${otp}`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            accept: "text/plain",
-            "Content-Type": "application/json",
+            Accept: 'text/plain',
           },
-          body: JSON.stringify(requestData),
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Something went wrong.");
-      }
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message);
+  
+      const result = await response.text();
+  
+      if (response.ok) {
+        setSuccess(true);
+        setError(false);
+        console.log('Verification successful:', result);
       } else {
-        setError("An unknown error occurred.");
+        setError(true);
+        setSuccess(false);
+        console.error('Verification failed:', result);
       }
+    } catch (err) {
+      setError(true);
+      setSuccess(false);
+      console.error('Error verifying:', err);
+    } finally {
+      setLoading(false);
     }
   };
+  
 
   return (
     <div className="relative min-h-screen w-full bg-[#FBFAFF] p-6">
@@ -68,7 +75,7 @@ export default function LoginPage() {
 
           <form
             className="w-full flex flex-col items-center mt-6"
-            onSubmit={handleSubmit}
+            onSubmit={handleVerify}
           >
             <label className="block text-[#101928] w-full text-[16px] font-medium mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
               OTP
