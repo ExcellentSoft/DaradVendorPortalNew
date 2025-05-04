@@ -4,43 +4,39 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 
-export default function LoginPage() {
+export default function ResetPasswordPage() {
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
   });
+
   const [errors, setErrors] = useState({
     password: "",
     confirmPassword: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(""); // Added success message state
 
   useEffect(() => {
     const storedEmail = sessionStorage.getItem("userEmail");
-    if (storedEmail) setEmail(storedEmail);    
+    if (storedEmail) setEmail(storedEmail);
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    setErrors((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const { password, confirmPassword } = formData;
 
     if (!otp || !email || !password || !confirmPassword) {
@@ -49,22 +45,19 @@ export default function LoginPage() {
     }
 
     if (password !== confirmPassword) {
-      setErrors((prev) => ({
-        ...prev,
-        confirmPassword: "Passwords do not match.",
-      }));
+      setErrors((prev) => ({ ...prev, confirmPassword: "Passwords do not match." }));
       return;
     }
 
     setIsLoading(true);
     setError("");
-    setSuccessMessage(""); // Reset success message before making the request
+    setSuccessMessage("");
 
     const requestBody = {
-      email: email,
+      email,
       code: otp,
       newPassword: password,
-      confirmPassword: confirmPassword,
+      confirmPassword,
     };
 
     try {
@@ -73,22 +66,24 @@ export default function LoginPage() {
         {
           method: "POST",
           headers: {
-            accept: "text/plain",
+            Accept: "text/plain",
             "Content-Type": "application/json",
           },
           body: JSON.stringify(requestBody),
         }
       );
 
+      const data = await response.json();
       if (response.ok) {
-        setSuccessMessage("Password reset successful."); // Set success message
+        setSuccessMessage("Password reset successful.");
       } else {
-        const data = await response.json();
         setError(data.message || "Failed to reset password.");
       }
-    } catch (error) {
+    }catch (error) {
+      console.error(error); 
       setError("An error occurred. Please try again later.");
-    } finally {
+    }
+     finally {
       setIsLoading(false);
     }
   };
@@ -113,15 +108,11 @@ export default function LoginPage() {
                   Your new password must be strong and secure.
                 </p>
               </div>
-              {error && <p className="text-red-500 text-[36px] font-semibold text-center">{error}</p>}
-              {successMessage && <p className="text-green-500 text-[36px] font-semibold text-center">{successMessage}</p>} {/* Success message */}
 
-              <form
-                className="w-full flex flex-col items-center p-8 mt-2 max-w-[550px]"
-                onSubmit={handleSubmit}
-              >
-                {/* Email (readonly) */}
-                {/* OTP */}
+              {error && <p className="text-red-500 text-lg font-semibold text-center">{error}</p>}
+              {successMessage && <p className="text-green-500 text-lg font-semibold text-center">{successMessage}</p>}
+
+              <form className="w-full flex flex-col items-center p-8 mt-2 max-w-[550px]" onSubmit={handleSubmit}>
                 <label className="block text-[#101928] w-full text-[16px] font-medium">OTP</label>
                 <div className="mb-4 w-full">
                   <input
@@ -134,7 +125,6 @@ export default function LoginPage() {
                   />
                 </div>
 
-                {/* New Password */}
                 <label className="block text-[#101928] w-full text-[16px] font-medium">New Password</label>
                 <div className="mb-4 relative w-full">
                   <input
@@ -145,15 +135,11 @@ export default function LoginPage() {
                     onChange={handleChange}
                     value={formData.password}
                   />
-                  <div
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-8 top-3.5 cursor-pointer text-gray-600"
-                  >
+                  <div onClick={() => setShowPassword(!showPassword)} className="absolute right-8 top-3.5 cursor-pointer text-gray-600">
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </div>
                 </div>
 
-                {/* Confirm Password */}
                 <label className="block text-[#101928] w-full text-[16px] font-medium">Confirm Password</label>
                 <div className="mb-2 relative w-full">
                   <input
@@ -164,18 +150,12 @@ export default function LoginPage() {
                     onChange={handleChange}
                     value={formData.confirmPassword}
                   />
-                  <div
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-8 top-3.5 cursor-pointer text-gray-600"
-                  >
+                  <div onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-8 top-3.5 cursor-pointer text-gray-600">
                     {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </div>
-                  {errors.confirmPassword && (
-                    <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
-                  )}
+                  {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
                 </div>
 
-                {/* Submit */}
                 <button
                   type="submit"
                   className={`w-full max-w-[470px] mt-4 text-white py-3 mb-4 rounded-lg transition-colors duration-300 flex items-center justify-center ${formData.password && formData.confirmPassword && formData.password === formData.confirmPassword ? "bg-[#5F04F6]" : "bg-[#5F04F680]"}`}
@@ -187,27 +167,21 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Image */}
+          {/* Right Image */}
           <div className="w-[400px] h-[652px] mt-20 relative">
             <Image
               src="/mans.svg"
               alt="Happy vendor"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-r-lg"
+              fill
+              className="rounded-r-lg object-cover"
             />
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <div className="flex justify-around ml-40">
-        <p className="text-gray-500 text-sm text-center sm:text-left">
-          © 2025 MyDarads. All rights reserved.
-        </p>
-        <p className="text-gray-500 text-sm text-center mr-40 sm:text-right">
-          Developed by Kaybii Technologies
-        </p>
+        <p className="text-gray-500 text-sm text-center sm:text-left">© 2025 MyDarads. All rights reserved.</p>
+        <p className="text-gray-500 text-sm text-center mr-40 sm:text-right">Developed by Kaybii Technologies</p>
       </div>
     </div>
   );

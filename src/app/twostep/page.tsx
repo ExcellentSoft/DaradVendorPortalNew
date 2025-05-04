@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -12,6 +13,7 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
+  const router = useRouter();
 
   const isOtpEntered = otp.trim() !== "";
 
@@ -30,6 +32,7 @@ export default function LoginPage() {
   }, [resendCooldown]);
 
   const handleSubmit = async (e: React.FormEvent) => {
+  
     e.preventDefault();
     setError("");
     setMessage("");
@@ -42,7 +45,7 @@ export default function LoginPage() {
       return;
     }
 
-    const navigate = useNavigate();
+
 
     try {
       const url = new URL(`${baseUrl}/api/Vendor/Verify-two-factor`);
@@ -60,7 +63,8 @@ export default function LoginPage() {
 
       if (response.ok && data?.status) {
         setMessage("OTP verified successfully!");
-        navigate("/dashboard");
+        router.push("/dashboard");
+
       } else {
         setError(data?.message || "Verification failed. Please try again.");
       }
@@ -111,11 +115,11 @@ export default function LoginPage() {
   };
 
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(/\D/g, ""); // allow digits only
     setOtp(value);
-    // Store OTP in sessionStorage
     sessionStorage.setItem("otp", value);
   };
+  
 
   return (
     <div className="relative min-h-screen w-full bg-[#FBFAFF] p-6">
@@ -147,12 +151,17 @@ export default function LoginPage() {
             </label>
 
             <input
-              type="text"
-              placeholder="Enter your OTP"
-              value={otp}
-              onChange={handleOtpChange}
-              className="w-full px-4 py-3 mb-4 rounded-lg border border-[#D0D5DD] bg-white text-[#121212] focus:outline-none"
-            />
+  type="text"
+  placeholder="Enter your OTP"
+  value={otp}
+  onChange={handleOtpChange}
+  required
+  inputMode="numeric"
+  pattern="\d*"  // Ensures only digits are allowed
+  className="w-full px-4 py-3 mb-4 rounded-lg border border-[#D0D5DD] bg-white text-[#121212] focus:outline-none"
+/>
+
+
 
             <div className="flex justify-between w-full text-sm text-[#121212CC] mb-4">
               {resendCooldown > 0 ? (
