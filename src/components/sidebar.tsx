@@ -1,7 +1,23 @@
-
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function Sidebar() {
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Ensure sessionStorage is only accessed in the browser
+    const email = sessionStorage.getItem('userEmail');
+    setUserEmail(email);
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('userEmail');
+    sessionStorage.removeItem('loggedInStatus');
+    router.push('/');
+  };
   return (
     
       <aside className="flex flex-col  h-[3100px]  bg-white border-r shadow-sm ">
@@ -16,18 +32,14 @@ export default function Sidebar() {
             <Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
           </div>
 
-          <input
-            type="text"
-            placeholder="Search sidebar..."
-            className="mt-4 w-full px-3 py-2 border rounded text-sm"
-          />
+         
         </div>
 
         {/* Scrollable Nav */}
         <nav className="flex-1  text-sm px-4 space-y-6 pb-6">
           <div>
             <p className="text-[#121212CC] uppercase  text-xs mt-6 ml-6 font-semibold pb-2">Business Overview</p>
-            <p className='text-#12121266 border borber-b mb-8'></p>
+            <p className='text-[#C8C8C8] border borber-b mb-8'></p>
            
             <ul className="space-y-1 font-semibold">
               <li className="bg-[#5604F6]  text-white flex items-center gap-6 px-4 py-3 rounded-t-2xl">
@@ -47,7 +59,7 @@ export default function Sidebar() {
 
           <div>
             <p className="text-[#121212CC] uppercase  text-xs mt-6 ml-6 font-semibold pb-2">Finance & Transactions</p>
-            <p className='text-#12121266 border borber-b'></p>
+            <p className='text-[#C8C8C8] border borber-b'></p>
            
             <ul className="space-y-1 font-semibold">
               <li className="flex items-center gap-6 px-4 py-3 text-[#121212]">
@@ -63,7 +75,7 @@ export default function Sidebar() {
 
           <div>
             <p className="text-[#121212CC] uppercase  font-semibold text-xs mt-6 ml-6  pb-2">Store And Customer Engagement</p>
-            <p className='text-#12121266 border borber-b'></p>
+            <p className='text-[#C8C8C8] border borber-b'></p>
             <ul className="space-y-1 font-semibold">
               <li className="flex items-center gap-6 px-4 py-3 text-[#121212]">
                 <Image src="/globe.svg" alt="My Website" width={20} height={20} />
@@ -78,7 +90,7 @@ export default function Sidebar() {
 
           <div>
             <p className="text-[#121212CC] uppercase   text-xs mt-6 ml-6  pb-2">Account And Utilities</p>
-            <p className='text-#12121266 border borber-b'>
+            <p className='text-[#C8C8C8] border borber-b'>
 
             </p>
             <ul className="space-y-1 font-semibold">
@@ -96,17 +108,30 @@ export default function Sidebar() {
               </li>
             </ul>
           </div>
+
+
+          <div>
+            <p className="text-[#121212CC] uppercase text-xs mt-6 ml-6 font-semibold pb-2">Logout</p>
+            <p className='text-[#C8C8C8] border borber-b'></p>
+            <ul className="space-y-1 font-semibold">
+              <li onClick={handleLogout} className=" flex  text-[#121212] flex items-center gap-6 px-4 py-3 rounded-t-2xl cursor-pointer">
+              <Image src="/logout.svg" alt="Logout" width={24} height={24} />
+                <span>Logout</span>
+              </li>
+            </ul>
+          </div>
         </nav>
       </div>
 
       {/* Footer */}
-      <div className="bg-[#5604F6] text-white flex items-center justify-between px-4 py-3 rounded-t-2xl shrink-0">
+      <div  onClick={handleLogout} className="bg-[#5604F6] text-white flex items-center justify-between px-4 py-3 rounded-t-2xl shrink-0">
         <div className="flex items-center gap-6 px-4 py-3">
-          <Image src="/logout.svg" alt="Logout" width={32} height={32} />
+         
           <Image src="/user.svg" alt="User Avatar" width={32} height={32} />
           <div className="text-sm flex flex-col">
-            <p className="font-semibold leading-none truncate w-28">Temitope Sore...</p>
-            <p className="text-xs text-gray-200 truncate w-28">Temito...@Gmail.Com</p>
+            {/* <p className="font-semibold leading-none truncate w-28">Temitope Sore...</p> */}
+            <p className="text-xs text-gray-200 truncate w-28"> {userEmail ? userEmail : "Temitope.....@gmail.com"}</p>
+            
           </div>
         </div>
        
