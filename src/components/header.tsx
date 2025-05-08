@@ -1,6 +1,6 @@
 // components/DashboardHeader.tsx
 import Image from "next/image";
-import { Bell, Search } from 'lucide-react';
+import { Bell} from 'lucide-react';
 
 export default function DashboardHeader() {
 
