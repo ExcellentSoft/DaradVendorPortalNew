@@ -17,6 +17,14 @@ const config: Config = {
         },
       },
     },
+    container: {
+      center: true,
+      padding: '1rem',
+      screens: {
+        sm: '375px',
+        lg: '1280px',
+      },
+    },
   },
   plugins: [],
 };

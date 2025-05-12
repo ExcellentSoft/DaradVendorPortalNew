@@ -14,7 +14,7 @@ export default function ResetSuccess() {
          <Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
        </div>
 
-       <div className="flex items-center justify-center min-h-screen ">
+  <div className="container flex items-center justify-center min-h-screen">
        <div className="bg-white rounded-xl shadow-md p-10 w-full max-w-[450px] min-h-[450px]  items-center justify-center">
 
         <h2 className="text-[24px] font-semibold text-center text-[#27252B] mt-40">Verification Successful</h2>

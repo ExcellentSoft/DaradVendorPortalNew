@@ -61,7 +61,7 @@ export default function LoginPage() {
     </div>
   
     {/* Centered Form + Image */}
-    <div className="flex items-center justify-center min-h-screen ">
+     <div className="container flex items-center justify-center min-h-screen">
       <div className="flex w-full max-w-[1600px] mx-60  rounded-lg overflow-hidden">
         
         {/* Form Section */}

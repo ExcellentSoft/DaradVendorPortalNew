@@ -129,7 +129,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="flex flex-col w-full max-w-[1280px] bg-[#FBFAFF] shadow-lg rounded-lg overflow-hidden pb-6">
+      <div className="container flex flex-col w-full max-w-[1280px] bg-[#FBFAFF] shadow-lg rounded-lg overflow-hidden pb-6">
         <div className="flex w-full h-[900px]">
           <div className="flex flex-col w-full md:w-[760px]">
             <div className="flex bg-white p-8 w-full">
@@ -171,7 +171,7 @@ export default function LoginPage() {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className={`z-10 block text-black w-full rounded-lg p-4 focus:outline-none ${
+                    className={`z-10 block text-black w-full rounded-lg p-4 focus:outline-none text-[16px] ${
                       passwordError ? "border border-red-500" : "border border-[#E3E5E5]"
                     }`}
                   />

@@ -10,7 +10,7 @@ export default function Dashboard() {
   return (
     <>
       {/* Scrollable Content */}
-      <main className="mt-20 p-4 overflow-y-auto">
+      <main className=" p-4 overflow-y-auto">
         <Metrics />
         <ProductStats />
         <WalletGraph />
