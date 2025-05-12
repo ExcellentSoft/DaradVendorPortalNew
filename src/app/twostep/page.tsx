@@ -143,7 +143,7 @@ export default function LoginPage() {
       </div>
 
       {/* Centered Form */}
-      <div className="flex items-center justify-center min-h-screen">
+<div className="container flex items-center justify-center min-h-screen">
         <div className="bg-white w-full max-w-md p-8 rounded-lg shadow-md">
           <h2 className="text-[24px] font-bold text-gray-700 text-center" style={{ fontFamily: 'Urbanist, sans-serif' }}>
             Two-Step Verification

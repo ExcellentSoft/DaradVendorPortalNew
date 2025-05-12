@@ -14,8 +14,9 @@ export default function ResetSuccess() {
          <Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
        </div>
 
-       <div className="flex items-center justify-center min-h-screen ">
-       <div className="bg-white rounded-xl shadow-md p-10 w-full max-w-[450px] min-h-[450px]  items-center justify-center">
+       <div className="flex items-center justify-center min-h-screen">
+  <div className="container flex items-center justify-center">
+    <div className="bg-white rounded-xl shadow-md p-10 w-full max-w-[450px] min-h-[450px]">
 
         <h2 className="text-[24px] font-semibold text-center text-[#27252B] mt-40">Password reset successful</h2>
         <p className="text-[14px] text-center text-[#121212CC] mb-6">You can now log in with your new password.</p>
@@ -28,6 +29,7 @@ export default function ResetSuccess() {
         set up bank details
         </button>
         </div>
+      </div>
       </div>
       </div>
     </div>

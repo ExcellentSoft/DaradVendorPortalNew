@@ -70,7 +70,8 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="flex flex-col w-full max-w-[1280px] bg-[#FBFAFF] shadow-lg rounded-lg overflow-hidden pb-6">
+<div className="container flex flex-col bg-[#FBFAFF] shadow-lg rounded-lg overflow-hidden pb-6">
+
         <div className="flex w-full h-[832px]">
           {/* Left Section */}
           <div className="flex flex-col w-[760px]">

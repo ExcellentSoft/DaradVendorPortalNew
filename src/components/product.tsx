@@ -80,82 +80,79 @@ const products = [
 
 const Dashboard: FC = () => {
   return (
-    <div className="p-8 md:p-6 bg-gray-100 min-h-screen space-y-8">
-      {/* Overview Section */}
-  <div className="bg-white max-w-screen px-4 sm:px-6 md:p-6 rounded-lg">
+   <div className=" bg-gray-100 min-h-screen space-y-8 flex flex-col items-center">
+  {/* Overview Section */}
+  <div className="bg-white w-full max-w-7xl px-4 sm:px-6 md:p-6 rounded-lg">
+    <h2 className="text-lg text-[#121212] font-semibold mb-1">
+      Manage Your Digital Products With Ease
+    </h2>
+    <p className="text-sm text-[#121212CC] mb-6">
+      Add, edit, and track logs, phone numbers, tutorials, gift items, and digital courses—all in one place.
+    </p>
 
-  <h2 className="text-lg text-[#121212] font-semibold mb-1">
-    Manage Your Digital Products With Ease
-  </h2>
-  <p className="text-sm text-[#121212CC] mb-6">
-    Add, edit, and track logs, phone numbers, tutorials, gift items, and digital courses—all in one place.
-  </p>
+    <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+      {stats.map((stat, index) => (
+        <div
+          key={index}
+          className="w-full bg-white border rounded-lg p-5 md:p-8 shadow-sm flex flex-col justify-between h-48"
+        >
+          <div className="flex gap-4 items-center">
+            <div className="w-8 h-8 mb-1">
+              <img
+                src={stat.icon}
+                alt={stat.title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <p className="text-[14px] text-[#121212CC] text-center">{stat.title}</p>
+          </div>
 
- <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
-  {stats.map((stat, index) => (
-    <div
-      key={index}
-      className="w-full bg-white border rounded-lg p-5 md:p-8 shadow-sm flex flex-col justify-between h-48"
-    >
-      <div className="flex gap-4 items-center">
-        <div className="w-8 h-8 mb-1">
-          <img
-            src={stat.icon}
-            alt={stat.title}
-            className="w-full h-full object-contain"
-          />
+          <div className="flex justify-center">
+            <h3 className="text-[40px] text-[#121212] font-bold">{stat.value}</h3>
+          </div>
+
+          <div className="flex justify-end">
+            <p className="text-[14px] text-[#121212CC]">{stat.subtitle}</p>
+          </div>
         </div>
-        <p className="text-[14px] text-[#121212CC] text-center">{stat.title}</p>
-      </div>
-
-      <div className="flex justify-center">
-        <h3 className="text-[40px] text-[#121212] font-bold">{stat.value}</h3>
-      </div>
-
-      <div className="flex justify-end">
-        <p className="text-[14px] text-[#121212CC]">{stat.subtitle}</p>
-      </div>
+      ))}
     </div>
-  ))}
+  </div>
+
+  {/* Products List Section */}
+  <div className="bg-white w-full max-w-7xl rounded-lg p-4 sm:p-6 shadow space-y-4">
+    <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#000000]">All MyDarads products</h2>
+    {products.map((product, index) => (
+      <div key={index} className="flex flex-col sm:flex-row sm:justify-between border-b last:border-b-0 py-4 gap-4">
+        <div className="flex items-start gap-4">
+          <div className="w-8 h-8 flex-shrink-0">
+            <img src={product.icon} alt={product.name} className="w-full h-full object-contain" />
+          </div>
+          <div>
+            <p className="font-medium text-[#000000] text-base sm:text-lg">
+              {product.name}{" "}
+              {product.subtext && (
+                <span className="text-sm text-[#12121266]">{product.subtext}</span>
+              )}
+            </p>
+            <p className="text-sm text-gray-500">{product.description}</p>
+          </div>
+        </div>
+
+        <div className="flex justify-between sm:justify-end items-center sm:gap-8 gap-4">
+          <div className={`text-xs px-3 py-2 border rounded-md font-medium ${product.tagColor}`}>
+            {product.tag}
+            <span className="font-bold ml-1 text-sm text-[#121212]">{product.available}</span>
+          </div>
+          <div className="sm:mt-0 mt-1">
+            <Image src="/assets/right.svg" alt="Arrow Icon" width={20} height={20} />
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
 </div>
 
-</div>
-
-
-      {/* Products List Section */}
-     <div className="bg-white rounded-lg p-4 sm:p-6 shadow space-y-4">
-  <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#000000]">All MyDarads products</h2>
-  {products.map((product, index) => (
-    <div key={index} className="flex flex-col sm:flex-row sm:justify-between border-b last:border-b-0 py-4 gap-4">
-      <div className="flex items-start gap-4">
-        <div className="w-8 h-8 flex-shrink-0">
-          <img src={product.icon} alt={product.name} className="w-full h-full object-contain" />
-        </div>
-        <div>
-          <p className="font-medium text-[#000000] text-base sm:text-lg">
-            {product.name}{" "}
-            {product.subtext && (
-              <span className="text-sm text-[#12121266]">{product.subtext}</span>
-            )}
-          </p>
-          <p className="text-sm text-gray-500">{product.description}</p>
-        </div>
-      </div>
-
-      <div className="flex justify-between sm:justify-end items-center sm:gap-8 gap-4">
-        <div className={`text-xs px-3 py-2 border rounded-md font-medium ${product.tagColor}`}>
-          {product.tag}
-          <span className="font-bold ml-1 text-sm text-[#121212]">{product.available}</span>
-        </div>
-        <div className="sm:mt-0 mt-1">
-          <Image src="/assets/right.svg" alt="Arrow Icon" width={20} height={20} />
-        </div>
-      </div>
-    </div>
-  ))}
-</div>
-
-    </div>
   );
 };
 

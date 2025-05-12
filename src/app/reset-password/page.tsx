@@ -97,7 +97,8 @@ export default function ResetPasswordPage() {
       </div>
 
       <div className="flex items-center justify-center min-h-screen">
-        <div className="flex w-full max-w-[1600px] mx-60 rounded-lg overflow-hidden">
+<div className="container flex rounded-lg overflow-hidden">
+
           <div className="flex flex-col items-center justify-center w-[760px]">
             <div className="flex flex-col items-center bg-white w-[550px] h-[650px] m-20">
               <div className="w-full max-w-[800px] border-b border-gray-200 mb-8 px-8 pt-8 mt-20">

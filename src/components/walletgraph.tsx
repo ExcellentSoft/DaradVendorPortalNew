@@ -29,13 +29,16 @@ const data = [
 export default function SalesWalletChart() {
   return (
     <div className="w-full flex items-center justify-center p-8 bg-[#f4f4f5]">
-      <div className="w-full max-w-[1300px] h-[600px] bg-white rounded-xl shadow p-8">
+<div className="container min-h-[400px] md:h-[600px] bg-white rounded-xl shadow p-4 md:p-8">
+
+
         <div className="flex justify-between items-center mb-4">
           <div>
             <p className="text-gray-600 text-sm">Sales Wallet</p>
             <p className="text-[24px] font-bold text-[#000000]">NGN 450,000</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+
             <button className="flex items-center gap-1 px-4 py-2 text-sm text-[#5604F6] border border-[#5604F6] rounded-lg hover:bg-purple-50">
               Withdraw
               <Image src="/withdraw.svg" alt="Withdraw" width={10} height={10} />
@@ -62,7 +65,8 @@ export default function SalesWalletChart() {
           ))}
         </div>
 
-        <ResponsiveContainer width="100%" height={350}>
+      <ResponsiveContainer width="100%" height={300}>
+
   <LineChart data={data}>
     <XAxis dataKey="date" />
     <YAxis
@@ -103,8 +107,9 @@ export default function SalesWalletChart() {
 
 
         {/* Custom Legend */}
-        <div className="m-10 flex justify-between">
-  <div className="flex flex-wrap gap-20">
+<div className="m-4 flex flex-col md:flex-row justify-between gap-4 flex-wrap">
+  <div className="flex flex-wrap gap-6 sm:gap-10 md:gap-20">
+
     {/* Left group: Logs and Digital Course (stacked) */}
     <div className="flex flex-col space-y-2">
       <div className="flex items-center space-x-2">
