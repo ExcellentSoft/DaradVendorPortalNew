@@ -40,7 +40,7 @@ const LogType: React.FC = () => {
               ].map((header, idx, arr) => (
                 <th
                   key={header}
-                  className={`px-4 py-4 ${
+                  className={`px-4 py-4 whitespace-nowrap bg-[#C2C3C5] text-[#121212] ${
                     idx === 0 ? "rounded-tl-lg" : ""
                   } ${idx === arr.length - 1 ? "rounded-tr-lg" : ""}`}
                 >
@@ -52,17 +52,21 @@ const LogType: React.FC = () => {
           <tbody className="text-[#121212]">
             {[...Array(10)].map((_, idx) => (
               <tr key={idx} className="border-b bg-white hover:bg-gray-50">
-                <td className="px-4 py-2">{idx + 1}</td>
                 <td className="px-4 py-2">
+            <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
+              {idx + 1}
+            </div>
+          </td>
+                <td className="px-4 py-3">
                   {idx < 3
                     ? ["Social Media", "Email Marketing", "Messaging"][idx]
                     : "Facebook Ad Leads"}
                 </td>
-                <td className="px-4 py-2">31/04/2024</td>
-                <td className="px-4 py-2">₦10,000.00</td>
-                <td className="px-4 py-2 text-red-500">-₦500</td>
-                <td className="px-4 py-2">12</td>
-                <td className="px-4 py-2">⋮</td>
+                <td className="px-4 py-3">31/04/2024</td>
+                <td className="px-4 py-3">₦10,000.00</td>
+                <td className="px-4 py-3 text-red-500">-₦500</td>
+                <td className="px-4 py-3">12</td>
+                <td className="px-4 py-3">⋮</td>
               </tr>
             ))}
           </tbody>
