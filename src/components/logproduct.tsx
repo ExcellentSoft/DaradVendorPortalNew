@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from "react";
 import bgImage from '../../public/assets/doodle.png';
 import { ChevronDown,ChevronRight,ChevronLeft } from "lucide-react";
-
+import LogType from './logtype';
 
 interface LogProductProps {
   onGoBack: () => void;
@@ -12,7 +12,8 @@ interface LogProductProps {
 const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
-   
+   const [viewLogType, setViewLogType] = useState(false);
+
 
 
   return (
@@ -52,7 +53,11 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
 
 
       {/* Log Product Section */}
-      <div className="bg-white p-8 rounded-lg shadow">
+     {viewLogType ? (
+<LogType onGoBack={() => setViewLogType(false)} />
+
+) : (
+  <div className="bg-white p-8 rounded-lg shadow">
         <div className="border rounded-lg p-4 mb-4 bg-white shadow-sm relative">
     
     <div className="flex justify-between items-center mt-2 mb-2">  {/* Header section with dropdown toggle */}
@@ -76,12 +81,13 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
           >
             Product
           </button>
-          <button
-            onClick={() => alert('Navigate to Log Type')}
-            className="w-full text-left px-4 py-2 text-sm "
-          >
-            Log Type
-          </button>
+         <button
+  onClick={() => setViewLogType(true)}
+  className="w-full text-left px-4 py-2 text-sm"
+>
+  Log Type Name
+</button>
+
         </div>
       )}
 <div className="flex items-center space-x-2 text-sm text-gray-600">
@@ -160,6 +166,8 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
 
 
       </div>
+      
+)}
     </div>
   );
 };
