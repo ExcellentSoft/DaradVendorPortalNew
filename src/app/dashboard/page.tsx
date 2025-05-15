@@ -1,21 +1,27 @@
 "use client";
 import { useState } from "react";
-import { FiX } from "react-icons/fi"; // 👈 Import close icon
+import { FiX } from "react-icons/fi"; 
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import Overview from "@/components/overview";
 import Product from "@/components/product";
 
+
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+
+    const onOpenLogProduct = () => {
+    console.log("Log Product opened");
+  };
 
   const renderPage = () => {
     switch (activePage) {
       case "Overview":
         return <Overview />;
       case "Products":
-        return <Product />;
+          return <Product onOpenLogProduct={onOpenLogProduct} />;
       default:
         return <Overview />;
     }
