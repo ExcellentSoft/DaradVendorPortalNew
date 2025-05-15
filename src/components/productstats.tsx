@@ -42,15 +42,16 @@ const ProductsOrders = () => {
 
   return (
     <div className="w-full  flex items-center justify-center p-8 bg-[#f4f4f5]">
-      <div className="w-full max-w-[1300px] h-[600px]  bg-white rounded-xl shadow p-8">
+ <div className="container bg-white rounded-xl shadow p-8">
         <h2 className="text-xl font-semibold text-black mt-14 mb-2">Products Orders</h2>
         <p className="text-sm text-[#121212cc] mb-4 border-b border-[#12121266] pb-4">
           Monitor sales, track orders, and manage your top products at a glance.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-8 gap-8">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-8 gap-4">
+
           {/* Total Products Card */}
-          <div className="bg-[#2E0234] text-white p-6 rounded-xl h-[160px] w-[360px] flex flex-col justify-between shadow-md">
+  <div className="bg-[#2E0234] text-white p-4 rounded-xl flex flex-col justify-between shadow-md w-full h-auto min-h-[160px]">
             <div className="flex items-center gap-3">
                <Image src="/product.svg" alt="Darads Logo" width={40} height={40} />
                          
@@ -64,7 +65,7 @@ const ProductsOrders = () => {
           {products.map((product) => (
             <div
               key={product.title}
-              className="bg-white text-black border border-[#D2D5DA] p-4 rounded-xl w-[360px] h-[160px] flex flex-col justify-between shadow-sm"
+      className="bg-white text-black border border-[#D2D5DA] p-4 rounded-xl flex flex-col justify-between shadow-sm w-full h-auto min-h-[160px]"
             >
               <div className="flex items-center gap-3">
                 {product.icon}

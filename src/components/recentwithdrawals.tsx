@@ -1,4 +1,3 @@
-// components/RecentOrders.jsx
 import React from "react";
 import {
   CalendarDays,
@@ -9,8 +8,8 @@ import {
   RefreshCcw,
   ChevronLeft,
   ChevronRight,
-  ChevronDown
-} from 'lucide-react';
+  ChevronDown,
+} from "lucide-react";
 
 const orders = [
   {
@@ -62,24 +61,27 @@ const statusColor = {
 
 export default function RecentOrders() {
   return (
-    <div className="bg-white shadow rounded-lg p-6">
+    <div className="container mx-auto bg-white shadow rounded-lg p-4 sm:p-6">
       <div className="bg-gray-100 p-5 rounded-lg space-y-3">
-        <div className="flex justify-between">
+        <div className="flex flex-col sm:flex-row justify-between gap-2">
           <h2 className="text-lg font-semibold text-[#121212]">Recent Orders</h2>
           <RefreshCcw size={16} className="text-[#121212] cursor-pointer opacity-70 hover:opacity-100" />
         </div>
 
-        <div className="flex justify-between">
-          <p className="text-[#121212CC] text-[14px]">Search, filter, and download reports of all past transactions.</p>
-          <div className="flex text-[#12121299] gap-5">
+        <div className="flex flex-col sm:flex-row justify-between gap-2">
+          <p className="text-[#121212CC] text-[14px]">
+            Search, filter, and download reports of all past transactions.
+          </p>
+          <div className="flex gap-2 sm:gap-5 items-center text-[#12121299]">
             <span>Page 1 of 5</span>
-            <ChevronLeft size={16} className="cursor-pointer hover:opacity-80 mt-1 border rounded-full" />
-            <ChevronRight size={16} className="cursor-pointer hover:opacity-80 mt-1 border rounded-full" />
+            <ChevronLeft size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
+            <ChevronRight size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col border-b pb-4 sm:flex-row sm:items-center sm:justify-between gap- mt-10  mb-4">
+      {/* Filters and Search section */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10 mb-4">
         {/* Left - Search */}
         <input
           type="text"
@@ -88,7 +90,7 @@ export default function RecentOrders() {
         />
 
         {/* Right - Filters + Export */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-4 sm:gap-3">
           {/* Date Range */}
           <div className="relative w-full sm:w-40">
             <select className="appearance-none border border-[#E5E7EB] rounded-md px-3 py-2 pl-9 text-sm w-full">
@@ -126,39 +128,44 @@ export default function RecentOrders() {
           </div>
 
           {/* Export Button */}
-          <button className="flex items-center gap-2 bg-[#7C3AED] text-white text-sm px-4 py-2 rounded-md hover:bg-[#6B21A8]">
+          <button className="flex items-center justify-center gap-2 bg-[#7C3AED] text-white text-sm px-4 py-2 rounded-md hover:bg-[#6B21A8] w-full sm:w-auto">
             <Download size={16} />
             Export
           </button>
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-lg shadow mx-auto my-4 max-w-full">
+      {/* Table Section */}
+    {/* Desktop Table - visible on small screens and up */}
+<div className="hidden sm:block overflow-x-auto rounded-lg shadow mx-auto my-4 max-w-full">
   <table className="w-full text-sm text-left table-fixed">
     <thead>
       <tr className="bg-gray-200 text-gray-500 rounded-t-lg">
-        <th className="p-6 font-medium text-[#121212]">Order I.D</th>
-        <th className="p-6 font-black">Date & Time</th>
-        <th className="p-6 font-black">Product Name</th>
-        <th className="p-6 font-black">Customer Name</th>
-        <th className="p-6 font-black">Total Price</th>
-        <th className="p-6 font-black">Status</th>
-        <th className="p-6 font-black ">Action</th>
+        <th className="p-4 font-medium text-[#121212]">Order I.D</th>
+        <th className="p-4 font-medium">Date & Time</th>
+        <th className="p-4 font-medium">Product Name</th>
+        <th className="p-4 font-medium">Customer Name</th>
+        <th className="p-4 font-medium">Total Price</th>
+        <th className="p-4 font-medium">Status</th>
+        <th className="p-4 font-medium">Action</th>
       </tr>
     </thead>
     <tbody>
       {orders.map((order, idx) => (
-        <tr key={idx} className=" border border-[#D2D1D6]">
+        <tr key={idx} className="border border-[#D2D1D6]">
           <td className="p-4 text-[#121212] flex gap-6 font-semibold">
-            <span className="border px-2">{idx + 1}</span>{order.id}
+            <span className="border px-2">{idx + 1}</span>
+            {order.id}
           </td>
-          <td className="p-4  text-[#121212B2]">{order.date}</td>
+          <td className="p-4 text-[#121212B2]">{order.date}</td>
           <td className="p-4 text-[#121212]">{order.product}</td>
           <td className="p-4 text-[#121212] font-semibold">{order.customer}</td>
           <td className="p-4 text-[#121212] font-semibold">{order.amount}</td>
           <td className="p-4">
             <span
-              className={`px-3 py-1 rounded-full text-xs font-medium ${statusColor[order.status as keyof typeof statusColor]}`}
+              className={`px-3 py-1 rounded-full text-xs font-medium ${
+                statusColor[order.status as keyof typeof statusColor]
+              }`}
             >
               {order.status}
             </span>
@@ -168,6 +175,26 @@ export default function RecentOrders() {
       ))}
     </tbody>
   </table>
+</div>
+
+{/* Mobile Cards - visible only below small screens */}
+<div className="block sm:hidden space-y-4 mt-4">
+  {orders.map((order, idx) => (
+    <div key={idx} className="border border-[#D2D1D6] rounded-lg p-4 shadow-sm">
+      <div className="flex justify-between mb-2">
+        <span className="text-sm font-semibold">{order.id}</span>
+        <span className={`px-2 py-1 text-xs rounded-full font-medium ${statusColor[order.status as keyof typeof statusColor]}`}>
+          {order.status}
+        </span>
+      </div>
+      <div className="text-sm text-[#121212]">
+        <p><span className="font-semibold">Date:</span> {order.date}</p>
+        <p><span className="font-semibold">Product:</span> {order.product}</p>
+        <p><span className="font-semibold">Customer:</span> {order.customer}</p>
+        <p><span className="font-semibold">Amount:</span> {order.amount}</p>
+      </div>
+    </div>
+  ))}
 </div>
 
     </div>

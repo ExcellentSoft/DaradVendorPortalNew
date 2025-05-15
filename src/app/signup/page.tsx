@@ -138,7 +138,8 @@ export default function Signup() {
   </div>
 )}
       {/* Main Content */}
-      <div className="w-full min-h-screen flex flex-col md:flex-row items-center md:gap-24 justify-center">
+<div className="container mx-auto px-4 min-h-screen flex flex-col md:flex-row items-center md:gap-24 justify-center">
+
         {/* Signup Form */}
 
         {/* Display the API response message */}

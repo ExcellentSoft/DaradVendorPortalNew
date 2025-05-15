@@ -2,14 +2,16 @@
 import Image from 'next/image';
 export default function Home() {
     return (
-      <div className="min-h-screen  p-8">
+     <div className="container min-h-screen">
+
          <h1 className="text-[24px] font-bold text-[#5604F6] mb-2">Good Morning Temitope,</h1>
           <p className="text-lg text-[#121212CC] mb-8 pb-4 border-b border-[#1212121A]">Your store is performing great! Here’s what’s happening today.</p>
   
           <h1 className="text-[24px] font-bold text-[#000000] mb-2">Wallet & Payment Metrics,</h1>
           <p className="text-lg text-[#121212CC] mb-8">Monitor your earnings and manage transactions effortlessly</p>
   
-          <div className="grid grid-cols-3 gap-6 mb-8 mt-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 mt-20">
+
             {/* Sale Wallet Balance */}
             <div className="w-full max-w-[500px] min-h-[500px] bg-white p-8 rounded-xl shadow-md flex flex-col justify-between">
   {/* Header */}

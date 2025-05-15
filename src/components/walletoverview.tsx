@@ -45,17 +45,19 @@ const EcommerceStats = () => {
   ];
 
   return (
-    <div className="w-full flex items-center justify-center p-8 bg-[#f4f4f5]">
-      <div className="w-full max-w-[1300px] h-[300px]  rounded-xl p-8">
-        <h2 className="text-[20px] text-[#000000] font-semibold mb-2">E-commerce Stats</h2>
+    <div className="w-full flex items-center justify-center p-4 sm:p-6 md:p-8 bg-[#f4f4f5]">
+      <div className="w-full max-w-[1300px] rounded-xl p-4 sm:p-6 md:p-8">
+        <h2 className="text-[18px] sm:text-[20px] text-[#000000] font-semibold mb-2">
+          E-commerce Stats
+        </h2>
         <p className="text-[#121212CC] text-[14px] mb-6 border-b pb-2 border-[#12121299]">
           Your store performance in a glance.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat, index) => (
-            <div key={index} className="bg-white border rounded-lg p-4  flex flex-col gap-4">
-              <div className="flex items-center justify-between">
+            <div key={index} className="bg-white border rounded-lg p-4 flex flex-col gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                   <h3 className="text-sm text-gray-500">{stat.title}</h3>
                   <p className="text-2xl font-semibold text-black">{stat.value}</p>
@@ -63,7 +65,7 @@ const EcommerceStats = () => {
                 </div>
                 <div>{stat.icon}</div>
               </div>
-              <div className="flex items-center justify-between mt-2 text-sm">
+              <div className="flex flex-wrap items-center justify-between mt-2 text-sm">
                 {stat.title !== "Total Products Listed" ? (
                   <>
                     <p className="text-[#12121299]">This Month</p>

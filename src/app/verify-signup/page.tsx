@@ -57,7 +57,7 @@ const [success, setSuccess] = useState("");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="flex flex-col w-full max-w-[1280px] bg-[#FBFAFF] shadow-lg rounded-lg overflow-hidden pb-6">
+      <div className="container flex flex-col w-full max-w-[1280px] bg-[#FBFAFF] shadow-lg rounded-lg overflow-hidden pb-6">
         <div className="flex flex-col md:flex-row w-full h-full md:h-[832px]">
           <div className="flex flex-col w-full md:w-[760px]">
             {/* Logo */}
