@@ -84,7 +84,7 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   onClick={() => setViewLogType(true)}
   className="w-full text-left px-4 py-2 text-sm"
 >
-  Product Type Name
+  Tutorial Type Name
 </button>
 
 <button

@@ -2,9 +2,7 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
 
-interface LogProductProps {
-  onGoBack: () => void;
-}
+
 
 const LogType: React.FC = () => {
     
@@ -76,7 +74,7 @@ const LogType: React.FC = () => {
   );
 };
 
-const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
+const LogProductComponent: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [activeView, setActiveView] = useState<"product" | "logType">("product");
 
