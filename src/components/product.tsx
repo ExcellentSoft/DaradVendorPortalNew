@@ -4,7 +4,7 @@ import { FC } from "react";
 import Image from 'next/image';
 import LogProduct from "@/components/logproduct";
 
-
+import ProductDetails from "@/components/producttutorial";
 
 const stats = [
  {
@@ -88,14 +88,22 @@ interface DashboardProps {
 const Dashboard: FC<DashboardProps> = ({ onOpenLogProduct }) => {
   const [activeSubProduct, setActiveSubProduct] = useState<string | null>(null);
 
-  if (activeSubProduct === "Logs Management") {
-    return (
-      <div className="bg-gray-100 min-h-screen flex flex-col items-center">
-           <LogProduct onGoBack={() => setActiveSubProduct(null)} />
+if (activeSubProduct === "Logs Management") {
+  return (
+    <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+      <LogProduct onGoBack={() => setActiveSubProduct(null)} />
+    </div>
+  );
+}
 
-      </div>
-    );
-  }
+if (activeSubProduct === "Tutorials") {
+  return (
+    <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+      <ProductDetails onGoBack={() => setActiveSubProduct(null)} />
+    </div>
+  );
+}
+
 
   return (
     <div className=" bg-gray-100 min-h-screen space-y-8 flex flex-col items-center">
