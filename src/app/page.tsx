@@ -8,7 +8,6 @@ import axios from "axios";
 import { useState } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -60,7 +59,7 @@ export default function LoginPage() {
   
     try {
       const response = await axios.post(
-        `${baseUrl}/api/Vendor/Vendor-Log`,
+        `https://daradsvendorapi-h9cpe0fzhrb4cqa7.eastus-01.azurewebsites.net/api/Vendor/Vendor-Log`,
         {
           email,
           passWord: password,
