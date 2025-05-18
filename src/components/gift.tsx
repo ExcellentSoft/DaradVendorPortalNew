@@ -47,14 +47,17 @@ const gifts: GiftItem[] = [
   { name: "Ankara Notepad", category: "Owambe Souve...", dateAdded: "09/06/2025", price: "₦10,000.00", totalSales: "152 Unit", status: "Out Of Stock", quantity: 0 }
 ]
 
-const GiftDashboard = () => {
+interface LogProductProps {
+  onGoBack: () => void;
+}
+
+const GiftDashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
+
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [viewLogType, setViewLogType] = useState(false);
 
-  const onGoBack = () => {
-    setViewLogType(false);
-    setDropdownOpen(false);
-  };
+ 
 
   return (
     <div className="min-h-screen p-6">
