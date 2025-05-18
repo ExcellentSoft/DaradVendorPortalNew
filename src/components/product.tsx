@@ -5,6 +5,7 @@ import Image from 'next/image';
 import LogProduct from "@/components/logproduct";
 
 import ProductDetails from "@/components/producttutorial";
+import Phone from "@/components/phone";
 
 const stats = [
  {
@@ -104,8 +105,13 @@ if (activeSubProduct === "Tutorials") {
   );
 }
 
+    <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+      <Phone onGoBack={() => setActiveSubProduct(null)} />
+    </div>
+  );
+}
 
-  return (
+
     <div className=" bg-gray-100 min-h-screen space-y-8 flex flex-col items-center">
       {/* Overview Section */}
       <div className="  bg-white w-full max-w-7xl px-4 sm:px-6 md:p-6 rounded-lg">
