@@ -1,13 +1,13 @@
 // components/Dashboard.tsx
-import { useState } from "react";
-import { FC } from "react";
+import { useState, FC } from "react";
 import Image from 'next/image';
 import LogProduct from "@/components/logproduct";
-
-
+import ProductDetails from "@/components/producttutorial";
+import Phone from "@/components/phone";
+import GiftDashboard from "./gift";
 
 const stats = [
- {
+  {
     title: "Total Uploaded Products",
     value: "8500",
     subtitle: "Uploaded",
@@ -32,7 +32,7 @@ const products = [
     name: "Logs Management",
     description: "Manage logs efficiently with seamless uploads and tracking.",
     available: "65/100",
-   icon: "assets/logs.svg",
+    icon: "assets/logs.svg",
     tag: "Available Logs",
     tagColor: "border-[#5604F6] text-[#121212]",
   },
@@ -40,7 +40,7 @@ const products = [
     name: "Tutorials",
     description: "Upload and sell educational tutorials.",
     available: "24/100",
-  icon: "assets/tutorial.svg",
+    icon: "assets/tutorial.svg",
     tag: "Available Tutorials",
     tagColor: "border-[#4E59C080] text-[#121212]",
   },
@@ -57,7 +57,7 @@ const products = [
     description: "Manage online courses and track enrollments.",
     subtext: "(E-Learning Content Management)",
     available: "70/100",
- icon: "assets/digital.svg",
+    icon: "assets/digital.svg",
     tag: "Available Digital Courses",
     tagColor: "border-[#6976EB80] text-[#121212]",
   },
@@ -75,7 +75,7 @@ const products = [
     description: "Manage online courses and track enrollments.",
     subtext: "(E-Learning Content Management)",
     available: "65/100",
-  icon: "/assets/commerce.svg",
+    icon: "/assets/commerce.svg",
     tag: "Available E-Commerce Products",
     tagColor: "border-[#0496FF80] text-[#121212]",
   },
@@ -91,16 +91,41 @@ const Dashboard: FC<DashboardProps> = ({ onOpenLogProduct }) => {
   if (activeSubProduct === "Logs Management") {
     return (
       <div className="bg-gray-100 min-h-screen flex flex-col items-center">
-           <LogProduct onGoBack={() => setActiveSubProduct(null)} />
-
+        <LogProduct onGoBack={() => setActiveSubProduct(null)} />
       </div>
     );
   }
 
+  if (activeSubProduct === "Tutorials") {
+    return (
+      <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+        <ProductDetails onGoBack={() => setActiveSubProduct(null)} />
+      </div>
+    );
+  }
+
+  if (activeSubProduct === "Gift Items") {
   return (
-    <div className=" bg-gray-100 min-h-screen space-y-8 flex flex-col items-center">
+    <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+      <GiftDashboard onGoBack={() => setActiveSubProduct(null)} />
+    </div>
+  );
+}
+
+
+  if (activeSubProduct === "Phone numbers") {
+    return (
+      <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+        <Phone onGoBack={() => setActiveSubProduct(null)} />
+      </div>
+    );
+  }
+
+  // Default dashboard view
+  return (
+    <div className="bg-gray-100 min-h-screen space-y-8 flex flex-col items-center">
       {/* Overview Section */}
-      <div className="  bg-white w-full max-w-7xl px-4 sm:px-6 md:p-6 rounded-lg">
+      <div className="bg-white w-full max-w-7xl px-4 sm:px-6 md:p-6 rounded-lg">
         <h2 className="text-lg text-[#121212] font-semibold mb-1">
           Manage Your Digital Products With Ease
         </h2>
@@ -141,7 +166,7 @@ const Dashboard: FC<DashboardProps> = ({ onOpenLogProduct }) => {
       <div className="bg-white w-full max-w-7xl rounded-lg p-4 sm:p-6 shadow space-y-4">
         <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#000000]">All MyDarads products</h2>
         {products.map((product, index) => (
-          <div key={index} className="flex flex-col sm:flex-row sm:justify-between border-b last:border-b-0 py-4 gap-4">
+          <div key={index} className="flex flex-col  m-5 sm:flex-row sm:justify-between border-b last:border-b-0 py-4 gap-4">
             <div className="flex items-start gap-4">
               <div className="w-8 h-8 flex-shrink-0">
                 <img src={product.icon} alt={product.name} className="w-full h-full object-contain" />
@@ -167,10 +192,8 @@ const Dashboard: FC<DashboardProps> = ({ onOpenLogProduct }) => {
                 onClick={() => {
                   if (product.name === "Logs Management") {
                     onOpenLogProduct();
-                    setActiveSubProduct(product.name);
-                  } else {
-                    setActiveSubProduct(product.name);
                   }
+                  setActiveSubProduct(product.name);
                 }}
               >
                 <Image src="/assets/right.svg" alt="Arrow Icon" width={20} height={20} />
@@ -182,6 +205,5 @@ const Dashboard: FC<DashboardProps> = ({ onOpenLogProduct }) => {
     </div>
   );
 };
-
 
 export default Dashboard;
