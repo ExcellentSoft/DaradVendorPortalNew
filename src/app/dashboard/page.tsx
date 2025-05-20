@@ -5,7 +5,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import Overview from "@/components/overview";
 import Product from "@/components/product";
-
+import ApiUtility from "@/components/AirtimeDataTopUp";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview");
@@ -16,16 +16,19 @@ export default function Dashboard() {
     console.log("Log Product opened");
   };
 
-  const renderPage = () => {
-    switch (activePage) {
-      case "Overview":
-        return <Overview />;
-      case "Products":
-          return <Product onOpenLogProduct={onOpenLogProduct} />;
-      default:
-        return <Overview />;
-    }
-  };
+ const renderPage = () => {
+  switch (activePage) {
+    case "Overview":
+      return <Overview />;
+    case "Products":
+      return <Product onOpenLogProduct={onOpenLogProduct} />;
+   case "API & Utilities": 
+      return <ApiUtility />;
+    default:
+      return <Overview />;
+  }
+};
+
 
   return (
     <div className="flex min-h-screen bg-gray-100">
