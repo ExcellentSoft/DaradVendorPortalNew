@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import Overview from "@/components/overview";
 import Product from "@/components/product";
 import ApiUtility from "@/components/AirtimeDataTopUp";
+import Order from "@/components/Order";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview");
@@ -24,6 +25,8 @@ export default function Dashboard() {
       return <Product onOpenLogProduct={onOpenLogProduct} />;
    case "API & Utilities": 
       return <ApiUtility />;
+      case "Orders": 
+      return <Order />;
     default:
       return <Overview />;
   }
