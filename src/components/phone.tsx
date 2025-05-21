@@ -4,7 +4,7 @@
 
 import Image from 'next/image';
 
-import React, { useState, FC } from "react";
+import React, { useState } from "react";
 import bgImage from '../../public/assets/doodle.png';
 import { ChevronDown,ChevronRight,ChevronLeft } from "lucide-react";
 import { FaEllipsisV } from 'react-icons/fa';

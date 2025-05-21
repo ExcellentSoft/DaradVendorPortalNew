@@ -244,21 +244,35 @@ const GiftDashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
                 </tr>
               </thead>
               <tbody className="text-[#121212]">
-                {[...Array(10)].map((_, idx) => (
-                  <tr key={idx} className="border-b bg-white hover:bg-gray-50">
-                    <td className="px-4 py-2">
-                      <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
-                        {idx + 1}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">Product {idx + 1}</td>
-                    <td className="px-4 py-3">30/04/2024</td>
-                    <td className="px-4 py-3">₦12,000</td>
-                    <td className="px-4 py-3">₦500</td>
-                    <td className="px-4 py-3">In Stock</td>
-                    <td className="px-4 py-3">Edit | Delete</td>
-                  </tr>
-                ))}
+             {data.map((category, idx) => (
+  <tr key={category.id} className="border-b bg-white hover:bg-gray-50">
+    <td className="px-4 py-2">
+      <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
+        {idx + 1}
+      </div>
+    </td>
+    <td className="px-4 py-3">{category.name}</td>
+    <td className="px-4 py-3">{category.dateCreated}</td>
+    <td className="px-4 py-3">₦12,000</td> {/* Static or you can add a price field to data */}
+    <td className="px-4 py-3">₦500</td>     {/* Static or you can calculate from price */}
+    <td className="px-4 py-3">
+      <span
+        className={`px-2 py-1 text-xs font-medium rounded-md ${
+          category.stockStatus === 'In Stock'
+            ? 'bg-green-100 text-green-800'
+            : 'bg-red-100 text-red-800'
+        }`}
+      >
+        {category.stockStatus}
+      </span>
+      <span className="ml-2 inline-block px-2 py-0.5 text-xs bg-gray-100 rounded-md">
+        {category.productsUnit}
+      </span>
+    </td>
+    <td className="px-4 py-3">Edit | Delete</td>
+  </tr>
+))}
+
               </tbody>
             </table>
           </div>
