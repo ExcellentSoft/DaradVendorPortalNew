@@ -7,7 +7,7 @@ import Overview from "@/components/overview";
 import Product from "@/components/product";
 import ApiUtility from "@/components/AirtimeDataTopUp";
 import Order from "@/components/Order";
-
+import Promotion from "@/components/promotion";
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,8 +27,9 @@ export default function Dashboard() {
       return <ApiUtility />;
       case "Orders": 
       return <Order />;
-    default:
-      return <Overview />;
+       case "Promotion": 
+      return <Promotion />;
+  
   }
 };
 
