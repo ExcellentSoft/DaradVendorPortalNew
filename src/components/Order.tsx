@@ -85,11 +85,11 @@ const OrdersDashboard = () => {
     const COLORS = ["#EF4444", "#FACC15", "#10B981"];
 
   return (
-    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
+    <div className="p-6 space-y-6  min-h-screen">
       {/* Header */}
       <div className="bg-white rounded-xl shadow p-6">
-        <h2 className="text-xl font-semibold">Orders</h2>
-        <p className="text-sm text-gray-500 mt-1">
+        <h2 className="text-[24px] font-bold text-[#121212]">Orders</h2>
+        <p className="text-sm text-[#121212CC] mt-1">
           Track, manage, and fulfill orders seamlessly with real-time updates and smart insights.
         </p>
       </div>
@@ -100,8 +100,9 @@ const OrdersDashboard = () => {
       <div className="flex items-center gap-4 p-6 bg-white rounded-2xl shadow">
         <Image src="/progress.png" alt="Darads Logo" width={100} height={100} />
         <div>
-          <p className="text-sm text-gray-500">Orders Completed</p>
-          <h2 className="text-xl font-bold">65%</h2>
+         
+          <h2 className="text-[36px] text-[#3B3D53] font-bold">65%</h2>
+           <p className="text-[16px] text-[#161A4187]">Orders Completed</p>
         </div>
       </div>
 
@@ -109,8 +110,9 @@ const OrdersDashboard = () => {
       <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow">
         <Image src="/line.png" alt="Darads Logo" width={100} height={100} />
         <div>
-          <p className="text-sm text-gray-500">Total Orders</p>
-          <h2 className="text-xl font-bold">5,000</h2>
+          
+          <h2 className="text-[36px] text-[#3B3D53] font-bold">5,000</h2>
+          <p className="text-[16px] text-[#161A4187]">Total Orders</p>
         </div>
       </div>
 
@@ -120,8 +122,9 @@ const OrdersDashboard = () => {
            <Image src="/wallet.png" alt="Darads Logo" width={100} height={100} />
         </div>
         <div>
-          <p className="text-sm text-gray-500">Total Revenue</p>
-          <h2 className="text-xl font-bold">₦5,000,000</h2>
+         
+          <h2 className="text-[36px] text-[#3B3D53] font-bold">₦5,000,000</h2>
+         <p className="text-[16px] text-[#161A4187]">Total Revenue</p>
         </div>
       </div>
     </div>
@@ -132,7 +135,7 @@ const OrdersDashboard = () => {
   <div className="col-span-2 p-6 bg-white rounded-2xl shadow-md w-full">
     <div className="flex justify-between items-center mb-6">
       <h2 className="text-xl font-semibold text-gray-800">Revenue Breakdown</h2>
-      <div className="text-sm text-gray-600 border border-gray-300 px-3 py-1 rounded-md cursor-pointer">
+      <div className="text-sm text-[#121212CC] border border-[#12121266] px-3 py-1 rounded-md cursor-pointer">
         Last 7 days
       </div>
     </div>
@@ -170,34 +173,36 @@ const OrdersDashboard = () => {
   {/* Right Side - 1/3 width */}
   <div className="col-span-1 max-w-xs mx-auto p-4 bg-white rounded-xl shadow-md">
     <div className="flex justify-end">
-      <div className="text-sm border px-2 py-1 rounded">Last 7 days</div>
+      <div className="text-sm text-[#121212CC] border border-[#12121266] px-2 py-1 rounded">Last 7 days</div>
     </div>
     <div className="flex items-center gap-3">
-      <div className="h-full w-56">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={CircleData}
-              cx="50%"
-              cy="50%"
-              innerRadius={50}
-              outerRadius={70}
-              dataKey="value"
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
+     <div className="w-56 h-56">
+  <ResponsiveContainer width="100%" height="100%">
+
+  <PieChart>
+    <Pie
+      data={CircleData}
+      cx="50%"
+      cy="50%"
+      innerRadius={50}
+      outerRadius={70}
+      dataKey="value"
+    >
+      {CircleData.map((entry, index) => (
+        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+      ))}
+    </Pie>
+    <Tooltip />
+  </PieChart>
+</ResponsiveContainer>
+
       </div>
       <div className="text-red-500 font-semibold text-sm mb-8">
         40%
       </div>
     </div>
-    <div className="mt-4 text-center font-semibold text-lg">Order Completion Rate</div>
-    <div className="mt-2 flex flex-col gap-4 text-sm">
+    <div className="mt-4 text-center text-[#121212] font-bold text-[16px]">Order Completion Rate</div>
+    <div className="mt-2 flex flex-col gap-4 text-[14px] font-semibold text-[#121212CC]">
       <div className="flex items-center space-x-2">
         <span className="w-3 h-3 bg-red-500 rounded-full"></span>
         <span>Canceled</span>

@@ -1,107 +1,175 @@
 import React from "react";
 
-const OrderDetails = () => {
+
+
+export default function OrderDetails() {
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4 md:px-20">
-      <div className="bg-white shadow-lg rounded-xl p-6 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-semibold text-center mb-2">
-          Order Details – <span className="text-indigo-600 font-bold">#ORD1234</span>
-        </h2>
-        <p className="text-center text-gray-500 mb-6">
-          Get a clear view of your order details! Track progress, take quick actions, and stay in control—seamlessly.
+    <div className="flex flex-col min-w-full p-8 space-y-6  min-h-screen">
+      {/* Header */}
+      <div className="bg-white p-6 rounded shadow">
+        <h1 className="text-[24px] text-[#000000] font-bold">Order Details – #ORD1234</h1>
+        <p className="text-[#121212CC] text-[14px] mt-1">
+          Get a clear view of your order details! Track progress, take quick actions,
+          and stay in control—seamlessly.
         </p>
+      </div>
 
-        {/* Order Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b pb-6 mb-6">
-          <div>
-            <h4 className="font-semibold">Order Status:</h4>
-            <p className="text-green-600 font-bold">Completed</p>
-            <p className="text-sm text-gray-500">The Order Has Been Fulfilled Successfully.</p>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-gray-600">Placed On</p>
-              <p className="font-medium">March 10, 2025</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Expected Delivery</p>
-              <p className="font-medium">March 10, 2025</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Date Processed</p>
-              <p className="font-medium">22nd February 2025</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Time Processed</p>
-              <p className="font-medium">11:22 PM</p>
-            </div>
-          </div>
-        </div>
+      {/* Order Overview */}
+     <div className="  w-[540px] mx-auto bg-white shadow-md rounded-lg border p-8 space-y-4">
+  <h2 className="text-lg font-semibold text-gray-800">Order Overview</h2>
+  
+  <div className="flex items-center justify-between">
+        <span className="text-sm text-gray-600">Order Status</span>
+    <span className="bg-green-100 text-green-700 text-sm font-medium px-3 py-1 ">Completed</span>
+    <span className="text-sm text-gray-600">The Order Has Been Fulfilled Successfully.</span>
+  </div>
 
-        {/* Customer and Delivery */}
-        <div className="grid md:grid-cols-2 gap-6 border-b pb-6 mb-6">
-          <div>
-            <h4 className="font-semibold mb-2">Customer Details</h4>
-            <p><span className="font-medium">Name:</span> Adekunle Johnson</p>
-            <p><span className="font-medium">Phone No:</span> 09082917250</p>
-            <p><span className="font-medium">Email:</span> Dhemmexroxy@Gmail.Com</p>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-2">Delivery Details</h4>
-            <p><span className="font-medium">Delivery Method:</span> Email</p>
-            <p><span className="font-medium">Tracking Number:</span> Mdd-4B21X8Y72</p>
-            <p><span className="font-medium">Status:</span> Delivered</p>
-          </div>
-        </div>
+  <div className="grid grid-cols-2 gap-y-4 text-sm text-gray-700 pt-2">
+    <div className="font-medium">Placed On</div>
+    <div className="font-semibold text-gray-900">March 10, 2025</div>
 
-        {/* Payment Details */}
-        <div className="border-b pb-6 mb-6">
-          <h4 className="font-semibold mb-2">Payment Details</h4>
-          <p><span className="font-medium">Payment Status:</span> <span className="text-green-600 font-bold">Completed</span></p>
-          <p><span className="font-medium">Transaction ID:</span> Trx-12345</p>
-          <p><span className="font-medium">Payment Method:</span> Bank Transfer</p>
-          <p className="text-sm text-gray-500">
-            Reasons For Failed Payment: Insufficient Funds, Network Error, System Issue, etc.
-          </p>
-        </div>
+    <div className="font-medium">Expected Delivery</div>
+    <div className="font-semibold text-gray-900">March 10, 2025</div>
 
-        {/* Product Summary */}
-        <div className="mb-6">
-          <h4 className="font-semibold mb-2">Order Summary</h4>
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200 rounded-md">
-              <thead className="bg-gray-100 text-left">
-                <tr>
-                  <th className="py-2 px-4 border-b">Product Name</th>
-                  <th className="py-2 px-4 border-b">Quantity</th>
-                  <th className="py-2 px-4 border-b">Price</th>
-                  <th className="py-2 px-4 border-b">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="py-2 px-4 border-b">Facebook Advertisement</td>
-                  <td className="py-2 px-4 border-b">1</td>
-                  <td className="py-2 px-4 border-b">₦15,000</td>
-                  <td className="py-2 px-4 border-b">₦15,000</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <div className="font-medium">Date Processed</div>
+    <div className="font-semibold text-gray-900">22nd February 2025</div>
 
-        {/* Actions */}
-        <div className="flex flex-col md:flex-row gap-4 justify-end">
-          <button className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md text-sm font-medium">
-            Print Invoice
-          </button>
-          <button className="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium">
-            Reorder For Customer
-          </button>
-        </div>
+    <div className="font-medium">Time Processed</div>
+    <div className="font-semibold text-gray-900">11:22pm</div>
+  </div>
+</div>
+
+
+      {/* Main Info Section */}
+     <div className="flex flex-row gap-4 p-8 w-full">
+ 
+   <div className="border rounded-lg shadow p-6 w-3/5 ">
+    <h2 className="font-semibold text-lg mb-2 text-[#000000] mb-6 mt-3">Customer Details</h2>
+    <div className="mb-6 border-b border-#1212121A flex justify-between ">
+      <span className="text-[#121212CC]">Name:</span>
+      <span className="font-semibold text-[#121212]">Adekunle Johnson</span>
+    </div>
+    <div className="mb-6 border-b border-#1212121A flex justify-between">
+      <span className="text-[#121212CC]">Phone No:</span>
+      <span className="font-semibold text-[#121212CC]">09029717250</span>
+    </div>
+    <div>
+      <div className=" flex justify-between">
+      <span className="text-[#121212CC]">Email:</span>
+      <span className="font-semibold text-[#121212]">Dhemmexroxy@Gmail.Com</span>
       </div>
     </div>
-  );
-};
+  </div>
 
-export default OrderDetails;
+ 
+  <div className="border rounded-lg shadow p-6 w-3/5">
+    <h2 className="font-semibold text-lg mb-2 text-[#000000] mb-6 mt-3">Delivery Details</h2>
+    <div className="mb-6 border-b border-#1212121A  flex justify-between">
+      <span className="text-[#121212CC]"> Delivery Method:</span>
+      <span className="font-semibold text-[#121212]">Email</span>
+    </div>
+    <div className="mb-6 border-b border-#1212121A  flex justify-between">
+      <span className="text-[#121212CC]">Tracking Number:</span>
+      <span className="font-semibold text-[#121212]">Mdd-4821X8Y72</span>
+    </div>
+    <div className=" flex justify-between">
+      <span className="text-[#121212CC]">Status:</span>
+      <span className="font-semibold text-[#121212]">Delivered</span>
+    </div>
+  </div>
+</div>
+
+
+      {/* Product Details */}
+     <div className="border rounded-lg p-4 shadow-sm max-w-[700px] ml-8 w-full ">
+  <h2 className="font-bold text-[16px] text-gray-800 mb-4">Payment Details</h2>
+
+  <div className="mb-2 flex gap-20 items-center mb-6">
+    <span className="text-[#121212CC] mr-2">Payment Status</span>
+    <span className="font-semibold text-black flex items-center">
+      Completed
+      <svg className="w-4 h-4 ml-1 text-white bg-green-600 rounded-full" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fillRule="evenodd"
+          d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </span>
+  </div>
+
+  <div className=" flex gap-48 border-b border-#1212121A pb-3 mb-6 ">
+    
+      <span className="text-[#121212CC] text-[14px]">Transaction I.D</span>
+      <div className="flex gap-14">
+      <span className="font-semibold text-[14px] text-[#121212]">Trx-12345</span>
+    
+    
+      <span className="text-[#121212CC] text-[14px]">Payment Method</span>
+      <span className="font-semibold text-[14px] text-[#121212]">Bank Transfer</span>
+    </div>
+  </div>
+
+  <div className="mt-2 flex justify-between">
+    <span className="text-[#121212CC]">Reasons For Failed Payment</span>
+    
+    <span className="font-bold text-[16px] text-gray-800 block">
+      Insufficient Funds, Network Error, System Issue, Etc.
+    </span>
+  </div>
+</div>
+
+
+      {/* Action Buttons */}
+<div className=" mx-auto overflow-hidden border border-gray-200 rounded-xl">
+  <table className=" w-[700px] text-sm text-left text-gray-700">
+    <thead>
+      <tr className="bg-[#C2C3C580] text-gray-700">
+        <th className="px-4 py-3 rounded-tl-xl">Product Name</th>
+        <th className="px-4 py-3">Quantity</th>
+        <th className="px-4 py-3">Price</th>
+        <th className="px-4 py-3 rounded-tr-xl">Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="">
+        <td className="px-4 py-4 flex items-center space-x-2">
+          <span className="border border-gray-300 rounded-md px-2 py-1 text-xs text-gray-800">1</span>
+          <span className="font-bold">Facebook Advertisement</span>
+        </td>
+        <td className="px-4 py-4 font-bold">1</td>
+        <td className="px-4 py-4 text-gray-500">₦15,000</td>
+        <td className="px-4 py-4 font-medium">₦15,000</td>
+      </tr>
+      <tr className="">
+        <td className="px-4 py-4 font-bold">Total</td>
+        <td className="px-4 py-4">-</td>
+        <td className="px-4 py-4">-</td>
+        <td className="px-4 py-4 font-bold text-gray-800">₦15,000</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+<div className="mt-6 flex justify-center items-center gap-6">
+    <button className="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-100">
+      Print Invoice
+    </button>
+    <button className="flex items-center px-4 py-2 bg-[#5604F6] text-white text-sm font-medium rounded-md hover:bg-purple-700">
+      Reorder For Customer
+ <svg className="w-4 h-4 ml-1 text-white border border-white " fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fillRule="evenodd"
+          d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </button>
+  </div>
+    </div>
+  );
+}
