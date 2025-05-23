@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FiX } from "react-icons/fi"; 
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
-import Overview from "@/components/overview";
+import Overview from "../../components/overview";
 import Product from "@/components/product";
 
 
