@@ -48,7 +48,7 @@ export default function FundWalletForm() {
 
         {paymentMethod === "online" && (
           <p className="text-sm text-gray-500">
-            Securely complete your transaction via your bank's online service.
+            Securely complete your transaction via your bank&apos;s online service.
           </p>
         )}
 
@@ -94,7 +94,7 @@ export default function FundWalletForm() {
           <div className="bg-white p-6 rounded-lg max-w-sm w-full shadow-lg text-center">
             <h3 className="text-lg font-semibold mb-2">Confirm Online Payment</h3>
             <p className="text-sm text-gray-600 mb-4">
-              You are about to be redirected to your bank's secure online portal to complete your payment of ₦{amount}. Please ensure you have your bank login credentials ready.
+              You are about to be redirected to your bank&apos;s secure online portal to complete your payment of ₦{amount}. Please ensure you have your bank login credentials ready.
             </p>
             <div className="flex justify-center gap-4">
               <button
