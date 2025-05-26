@@ -7,6 +7,7 @@ interface ConfirmDeliveryModalProps {
   previousStatus: string;
   onCancel: () => void;
   onConfirm: () => void;
+   onClose: () => void;
 }
 
 const ConfirmDeliveryModal: React.FC<ConfirmDeliveryModalProps> = ({
@@ -15,39 +16,54 @@ const ConfirmDeliveryModal: React.FC<ConfirmDeliveryModalProps> = ({
   deliveryDate,
   previousStatus,
   onCancel,
+  onClose,
   onConfirm,
 }) => {
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-lg p-6 text-center">
+    <div className="w-full max-w-[600px] mx-auto bg-white rounded-xl shadow-lg p-6 text-center">
       {/* Modal Heading */}
-      <h2 className="text-xl font-semibold mb-2">Confirm Delivery</h2>
-      <p className="text-sm text-gray-600 mb-6">
+      <div className="flex justify-end  mb-2">
+         <button onClick={onClose} className="text-gray-400  text-[24px]">
+            &times;
+          </button>
+          </div>
+          <div className=' border-b '>
+      <h2 className="text-[24px] text-[#000000] font-bold mb-2">Confirm Delivery</h2>
+      <p className="text-[14px] text-[#121212CC] mb-6">
         Are you sure you want to mark Order <span className="font-medium">#{orderId}</span> as delivered?
         This action will update the order status and notify the customer that their package has been received.
       </p>
-
+</div>
       {/* Order Overview */}
-      <div className="border rounded-md p-4 text-left text-sm text-gray-700 mb-6">
-        <div className="flex justify-between mb-2">
-          <span className="font-medium">Order I.D</span>
-          <span>#{orderId}</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span className="font-medium">Name</span>
-          <span>{customerName}</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span className="font-medium">Order Status (Before)</span>
-          <span>{previousStatus}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">Delivery Date</span>
-          <span>{deliveryDate}</span>
-        </div>
-      </div>
+
+
+                  <div className=" mb-8  mx-auto bg-white mt-4 rounded-lg border border-[#12121233] p-8 space-y-4">
+  <h2 className="text-lg font-semibold text-gray-800">Order Overview</h2>
+  
+  <div className="flex items-center justify-between border-b pb-2">
+        <span className="text-sm text-gray-600">Order ID</span>
+ <p className="text-[#121212] font-bold">Trx-12345</p>
+ 
+              <p className=" text-black">Name</p>
+                 <p className="font-bold text-black">   Adekunle Johnson</p>
+           
+              </div>
+
+               <div className="flex items-center justify-between border-b pb-2">
+        <span className="text-sm text-gray-600">Order Status (Before)</span>
+ <p className="text-[#121212] font-bold">Out for Delivery</p>
+ 
+              <p className=" text-black">Delivery Date</p>
+                 <p className="font-bold text-black">   March 15, 2025</p>
+           
+              </div>
+
+ 
+</div>
+     
 
       {/* Action Buttons */}
-      <div className="flex justify-center gap-4">
+      <div className="flex flex-col mt-8 md:flex-row gap-6 justify-center items-center">
         <button
           onClick={onCancel}
           className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
@@ -56,7 +72,7 @@ const ConfirmDeliveryModal: React.FC<ConfirmDeliveryModalProps> = ({
         </button>
         <button
           onClick={onConfirm}
-          className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+          className="px-4 py-2 bg-[#5604F6] text-white rounded-md "
         >
           Confirm Delivery
         </button>

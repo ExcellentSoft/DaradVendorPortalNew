@@ -8,13 +8,14 @@ import Orderdetailsfailed from './orderdetailsfailed';
 
 // Dummy Modal component for now
 const Modal = ({ children, onClose }: { children: React.ReactNode; onClose: () => void }) => (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-white p-6 rounded-lg relative max-w-[900px] w-full h-screen overflow-y-auto">
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="bg-white p-6 rounded-lg relative max-w-[900px] w-full max-h-[80vh] overflow-y-auto">
       <button className="absolute top-2 right-2 text-gray-500" onClick={onClose}>X</button>
       {children}
     </div>
   </div>
 );
+
 
 
 const orders = [
@@ -47,10 +48,7 @@ const OrderHistoryTable: React.FC = () => {
   const [selectedOrderStatus, setSelectedOrderStatus] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  const handleExportClick = (status: string) => {
-    setSelectedOrderStatus(status);
-    setShowModal(true);
-  };
+ 
 
   return (
     <div className="p-4 space-y-4">
@@ -83,7 +81,7 @@ const OrderHistoryTable: React.FC = () => {
               <option>Product Category</option>
             </select>
             <button
-              onClick={() => handleExportClick('Completed')}
+              
               className="flex items-center gap-2 bg-[#5604F6] text-white text-sm font-medium px-4 py-1.5 rounded-md"
             >
               <FileDown size={16} /> Export
@@ -105,21 +103,29 @@ const OrderHistoryTable: React.FC = () => {
               <th className="p-6">Action</th>
             </tr>
           </thead>
-          <tbody>
-            {orders.map((order, index) => (
-              <tr key={order.id + index} className="border-t text-sm">
-                <td className="p-6 text-[14px] font-semibold text-[#121212]">{index + 1}</td>
-                <td className="p-6 text-[14px] font-semibold text-[#121212]">{order.id}</td>
-                <td className="p-6 text-[14px] text-[#121212B2]">{order.product}</td>
-                <td className="p-6 text-[14px] font-semibold text-[#121212B2]">{order.customer}</td>
-                <td className="p-6 text-[14px] font-bold text-[#121212B2]">₦{order.price.toLocaleString()}</td>
-                <td className="p-6"><StatusIcon status={order.status} /></td>
-                <td className="px-4 py-3">
-                  <FaEllipsisV className="text-gray-500 cursor-pointer" />
-                </td>
-              </tr>
-            ))}
-          </tbody>
+         <tbody>
+  {orders.map((order, index) => (
+    <tr
+      key={order.id + index}
+      className="border-t text-sm cursor-pointer"
+      onClick={() => {
+        setSelectedOrderStatus(order.status);
+        setShowModal(true);
+      }}
+    >
+      <td className="p-6 text-[14px] font-semibold text-[#121212]">{index + 1}</td>
+      <td className="p-6 text-[14px] font-semibold text-[#121212]">{order.id}</td>
+      <td className="p-6 text-[14px] text-[#121212B2]">{order.product}</td>
+      <td className="p-6 text-[14px] font-semibold text-[#121212B2]">{order.customer}</td>
+      <td className="p-6 text-[14px] font-bold text-[#121212B2]">₦{order.price.toLocaleString()}</td>
+      <td className="p-6"><StatusIcon status={order.status} /></td>
+      <td className="px-4 py-3">
+        <FaEllipsisV className="text-gray-500 cursor-pointer" />
+      </td>
+    </tr>
+  ))}
+</tbody>
+
         </table>
       </div>
 
