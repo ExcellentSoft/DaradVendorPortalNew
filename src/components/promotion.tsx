@@ -9,33 +9,7 @@ import RevenuePromotion from "./revenuepromotion";
 
 
 
-const data = [
-  {
-    name: "Phone Numbers",
-    revenue: 380000,
-    fill: "#6B21A8",
-  },
-  {
-    name: "Tutorials",
-    revenue: 420000,
-    fill: "#0E7490",
-  },
-  {
-    name: "Gift Items",
-    revenue: 500000,
-    fill: "#BE185D",
-  },
-  {
-    name: "Digital Courses",
-    revenue: 500000,
-    fill: "#EA580C",
-  },
-  {
-    name: "Logs",
-    revenue: 230000,
-    fill: "#15803D",
-  },
-];
+
 
 
 

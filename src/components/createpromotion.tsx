@@ -5,11 +5,12 @@ import { useState } from 'react';
 export default function CreatePromotion() {
   const [category, setCategory] = useState('Logs Type Name');
   const [logType, setLogType] = useState('Social Media');
-  const [selectedProducts, setSelectedProducts] = useState<string[]>([
-    'Facebook Ad Leads',
-    'TikTok Engagement Log',
-    'TikTok Engagement Log',
-  ]);
+const [selectedProducts] = useState<string[]>([
+  'Facebook Ad Leads',
+  'TikTok Engagement Log',
+  'TikTok Engagement Log',
+]);
+
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [showModal, setShowModal] = useState(false);

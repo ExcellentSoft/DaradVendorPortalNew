@@ -63,7 +63,8 @@ const notificationsData: Notification[] = [
 ];
 
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState(notificationsData);
+const [notifications] = useState(notificationsData);
+
 
   const renderIcon = (type: NotificationType) => {
     switch (type) {

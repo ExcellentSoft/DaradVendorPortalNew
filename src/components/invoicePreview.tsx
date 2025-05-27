@@ -28,10 +28,10 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({
   vendor,
   orderDate,
   paymentMethod,
-  items,
+ 
 
 }) => {
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+ 
 
   return (
    <div className="w-full h-screen overflow-auto  p-4">
