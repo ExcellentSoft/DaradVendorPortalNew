@@ -141,11 +141,13 @@ const Dashboard: FC<DashboardProps> = ({ onOpenLogProduct }) => {
             >
               <div className="flex gap-4 items-center">
                 <div className="w-8 h-8 mb-1">
-                  <img
-                    src={stat.icon}
-                    alt={stat.title}
-                    className="w-full h-full object-contain"
-                  />
+                <Image
+  src={stat.icon}
+  alt={stat.title}
+  width={40}
+  height={40}
+  className="w-full h-full object-contain"
+/>
                 </div>
                 <p className="text-[14px] text-[#121212CC] text-center">{stat.title}</p>
               </div>
@@ -169,7 +171,13 @@ const Dashboard: FC<DashboardProps> = ({ onOpenLogProduct }) => {
           <div key={index} className="flex flex-col  m-5 sm:flex-row sm:justify-between border-b last:border-b-0 py-4 gap-4">
             <div className="flex items-start gap-4">
               <div className="w-8 h-8 flex-shrink-0">
-                <img src={product.icon} alt={product.name} className="w-full h-full object-contain" />
+<Image
+  src={product.icon}
+  alt={product.name}
+  width={40}
+  height={40}
+  className="w-full h-full object-contain"
+/>
               </div>
               <div>
                 <p className="font-medium text-[#000000] text-base sm:text-lg">

@@ -200,7 +200,7 @@ export default function SettingsPanel() {
               <div>
                 <h4 className="font-semibold mb-2">🛡️ Security Question & Backup Email</h4>
                 <select className="input mb-2">
-                  <option>What is your mother’s maiden name?</option>
+                <option>What is your mother&apos;s maiden name?</option>
                 </select>
                 <input className="input mb-2" placeholder="Your answer" />
                 <input className="input" defaultValue="Temitope Soremekun" />
