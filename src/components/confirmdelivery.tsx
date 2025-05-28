@@ -2,13 +2,21 @@ import React from 'react';
 
 interface ConfirmDeliveryModalProps {
   orderId: string;
+  customerName: string;     
+  deliveryDate: string;  
+  previousStatus: string;   
   onCancel: () => void;
   onConfirm: () => void;
   onClose: () => void;
 }
 
+
 const ConfirmDeliveryModal: React.FC<ConfirmDeliveryModalProps> = ({
+
   orderId,
+  customerName,
+  deliveryDate,
+  previousStatus,
   onCancel,
   onClose,
   onConfirm,
@@ -35,18 +43,18 @@ const ConfirmDeliveryModal: React.FC<ConfirmDeliveryModalProps> = ({
 
         <div className="flex items-center justify-between border-b pb-2">
           <span className="text-sm text-gray-600">Order ID</span>
-          <p className="text-[#121212] font-bold">Trx-12345</p>
+          <p className="text-[#121212] font-bold">{orderId}</p>
 
           <p className="text-black">Name</p>
-          <p className="font-bold text-black">Adekunle Johnson</p>
+          <p className="font-bold text-black">{customerName}</p>
         </div>
 
         <div className="flex items-center justify-between border-b pb-2">
           <span className="text-sm text-gray-600">Order Status (Before)</span>
-          <p className="text-[#121212] font-bold">Out for Delivery</p>
+          <p className="text-[#121212] font-bold">{previousStatus}</p>
 
           <p className="text-black">Delivery Date</p>
-          <p className="font-bold text-black">March 15, 2025</p>
+           <p className="font-bold text-black">{deliveryDate}</p>
         </div>
       </div>
 
