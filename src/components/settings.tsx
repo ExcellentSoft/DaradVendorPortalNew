@@ -97,7 +97,8 @@ export default function SettingsPanel() {
                 <h3 className="font-bold text-lg mb-2 text-yellow-600">Deactivate Account</h3>
                 <ul className="text-sm text-gray-600 list-disc ml-5 mb-2">
                   <li>Your store will be hidden from customers.</li>
-                  <li>New orders won't be accepted.</li>
+                  <li>New orders won&apos;t be accepted.</li>
+
                   <li>Pending transactions processed.</li>
                 </ul>
                 <button className="btn-secondary w-full">Deactivate My Account</button>
