@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { FaCheckCircle, FaInfoCircle, FaExclamationTriangle, FaFireAlt, FaStar, FaBoxOpen, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaCheck , FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import Image from 'next/image';
 
 type NotificationType = 'order' | 'payout' | 'system' | 'promo' | 'spotlight' | 'stock';
 
@@ -66,63 +67,77 @@ export default function NotificationsPage() {
 const [notifications] = useState(notificationsData);
 
 
-  const renderIcon = (type: NotificationType) => {
-    switch (type) {
-      case 'order':
-        return <FaCheckCircle className="text-green-500 mt-1" />;
-      case 'payout':
-        return <FaInfoCircle className="text-green-600 mt-1" />;
-      case 'system':
-        return <FaExclamationTriangle className="text-orange-500 mt-1" />;
-      case 'promo':
-        return <FaFireAlt className="text-red-500 mt-1" />;
-      case 'spotlight':
-        return <FaStar className="text-yellow-500 mt-1" />;
-      case 'stock':
-        return <FaBoxOpen className="text-pink-600 mt-1" />;
-      default:
-        return null;
-    }
+const iconsMap: Record<NotificationType, string> = {
+  order: '/assets/order.svg',
+  payout: '/assets/payout.svg',
+  system: '/assets/system.svg',
+  promo: '/assets/promo.svg',
+  spotlight: '/assets/spotlight.svg',
+  stock: '/assets/stock.svg',
+};
+
+const renderIcon = (type: NotificationType) => (
+    <Image
+      src={iconsMap[type]}
+      alt={`${type} icon`}
+      width={24}
+      height={24}
+      className="mt-1"
+    />
+  );
+
+const typeColors: Record<NotificationType, string> = {
+    order: 'text-[#1D9E34] ',
+    payout: 'text-[#127123] ',
+    system: 'text-[#F68D2B] ',
+    promo: 'text-[#ED0423]',
+    spotlight: 'text-[#FF8C00]',
+    stock: 'text-[#0A0A0A]',
   };
+ 
 
   return (
-    <div className="min-h-screen bg-white px-6 py-10">
+    <div className="min-h-screen bg-white w-[950px] px-8 py-10">
       <h1 className="text-2xl font-semibold text-purple-900 mb-1">Notifications</h1>
       <p className="text-sm text-gray-600 mb-6">
         Stay updated with the latest order alerts, payouts, and system updates.
       </p>
 
       {/* Notification List */}
-      <div className="bg-white rounded-lg shadow p-4">
+      <div className="bg-white  p-4 border border-[#E7E7E7] rounded-md p-8 shadow">
         {/* Pagination + Filter */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <button className="p-2 border rounded disabled:opacity-50">
+            <p className='text-[#0A0A0ACC] font-semibold'>Page</p>
+            <button className="p-2 border  bg-[#E9EBE8] text-[#CBB1FC] rounded disabled:opacity-50">
               <FaChevronLeft />
             </button>
-            <span className="px-3 py-1 rounded text-white bg-purple-700 text-sm font-medium">1</span>
+            <span className="py-2 px-4 rounded text-white bg-purple-700 text-sm font-medium">1</span>
             <button className="p-2 border rounded disabled:opacity-50">
               <FaChevronRight />
             </button>
           </div>
 
-          <select className="border px-3 py-2 rounded text-sm text-gray-600">
+          <select className="px-4 py-2 rounded-lg shadow-md  border border-[#E7E7E7] text-sm bg-[#FFFFF] text-[#0A0A0ACC]">
             <option>All notifications</option>
           </select>
         </div>
 
-        <ul className="divide-y divide-gray-100">
+  <ul className="">
           {notifications.map((notif) => (
-            <li key={notif.id} className="flex items-start justify-between py-4">
+            <li
+              key={notif.id}
+              className={`flex items-start border-b border-[#E7E7E7] justify-between py-5 ${typeColors[notif.type]}`}
+            >
               <div className="flex gap-3">
                 {renderIcon(notif.type)}
                 <div>
-                  <p className="font-medium text-sm">{notif.title}</p>
-                  <p className="text-sm text-gray-600 mt-1">{notif.message}</p>
+                  <p className="font-bold text-[18px]">{notif.title}</p>
+                  <p className="text-[16px] text-[#0A0A0ACC] mt-1">{notif.message}</p>
                 </div>
               </div>
               <div className="text-right min-w-fit text-sm">
-                <p className="text-gray-500 mb-2">{notif.time}</p>
+                <p className="text-[#0A0A0A] text-[16px] font-bold mb-2">{notif.time}</p>
                 {notif.actionLabel && (
                   <button className="bg-purple-100 text-purple-700 px-4 py-1 rounded font-medium hover:bg-purple-200">
                     {notif.actionLabel}
@@ -133,14 +148,20 @@ const [notifications] = useState(notificationsData);
           ))}
         </ul>
 
+
         {/* Footer buttons */}
-        <div className="flex justify-end mt-6 gap-4">
-          <button className="text-red-600 border border-red-500 px-4 py-2 rounded hover:bg-red-50">
-            Delete All Notifications 🗑️
+        <div className="flex justify-center mt-20 gap-4">
+          <button className="text-[#000000] flex gap-5 border border-[#12121266] px-4 py-3 rounded-lg ">
+            Delete All Notifications 
+
+                                  <Image src="assets/trash.svg" alt="Darads Logo" width={20} height={20} />
           </button>
-          <button className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
-            Mark All As Read
-          </button>
+         <button className="bg-[#5604F6] flex items-center gap-4 text-white px-8 py-3 rounded-lg">
+  <span className="bg-white text-black rounded p-1.5">
+    <FaCheck size={8} />
+  </span>
+  Mark All As Read
+</button>
         </div>
       </div>
     </div>

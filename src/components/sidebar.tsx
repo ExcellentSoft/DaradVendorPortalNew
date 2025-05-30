@@ -8,7 +8,9 @@ type MenuItem = {
   icon: string;
   label: string;
   action?: () => void;
+  children?: string[]; 
 };
+
 
 type MenuSection = {
   section: string;
@@ -18,6 +20,9 @@ type MenuSection = {
 export default function Sidebar({ setActivePage }: { setActivePage: (page: string) => void }) {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [activePage, setPage] = useState<string>('Overview');
+  const [expandedMenus, setExpandedMenus] = useState<{ [label: string]: boolean }>({});
+const [selectedPromotionTab, setSelectedPromotionTab] = useState<string>('Current Promotion');
+
   const router = useRouter();
 
   useEffect(() => {
@@ -34,6 +39,10 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
     sessionStorage.clear();
     router.push('/');
   };
+
+  const isChildActive = (children: string[] | undefined) => {
+  return children?.some((child) => activePage === child);
+};
 
   const menuItems: MenuSection[] = [
     {
@@ -55,7 +64,11 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
       section: 'Store And Customer Engagement',
       items: [
         { icon: '/globe.svg', label: 'My Website' },
-        { icon: '/promotion.svg', label: 'Promotion' },
+      {
+      icon: '/promotion.svg',
+      label: 'Promotion',
+      children: ['Current Promotion', 'Create Promotion'],
+    },
       ],
     },
     {
@@ -83,34 +96,73 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
         </div>
       </div>
 
-      <nav className="flex-1 overflow-y-auto text-sm px-4 space-y-6 pb-6">
-        {menuItems.map((section) => (
-          <div key={section.section}>
-            <p className="text-[#121212CC] uppercase text-xs mt-6 ml-6 font-semibold pb-2">{section.section}</p>
-            <p className="text-[#C8C8C8] border-b mb-2" />
-            <ul className="space-y-1 font-semibold">
-              {section.items.map((item) => (
-                <li
-                  key={item.label}
-                  onClick={() => {
-                    if (item.action) {
-                      item.action();
-                    } else {
-                      handleMenuClick(item.label);
-                    }
-                  }}
-                  className={`flex items-center gap-6 px-4 py-3 cursor-pointer rounded-t-2xl ${
-                    activePage === item.label ? 'bg-[#5604F6] text-white' : 'text-[#121212]'
-                  }`}
-                >
-                  <Image src={item.icon} alt={item.label} width={20} height={20} />
-                  <span>{item.label}</span>
-                </li>
-              ))}
-            </ul>
+     <nav className="flex-1 overflow-y-auto text-sm px-4 space-y-6 pb-6">
+  {menuItems.map((section) => (
+    <div key={section.section}>
+      <p className="text-[#121212CC] uppercase text-xs mt-6 ml-6 font-semibold pb-2">
+        {section.section}
+      </p>
+      <p className="text-[#C8C8C8] border-b mb-2" />
+      <ul className="space-y-1 font-semibold">
+        {section.items.map((item) => (
+          <div key={item.label}>
+         <li
+  onClick={() => {
+    if (item.children) {
+      setExpandedMenus((prev) => ({
+        ...prev,
+        [item.label]: !prev[item.label],
+      }));
+    } else if (item.action) {
+      item.action();
+    } else {
+      handleMenuClick(item.label);
+    }
+  }}
+  className={`flex items-center gap-6 px-4 py-3 cursor-pointer rounded-t-2xl ${
+    activePage === item.label || isChildActive(item.children)
+      ? 'bg-[#5604F6] text-white'
+      : 'text-[#121212]'
+  }`}
+>
+  <Image src={item.icon} alt={item.label} width={20} height={20} />
+  <span>{item.label}</span>
+  {item.children && (
+    <span className="ml-auto text-lg">
+      {expandedMenus[item.label] ? '▾' : '▸'}
+    </span>
+  )}
+</li>
+
+
+            {/* Children (dropdown submenu) */}
+            {item.children && expandedMenus[item.label] && (
+              <ul className="ml-4 mt-1 space-y-1 bg-white rounded-md shadow-sm">
+                 {item.children.map((child) => (
+    <li
+      key={child}
+      onClick={() => {
+        setSelectedPromotionTab(child);
+        handleMenuClick(child);
+      }}
+      className={`cursor-pointer px-4 py-2 rounded-md relative transition-colors duration-150 ${
+        selectedPromotionTab === child
+          ? 'bg-[#EAE0FF] text-[#5604F6] font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#5604F6] before:rounded'
+          : 'text-[#121212] hover:bg-gray-100'
+      }`}
+    >
+      {child}
+    </li>
+  ))}
+              </ul>
+            )}
           </div>
         ))}
-      </nav>
+      </ul>
+    </div>
+  ))}
+</nav>
+
 
       <div
         onClick={handleLogout}
