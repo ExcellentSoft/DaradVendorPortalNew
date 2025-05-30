@@ -1,181 +1,189 @@
-import { useState } from 'react';
+import React, { useState } from "react";
 
-// Embedded SidebarLayout component
-const SidebarLayout = ({
-  children,
-  setActiveSection,
-  activeSection,
-}: {
-  children: React.ReactNode;
-  setActiveSection: (section: string) => void;
-  activeSection: string;
-}) => {
-  const menuItems = [
-    { label: 'Contact Us', section: 'contact' },
-    { label: 'Terms & Conditions', section: 'terms' },
-    { label: 'Privacy Policy', section: 'privacy' },
-  ];
+import { FiPhoneCall } from 'react-icons/fi';
+import Image from 'next/image';
+
+export default function ContactForm() {
+  const [activeTab, setActiveTab] = useState("Contact Us");
+const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+
+  const tabs = ["Contact Us", "Terms & Conditions", "Privacy Policy"];
+
+
+
+ function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const file = event.target.files?.[0];
+  if (file) {
+    setSelectedFile(file);
+  }
+}
+
 
   return (
-    <div className="flex min-h-screen">
-      <aside className="w-1/5 bg-gray-100 p-4">
-        <ul className="space-y-2">
-          {menuItems.map((item) => (
-            <li key={item.section}>
-              <button
-                onClick={() => setActiveSection(item.section)}
-                className={`w-full text-left px-4 py-2 rounded ${
-                  activeSection === item.section
-                    ? 'bg-purple-600 text-white'
-                    : 'text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </aside>
-      <main className="flex-1 p-6 bg-white">{children}</main>
-    </div>
-  );
-};
-
-const accordionItems = {
-  terms: [
-    {
-      title: 'Account Responsibilities',
-      content: 'You must secure your account and comply with our platform rules.',
-    },
-    {
-      title: 'Product Listings & Sales',
-      content: 'Only legitimate products can be sold. Counterfeit items are prohibited.',
-    },
-    {
-      title: 'Payment & Payouts',
-      content: 'Payouts occur every 3 days. Disputes must be raised within 7 days.',
-    },
-  ],
-  privacy: [
-    {
-      title: 'Information We Collect',
-      content: 'We collect name, email, and product info to improve your experience.',
-    },
-    {
-      title: 'Information Sharing',
-      content: 'We never sell your data. Limited sharing is done for operational purposes.',
-    },
-    {
-      title: 'Your Rights',
-      content: 'You can request data deletion or export anytime.',
-    },
-  ],
-};
-
-export default function Home() {
-  const [activeSection, setActiveSection] = useState('contact');
-  const [openAccordion, setOpenAccordion] = useState<number | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setFile(e.target.files[0]);
-  };
-
-  const renderContact = () => (
-    <div className="max-w-2xl mx-auto space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-semibold">📞 Contact Us</h2>
-        <p className="text-gray-600">Need help? Get in touch with our support team.</p>
-      </div>
-      <form className="space-y-4">
-        <div>
-          <label className="block mb-1 font-medium">Full Name</label>
-          <input
-            type="text"
-            placeholder="Enter your full name"
-            className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-purple-500"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Email</label>
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-purple-500"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Message Subject</label>
-          <select className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-purple-500">
-            <option>Select A Subject</option>
-            <option>Technical Issue</option>
-            <option>Payment Inquiry</option>
-          </select>
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Message</label>
-          <textarea
-            className="w-full border px-4 py-2 rounded resize-none focus:ring-2 focus:ring-purple-500"
-            rows={5}
-          />
-        </div>
-        <div className="bg-gray-50 border border-dashed p-6 rounded text-center">
-          <p className="mb-2">Upload File</p>
-          <input type="file" className="hidden" id="fileUpload" onChange={handleFileChange} />
-          <label htmlFor="fileUpload" className="cursor-pointer px-4 py-2 border text-purple-600 rounded hover:bg-purple-50">
-            {file ? file.name : 'Drag your file(s) or browse'}
-          </label>
-          <p className="text-xs text-gray-400 mt-1">Max 10MB. .jpg, .png, .svg, .zip</p>
-        </div>
-        <button className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">Submit Request</button>
-      </form>
-    </div>
-  );
-
-  const renderAccordion = (type: 'terms' | 'privacy') => (
-    <div className="max-w-2xl mx-auto">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-semibold">
-          {type === 'terms' ? '📜 Terms & Conditions' : '🔒 Privacy Policy'}
-        </h2>
-        <p className="text-gray-600">
-          {type === 'terms'
-            ? 'Rules governing your use of My Darads services.'
-            : 'How we protect and use your data.'}
-        </p>
-      </div>
-      <div className="space-y-4">
-        {accordionItems[type].map((item, index) => (
-          <div key={index} className="border rounded">
-            <button
-              className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 flex justify-between"
-              onClick={() => setOpenAccordion(openAccordion === index ? null : index)}
+    <div className="flex w-full min-h-screen bg-gray-100">
+      {/* Sidebar Card */}
+      <aside className="w-[350px] p-4">
+        <div className="bg-white rounded-xl shadow p-8 space-y-6">
+          {tabs.map((tab) => (
+            <div
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex items-center gap-2 p-3 rounded-xl cursor-pointer transition
+                ${activeTab === tab ? "bg-[#5604F6] text-white border border-white" : " text-[#121212CC] "}`}
             >
-              {item.title}
-              <span>{openAccordion === index ? '-' : '+'}</span>
-            </button>
-            {openAccordion === index && (
-              <div className="px-4 py-3 text-gray-700 bg-white">{item.content}</div>
-            )}
-          </div>
-        ))}
+    <span
+                className={`w-8 h-8 pb-0.5  rounded-full border-2 flex items-center  justify-center text-3xl
+                  ${activeTab === tab ? " pb-0.5 border-white text-white" : "bg-gray-100 pb-0.5 border-gray-400 text-gray-400"}`}
+              >
+                ●
+              </span>
+
+              <span className="font-medium">{tab}</span>
+            </div>
+          ))}
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className=" w-[750px] flex-1 bg-white h-[1400px]">
+        {/* Header */}
+            
+             <div className="bg-[#2E0234] text-white p-6 text-center rounded-t-lg">
+          <h1 className="text-[24px] font-semibold flex justify-center gap-4"> 
+            <FiPhoneCall color="#d3d3d3" size={24} />
+           Contact Us</h1>
+          <p className="text-[14px] mt-2">Need help? Get in touch with our support team.</p>
+        </div>
+
+        {/* Form */}
+      <div className=" mt-20 flex items-center justify-center ">
+  <form className="  p-6 space-y-6 ">
+    <div>
+      <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Full Name</label>
+      <input
+        type="text"
+        className="w-full text-[#98A2B3] border border-[#D0D5DD] rounded-lg p-4"
+        placeholder="Enter your full name"
+      />
+    </div>
+
+    <div>
+      <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Email Address</label>
+      <input
+        type="email"
+        className="w-full text-[#98A2B3] border border-[#D0D5DD] rounded-lg p-4"
+        placeholder="Enter your email"
+      />
+    </div>
+
+    <div>
+      <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Message Subject</label>
+      <select className="w-full text-[#101928] border border-[#D0D5DD] rounded-lg p-4">
+        <option>Select a Subject</option>
+        <option>Support</option>
+        <option>Feedback</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Message</label>
+      <textarea
+        className="w-full text-[#98A2B3] border border-[#D0D5DD] rounded-lg p-4"
+        placeholder="Type your message here..."
+        rows={4}
+      ></textarea>
+    </div>
+
+    {/* Upload File */}
+   <div className="w-full p-4 bg-white rounded-2xl shadow-sm">
+  <h2 className="text-[20px] font-bold text-[#0B0B0B] mb-1">Upload File</h2>
+  <p className="text-[16px] text-[#6D6D6D] mb-4">For screenshots, receipts, etc.</p>
+
+  <div className="border-2 border-dashed border-[#4103B9] rounded-lg py-10 px-4 flex flex-col items-center justify-center">
+    <Image src="assets/video.svg" alt="video icon" width={40} height={40} />
+    <p className="text-[18px] text-[#0B0B0B] mb-1 mt-4">
+      Drag your file(s) or{" "}
+      <label htmlFor="fileInput" className="text-[#5604F6] font-medium cursor-pointer">
+        browse
+      </label>
+    </p>
+    <p className="text-[16px] text-[#6D6D6D]">Max 10 MB files are allowed</p>
+
+    <input
+      id="fileInput"
+      type="file"
+      accept=".jpg,.png,.svg,.zip,.mp4,.mov,.avi"
+      onChange={handleFileChange}
+      className="hidden"
+    />
+  </div>
+
+  {selectedFile && (
+    <p className="mt-2 text-sm text-[#5604F6]">
+      Selected file: {selectedFile.name}
+    </p>
+  )}
+
+  <p className="text-[16px] text-[#6D6D6D] mt-4">
+    Only support .jpg, .png, .svg, .zip, and common video files
+  </p>
+</div>
+
+
+    <div className="flex justify-center">
+      <button
+        type="submit"
+        className="bg-[#5604F6] w-[300px] text-white px-8 py-4 rounded-lg "
+      >
+        Submit Request
+      </button>
+    </div>
+  </form>
+</div>
+
+
+        {/* Support Info */}
+
+          <div className="border-t-2 border-dashed border-purple-500 mb-6"></div>
+        <div className="pt-4 text-sm px-4"> 
+  <div className="bg-white rounded-lg shadow p-6 space-y-4 max-w-md mx-auto">
+
+      {/* Phone Support */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+        
+         <Image src="assets/phonecall.svg" alt="phone icon" width={40} height={40} />
+          
+          <span className="text-[#101928] font-medium">Phone Support</span>
+        </div>
+        <span className="text-[#101928] font-semibold">+234 812 345 6789</span>
       </div>
-      <div className="flex justify-end gap-4 mt-6">
-        <button className="bg-white border border-red-500 text-red-500 px-6 py-2 rounded hover:bg-red-50">
-          ❌ Decline
+      
+         <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          
+            <Image src="assets/email.svg" alt="envelope icon" width={40} height={40} />
+          
+          <span className="text-[#101928] font-medium">Email Support</span>
+        </div>
+        <span className="text-[#101928] font-semibold">support@mydarads.com</span>
+      </div>
+           {/* WhatsApp Support */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Image src="assets/whatsapp.svg" alt="whatsapp icon" width={40} height={40} />
+          <span className="text-[#101928] font-medium">Whatsapp</span>
+        </div>
+        <button className="text-[#5604F6] border border-[#EEE6FE] bg-[#EEE6FE] rounded px-6 py-2 text-md">
+          Start Chat
         </button>
-        <button className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">
-          ✅ Accept & Continue
-        </button>
+      </div>
       </div>
     </div>
-  );
-
-  return (
-    <SidebarLayout setActiveSection={setActiveSection} activeSection={activeSection}>
-      {activeSection === 'contact'
-        ? renderContact()
-        : renderAccordion(activeSection as 'terms' | 'privacy')}
-    </SidebarLayout>
+        
+      </main>
+    </div>
   );
 }
