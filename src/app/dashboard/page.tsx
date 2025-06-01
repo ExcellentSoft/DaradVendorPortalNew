@@ -8,6 +8,8 @@ import Product from "@/components/product";
 import ApiUtility from "@/components/AirtimeDataTopUp";
 import Order from "@/components/Order";
 import Promotion from "@/components/promotion";
+import CreatePromotion from "@/components/createpromotion";
+import Support from "@/components/support";
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,21 +19,29 @@ export default function Dashboard() {
     console.log("Log Product opened");
   };
 
- const renderPage = () => {
+const renderPage = () => {
   switch (activePage) {
     case "Overview":
       return <Overview />;
     case "Products":
       return <Product onOpenLogProduct={onOpenLogProduct} />;
-   case "API & Utilities": 
+    case "API & Utilities":
       return <ApiUtility />;
-      case "Orders": 
+    case "Orders":
       return <Order />;
-       case "Promotion": 
+    case "Promotion":
       return <Promotion />;
-  
+    case "Create Promotion":
+      return <CreatePromotion />;
+    case "Current Promotion":
+      return <Promotion />;
+      case "Support":
+      return <Support/>;
+    default:
+      return <Overview />;
   }
 };
+
 
 
   return (
