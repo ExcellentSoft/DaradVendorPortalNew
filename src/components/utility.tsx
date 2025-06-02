@@ -49,22 +49,7 @@ const CheckmarkIcon: React.FC<{ isActive: boolean }> = ({ isActive }) => (
 
 
 
-const EnvelopeIcon: React.FC = () => (
-  <svg
-    className="w-6 h-6 text-gray-400"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 13a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h16a2 2 0 012 2v10z"
-    />
-  </svg>
-);
+
 
 
 interface ServiceCategory {
@@ -278,8 +263,8 @@ const UtilitiesForm: React.FC = () => {
                       }}
                       className="outline-none py-[15px] text-gray-700 w-[259px]
                                          font-['Inter'] font-normal text-sm leading-[145%] placeholder-[#98A2B3]"
-                      placeholder="09029717250" // Placeholder remains for visual guidance
-                      maxLength={11} // UPDATED: Changed to 11 for full Nigerian number
+                      placeholder="09029717250" 
+                      maxLength={11} 
                     />
                   </div>
                   {mobileNumberError && (
@@ -290,7 +275,7 @@ const UtilitiesForm: React.FC = () => {
                 </div>
 
 
-                {/* Conditional rendering for Amount / Operator / Data Plan based on activeTab */}
+            
                 {activeTab === 'airtime' ? (
                   <>
                     {/* Amount Field for Airtime */}
@@ -315,16 +300,16 @@ const UtilitiesForm: React.FC = () => {
                         min="0"
                       />
                       {amountError && (
-                        <p className={errorMessageClass}> {/* Applied consolidated error class */}
+                        <p className={errorMessageClass}> 
                           {amountError}
                         </p>
                       )}
                     </div>
 
 
-                    {/* Select Operator Field for Airtime (comes after amount) */}
+                   
                     <div>
-                      {/* CORRECTED: text-gray-700 to text-[#101928] */}
+                   
                       <label htmlFor="operator" className="block text-[#101928] text-base font-medium mb-2">
                         Select Operator
                       </label>
@@ -356,9 +341,9 @@ const UtilitiesForm: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    {/* Select Operator Field for Data Top Up (comes before data plan) */}
+
                     <div>
-                      {/* CORRECTED: text-gray-700 to text-[#101928] */}
+                    
                       <label htmlFor="operator" className="block text-[#101928] text-base font-medium mb-2">
                         Select Operator
                       </label>
@@ -389,9 +374,9 @@ const UtilitiesForm: React.FC = () => {
                     </div>
 
 
-                    {/* Data Plan Selection for Data Top Up */}
+                   
                     <div>
-                      {/* CORRECTED: text-gray-700 to text-[#101928] */}
+
                       <label className="block text-[#101928] text-base font-medium mb-2">
                         Select Data Plan
                       </label>
@@ -405,8 +390,8 @@ const UtilitiesForm: React.FC = () => {
                                   bg-white
                                   text-gray-700 font-medium
                                   ${selectedDataPlan?.id === plan.id
-                                    ? 'border-[#1E0156]/50 ring-2 ring-[#1E0156]/50' // Selected: New border color, ring
-                                    : 'border-[#D0D5DD]' // Default: original border
+                                    ? 'border-[#1E0156]/50 ring-2 ring-[#1E0156]/50' 
+                                    : 'border-[#D0D5DD]' 
                                   }
                                   hover:border-[#1E0156]/50 // Hover: New border color
                                 `}
@@ -418,11 +403,11 @@ const UtilitiesForm: React.FC = () => {
                               checked={selectedDataPlan?.id === plan.id}
                               onChange={() => {
                                 setSelectedDataPlan(plan);
-                                setDataPlanError(null); // Clear error on selection
+                                setDataPlanError(null); 
                               }}
-                              className="hidden" // Hide native radio button
+                              className="hidden" 
                             />
-                            <span className="text-center"> {/* Font-medium moved to parent */}
+                            <span className="text-center"> 
                               {plan.label} for ₦{plan.price.toLocaleString()}
                             </span>
                           </label>
@@ -439,7 +424,7 @@ const UtilitiesForm: React.FC = () => {
               </div>
 
 
-              {/* Recharge Now / Buy Data Button - FONT WEIGHT REMAINS MEDIUM (500) */}
+         
               <button
                 type="submit"
                 className="mt-8 w-[335px] py-[14px] bg-[#5604F6] text-white rounded-xl text-base font-medium font-['Urbanist'] leading-[150%] tracking-normal capitalize mx-auto focus:outline-none focus:ring-2 focus:ring-[#5604F6] focus:ring-offset-2 transition-colors duration-200"
@@ -475,14 +460,14 @@ const UtilitiesForm: React.FC = () => {
             </button>
 
 
-            {/* Modal Title and Subtitle Container */}
+         
             <div className="absolute flex flex-col items-center justify-center"
               style={{ width: 434, height: 119, top: 40, left: 8, paddingTop: 24, paddingRight: 40, paddingBottom: 12, paddingLeft: 40, gap: 10 }}>
-              {/* Modal Title with updated typography */}
+             
               <h2 className="font-['Urbanist'] font-semibold text-2xl leading-none tracking-normal text-center capitalize text-black">
                 Confirm {activeTab === 'airtime' ? 'Airtime Top-Up' : 'Data Purchase'}
               </h2>
-              {/* Modal Subtitle with updated typography and dynamic amount styling */}
+             
               <p className="font-['Inter'] font-normal text-sm leading-[160%] tracking-normal text-center text-[#121212]/80">
                 {activeTab === 'airtime' ? (
                   <>
@@ -526,17 +511,10 @@ const UtilitiesForm: React.FC = () => {
   );
 
 
-  // Placeholder for other service forms - still use the generic Card
-  const OtherServiceForm = (serviceName: string) => (
-    <Card title={serviceName} subtitle={`Details for ${serviceName} will be displayed here.`}>
-      <div className="p-8 text-center text-gray-500">
-        <p>This section is under construction. Please check back later!</p>
-      </div>
-    </Card>
-  );
+  
 
 
-  // Define service categories and their corresponding forms
+  
   const serviceCategories: ServiceCategory[] = [
     {
       id: 'airtime_data_topup',

@@ -335,7 +335,7 @@ const ApiIntegrationDashboard: React.FC = () => {
             style={{ width: '355px', height: '76px', textAlign: 'left' }} // Kept text-align left within this block for the actual text
           >
             <div className="flex items-center">
-              <img src="/pin-icon.svg" alt="Webhook Icon" className="h-5 w-5 mr-2" aria-hidden="true" />
+
               <h3
                 className="capitalize"
                 style={{
