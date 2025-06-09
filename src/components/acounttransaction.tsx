@@ -10,6 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+
 const orders = [
   {
     id: "#Mdd-1023",
@@ -79,8 +80,8 @@ const SalesTransactions = () => {
       <div>
         <div className='bg-white p-6'>
         <h1 className="text-2xl text-gray-800 font-bold flex items-center space-x-2">
-          <span>📊</span>
-          <span>Sales Transactions</span>
+         
+          <span> Account Wallet Transactions</span>
         </h1>
         <p className="text-gray-600 mt-1">
           View all sales payments, including timestamps, transaction status, payment methods, transfers, and withdrawals.
@@ -89,41 +90,42 @@ const SalesTransactions = () => {
 
         {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-  <div className="bg-white p-6 rounded-2xl min-h-[150px]">
+<div className="bg-white p-6 rounded-2xl min-h-[150px] flex flex-col items-center justify-center text-center">
 
-            <p className="text-gray-500 text-sm">Total Revenue Generated</p>
-            <p className="font-semibold text-xl">₦0.00</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl">
-            <p className="text-gray-500 text-sm">Total Amount Withdrawn</p>
-            <p className="font-semibold text-xl">₦0.00</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl">
-            <p className="text-gray-500 text-sm">Total Revenue Generated</p>
-            <p className="font-semibold text-xl">₦0.00</p>
-          </div>
-        </div>
-      </div>
 
- <div className="bg-gray-100 p-5 rounded-lg space-y-3">
-       <div className="flex flex-col sm:flex-row justify-between gap-2">
-                       <h2 className="text-lg font-semibold text-[#121212]">Transaction History</h2>
-                       <RefreshCcw size={16} className="text-[#121212] cursor-pointer opacity-70 hover:opacity-100" />
-                     </div>
-             
-                     <div className="flex flex-col sm:flex-row justify-between gap-2">
-                       <p className="text-[#121212CC] text-[14px]">
-                         View, manage, and track all your logs in one place.
-                       </p>
-          <div className="flex gap-2 sm:gap-5 items-center text-[#12121299]">
-            <span>Page 1 of 5</span>
-            <ChevronLeft size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
-            <ChevronRight size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
+            <p className="text-gray-800 font-semibold text-md">Total Amount</p>
+            <p className="font-semibold text-gray-800 text-md">Deposited</p>
+          </div>
+        <div className="bg-white p-6 rounded-2xl min-h-[150px] flex flex-col items-center justify-center text-center">
+
+            <p className="text-gray-800 font-semibold text-md">Total Amount</p>
+            <p className="font-semibold text-gray-800 text-md">Transferred</p>
+          </div>
+         <div className="bg-white p-6 rounded-2xl min-h-[150px] flex flex-col items-center justify-center text-center">
+
+            <p className="text-gray-800 font-semibold text-md">Pending Monthly</p>
+            <p className="font-semibold text-gray-800 text-md">Maintainance Fee</p>
           </div>
         </div>
       </div>
 
-
+      <div className="bg-gray-100 p-5 rounded-lg space-y-3">
+              <div className="flex flex-col sm:flex-row justify-between gap-2">
+                <h2 className="text-lg font-semibold text-[#121212]">Transaction History</h2>
+                <RefreshCcw size={16} className="text-[#121212] cursor-pointer opacity-70 hover:opacity-100" />
+              </div>
+      
+              <div className="flex flex-col sm:flex-row justify-between gap-2">
+                <p className="text-[#121212CC] text-[14px]">
+                  View, manage, and track all your logs in one place.
+                </p>
+                <div className="flex gap-2 sm:gap-5 items-center text-[#12121299]">
+                  <span>Page 1 of 5</span>
+                  <ChevronLeft size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
+                  <ChevronRight size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
+                </div>
+              </div>
+            </div>
 
       {/* Filter/Search Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10 mb-4 font-sans text-sm">
@@ -182,7 +184,7 @@ const SalesTransactions = () => {
         <th className="p-4 text-left">Transaction I.D</th>
         <th className="p-4 text-left">Date & Time</th>
         <th className="p-4 text-left">Type</th>
-        <th className="p-4 text-left">Name/Customer</th>
+        <th className="p-4 text-left">Description</th>
         <th className="p-4 text-left">Amount</th>
         <th className="p-4 text-left">Wallet Balance</th>
         <th className="p-4 text-center">Status</th>

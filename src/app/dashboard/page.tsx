@@ -7,6 +7,8 @@ import Overview from "../../components/overview";
 import Product from "@/components/product";
 import ApiUtility from "@/components/utility";
 import Order from "@/components/Order";
+import Transactions from "@/components/salesaccount";
+import AccountTransactions from "@/components/acounttransaction";
 import Promotion from "@/components/promotion";
 import CreatePromotion from "@/components/createpromotion";
 import Support from "@/components/support";
@@ -32,6 +34,13 @@ const renderPage = () => {
       return <ApiUtility />;
     case "Orders":
       return <Order />;
+
+       case "Sales Transactions":
+      return <Transactions />;
+    case "Account Transactions":
+      return <AccountTransactions />;
+    case "Current Promotion":
+      return <Promotion />;
     case "Promotion":
       return <Promotion />;
     case "Create Promotion":
