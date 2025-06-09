@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Electricity from './electricity'; 
-// import ApiIntegration from './apiservice';
+import ApiIntegration from './apiservice';
 
 
 const Card: React.FC<{ title: string; subtitle?: string; children: React.ReactNode; disableStyles?: boolean }> = ({
@@ -106,7 +106,7 @@ const UtilitiesForm: React.FC = () => {
     // Reset errors
     setMobileNumberError(null);
     setAmountError(null);
-    setDataPlanError(null); // Clear data plan error
+    setDataPlanError(null);
 
 
     let hasError = false;
@@ -414,7 +414,7 @@ const UtilitiesForm: React.FC = () => {
                         ))}
                       </div>
                       {dataPlanError && (
-                        <p className={errorMessageClass}> {/* Applied consolidated error class */}
+                        <p className={errorMessageClass}> 
                           {dataPlanError}
                         </p>
                       )}
@@ -523,13 +523,13 @@ const UtilitiesForm: React.FC = () => {
     },
       {
     id: 'electricity',
-    name: 'Electricity',
+    name: 'Electricity Bill Payments',
     formComponent: <Electricity />
   },
     {
       id: 'api_services_integration',
       name: 'API Services Integration',
-      formComponent: <Electricity/>
+      formComponent: <ApiIntegration/>
     },
   ];
 

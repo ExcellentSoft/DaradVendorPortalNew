@@ -163,12 +163,18 @@ const ElectricityBillForm = () => {
             <div/>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-purple-700 text-white py-4 rounded-md hover:bg-purple-800 transition"
-            >
-              Pay Now
-            </button>
+           <button
+  type="submit"
+  disabled={!meterNumber.trim() || !amount.trim()}
+  className={`w-full py-4 rounded-md transition text-white ${
+    meterNumber.trim() && amount.trim()
+      ? 'bg-[#5F04F6] hover:bg-purple-800'
+      : 'bg-[#5F04F680] cursor-not-allowed'
+  }`}
+>
+  Pay Now
+</button>
+
           </form>
 </div>
 </div>
@@ -191,7 +197,7 @@ const ElectricityBillForm = () => {
                 Cancel
               </button>
               <button
-                className="px-4 py-2 bg-purple-700 text-white rounded-md text-sm hover:bg-purple-800"
+                className="px-4 py-2 bg-[#5F04F6] text-white rounded-md text-sm hover:bg-purple-800"
                 onClick={confirmPayment}
               >
                 Confirm

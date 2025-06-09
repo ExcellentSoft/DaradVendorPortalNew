@@ -1,14 +1,14 @@
 import React from "react";
 import {
   CalendarDays,
-  Filter,
-  ArrowDownWideNarrow,
-  PackageSearch,
+
+   Search as MagnifyingGlassIcon,
+  
   Download,
   RefreshCcw,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
+ 
 } from "lucide-react";
 
 const orders = [
@@ -81,80 +81,100 @@ export default function RecentOrders() {
       </div>
 
       {/* Filters and Search section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10 mb-4">
-        {/* Left - Search */}
-        <input
-          type="text"
-          placeholder="Search Transaction..."
-          className="border border-[#E5E7EB] rounded-md px-3 py-2 text-sm w-full sm:w-60 placeholder:text-[#9CA3AF]"
-        />
+  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10 mb-4 font-sans text-sm"> 
+  {/* Search Input with Icon */}
+  <div className="relative w-full sm:w-60">
+    <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+    <input
+      type="text"
+      placeholder="Search Transaction..."
+      className="pl-10 pr-3 py-2 border border-[#E5E7EB] rounded-md w-[180px] placeholder:text-[#6E6B7B] focus:outline-none"
+    />
+  </div>
 
-        {/* Right - Filters + Export */}
-        <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-4 sm:gap-3">
-          {/* Date Range */}
-          <div className="relative w-full sm:w-40">
-            <select className="appearance-none border border-[#E5E7EB] rounded-md px-3 py-2 pl-9 text-sm w-full">
-              <option>Date Range</option>
-            </select>
-            <CalendarDays size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          </div>
+  {/* Filters and Export */}
+  <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-4 sm:gap-3">
 
-          {/* Status */}
-          <div className="relative w-full sm:w-32">
-            <select className="appearance-none border border-[#E5E7EB] rounded-md px-3 py-2 pl-9 text-sm w-full">
-              <option>Status</option>
-            </select>
-            <Filter size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          </div>
+    {/* Date Range */}
+    <div className="relative text-center w-[120px] sm:w-40">
+<select className=" border border-[#E5E7EB] rounded-md px-6 py-2 pl-9 text-sm text-[#12121299] w-full">
 
-          {/* Sort By */}
-          <div className="relative w-full sm:w-40">
-            <select className="appearance-none border border-[#E5E7EB] rounded-md px-3 py-2 pl-9 text-sm w-full">
-              <option>Sort By</option>
-            </select>
-            <ArrowDownWideNarrow size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          </div>
+        <option>Date Range</option>
+        <option>Today</option>
+        <option>This Week</option>
+        <option>This Month</option>
+        <option>Custom Range</option>
+      </select>
+      <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+    </div>
 
-          {/* Product Category */}
-          <div className="relative w-full sm:w-52">
-            <select className="appearance-none border border-[#E5E7EB] rounded-md px-3 py-2 pl-9 text-sm w-full">
-              <option>Product Category</option>
-            </select>
-            <PackageSearch size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          </div>
+    {/* Status */}
+    <div className="relative w-full sm:w-32">
+      <select className=" border border-[#E5E7EB] rounded-md pl-9 px-6 py-2 text-sm text-[#12121299] w-full">
+        <option>Status</option>
+        <option>Completed</option>
+        <option>Pending</option>
+        <option>Failed</option>
+      </select>
+    
+    </div>
 
-          {/* Export Button */}
-          <button className="flex items-center justify-center gap-2 bg-[#7C3AED] text-white text-sm px-4 py-2 rounded-md hover:bg-[#6B21A8] w-full sm:w-auto">
-            <Download size={16} />
-            Export
-          </button>
-        </div>
-      </div>
+    {/* Sort By */}
+    <div className="relative w-full sm:w-40">
+    <select className=" border border-[#E5E7EB] rounded-md px-6 py-2 pl-9 text-sm text-[#12121299] w-full">
+        <option>Sort By</option>
+        <option>Newest</option>
+        <option>Oldest</option>
+        <option>Highest Amount</option>
+        <option>Lowest Amount</option>
+      </select>
+
+    
+    </div>
+
+    {/* Product Category */}
+    <div className="relative w-full sm:w-52">
+     <select className="text-center border border-[#E5E7EB] rounded-md pl-9 px-6 py-2 text-sm text-[#12121299] w-full">
+         <option>Product Category</option>
+        <option>Digital Course</option>
+        <option>Phone Numbers</option>
+        <option>Logs</option>
+        <option>Gift Items</option>
+        <option>Tutorials</option>
+      </select>
+
+    </div>
+
+    {/* Export Button */}
+    <button className="flex items-center justify-center gap-2 bg-[#7C3AED] text-white text-sm px-4 py-2 rounded-md hover:bg-[#6B21A8] w-full sm:w-auto">
+      <Download size={16} />
+      Export
+    </button>
+  </div>
+</div>
+
+
 
       {/* Table Section */}
-    {/* Desktop Table - visible on small screens and up */}
-<div className="hidden sm:block overflow-x-auto rounded-lg shadow mx-auto my-4 max-w-full">
-  <table className="w-full text-sm text-left table-fixed">
-    <thead>
-      <tr className="bg-gray-200 text-gray-500 rounded-t-lg">
-        <th className="p-4 font-medium text-[#121212]">Order I.D</th>
-        <th className="p-4 font-medium">Date & Time</th>
-        <th className="p-4 font-medium">Product Name</th>
-        <th className="p-4 font-medium">Customer Name</th>
-        <th className="p-4 font-medium">Total Price</th>
-        <th className="p-4 font-medium">Status</th>
-        <th className="p-4 font-medium">Action</th>
+    
+<div className="hidden sm:block overflow-x-auto rounded-lg shadow mx-auto my-6 max-w-full">
+  <table className="w-full text-sm  table-fixed">
+    <thead className="font-semibold ">
+      <tr className="bg-gray-200 text-[#121212]  text-[16px] rounded-t-lg">
+        <th className="p-6 font-semibold text-[#121212] ">Order I.D</th>
+        <th className="p-6 font-semibold text-[16px]">Date & Time</th>
+        <th className="p-6 font-semibold text-[16px]">Product Name</th>
+        <th className="p-6 font-semibold text-[16px]">Customer Name</th>
+        <th className="p-6 font-semibold text-[16px]">Total Price</th>
+        <th className="p-6 font-semibold text-[16px]">Status</th>
+        <th className="p-6 font-semibold text-[16px]">Action</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody className="text-center">
       {orders.map((order, idx) => (
-        <tr key={idx} className="border border-[#D2D1D6]">
-          <td className="p-4 text-[#121212] flex gap-6 font-semibold">
-            <span className="border px-2">{idx + 1}</span>
+        <tr key={idx} className="border-b  border-[#D2D1D6]">
+          <td className="py-8 px-4 text-[#121212] flex gap-6 font-semibold">
+            <span className="border px-2  ">{idx + 1}</span>
             {order.id}
           </td>
           <td className="p-4 text-[#121212B2]">{order.date}</td>
@@ -180,7 +200,7 @@ export default function RecentOrders() {
 {/* Mobile Cards - visible only below small screens */}
 <div className="block sm:hidden space-y-4 mt-4">
   {orders.map((order, idx) => (
-    <div key={idx} className="border border-[#D2D1D6] rounded-lg p-4 shadow-sm">
+    <div key={idx} className="border border-[#D2D1D6] rounded-lg p-5 ">
       <div className="flex justify-between mb-2">
         <span className="text-sm font-semibold">{order.id}</span>
         <span className={`px-2 py-1 text-xs rounded-full font-medium ${statusColor[order.status as keyof typeof statusColor]}`}>
