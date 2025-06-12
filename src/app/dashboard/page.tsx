@@ -12,7 +12,7 @@ import AccountTransactions from "@/components/acounttransaction";
 import Promotion from "@/components/promotion";
 import CreatePromotion from "@/components/createpromotion";
 import Support from "@/components/support";
-import Settings from "@/components/settings";
+import Settings from "@/components/profile";
 import Wallet from "../../components/walletgraph";
 
 export default function Dashboard() {
