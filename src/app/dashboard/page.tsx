@@ -12,8 +12,8 @@ import AccountTransactions from "@/components/acounttransaction";
 import Promotion from "@/components/promotion";
 import CreatePromotion from "@/components/createpromotion";
 import Support from "@/components/support";
-// import Settings from "@/components/settings";
-
+import Settings from "@/components/settings";
+import Wallet from "../../components/walletgraph";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview");
@@ -49,7 +49,10 @@ const renderPage = () => {
       return <Promotion />;
       case "Support":
       return <Support/>;
-  
+   case "Settings":
+      return <Settings/>;
+       case "Wallet":
+      return <Wallet/>;
     default:
       return <Overview />;
   }
