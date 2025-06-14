@@ -1,9 +1,9 @@
-// components/FundWalletModal.tsx
+
 
 import React, { useState } from 'react';
 
 interface FundWalletModalProps {
-  onClose: () => void; // Function to close the main modal
+  onClose: () => void; 
 }
 
 const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
@@ -19,39 +19,39 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
   };
 
   const handleContinuePayment = () => {
-    // Logic for continuing with payment (e.g., redirect to bank portal)
+    
     setShowConfirmModal(false);
     onClose();
   };
 
-  // Function to handle copying text to clipboard
+ 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      // Optional: Add a small visual feedback like a tooltip
+      
       console.log('Copied to clipboard:', text);
     }).catch(err => {
       console.error('Failed to copy: ', err);
     });
   };
 
-  // Main modal container classes - CONSISTENTLY 450px width
+
   const modalContainerClasses = `bg-white shadow-lg relative rounded-2xl w-[450px]`;
 
-  // Header div classes - CONSISTENT ACROSS BOTH PAYMENT METHODS
+
   const headerDivClasses = `pt-8 pb-6 px-8 text-center border-b border-gray-200`;
 
-  // Title text classes - CONSISTENT ACROSS BOTH PAYMENT METHODS
+
   const titleTextClasses = `font-urbanist font-semibold text-2xl leading-[24px] tracking-normal capitalize text-black mb-2`;
 
-  // Subtitle text classes - CONSISTENT ACROSS BOTH PAYMENT METHODS
+  
   const subtitleTextClasses = `font-inter font-normal text-sm leading-[160%] tracking-normal text-[#121212]/80`;
 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      {/* Main Fund Wallet Modal - Dynamic classes applied */}
+    
       <div className={modalContainerClasses}>
-        {/* Close Button for Fund Wallet Modal */}
+        
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 z-10"
@@ -68,7 +68,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
           </svg>
         </button>
 
-        {/* Header - Dynamic classes applied */}
+      
         <div className={headerDivClasses}>
           <h2 className={titleTextClasses}>
             Fund Your Wallet
@@ -129,10 +129,10 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
               </label>
             </div>
 
-            {/* Line under the buttons - now spans full width */}
+          
             <div className="border-b border-gray-200 mt-8 mx-[-32px]"></div>
 
-            {/* Conditional Description Text Block */}
+        
             {selectedPaymentMethod === 'onlineBanking' && (
               <div className="mt-8 rounded-lg w-full h-[54px] p-6 bg-[#F8F8F8] border-[0.5px] border-[#121212]/10 flex items-center">
                 <p className="font-inter font-normal text-[15px] text-gray-700 text-center">
@@ -149,27 +149,27 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
               </div>
             )}
           </div>
-        {/* NEW: Grouping for Deposit Amount and subsequent fields */}
+      
         <div className="flex flex-col gap-6">
 
-            {/* Conditional Sections based on Payment Method */}
+         
             {selectedPaymentMethod === 'onlineBanking' && (
-            /* Select Your Bank Section */
+          
             <>
-              {/* Deposit Amount Section - Now inside onlineBanking block */}
+              
               <div>
                   <label htmlFor="depositAmountOnline" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
                     Deposit Amount (₦)
                   </label>
                   <input
-                    id="depositAmountOnline" // Unique ID for online banking
+                    id="depositAmountOnline" 
                     type="text"
                     placeholder="enter the amount to fund"
                     className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-[#5604F6]
                                 font-inter font-normal text-sm leading-[145%] tracking-normal placeholder-[#98A2B3]"
                   />
               </div>
-              <div> {/* Select Your Bank Section */}
+              <div> 
                   <label htmlFor="selectBank" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
                   Select Your Bank
                   </label>
@@ -187,7 +187,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
                       >
                       Choose a bank
                       </option>
-                      {/* Add more bank options here */}
+                     
                       <option value="bank1">Bank A</option>
                       <option value="bank2">Bank B</option>
                   </select>
@@ -207,11 +207,11 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
 
             {selectedPaymentMethod === 'manualDeposit' && (
             <>
-                {/* Manual Deposit - Reordered Sections */}
+              
 
-                {/* NEW: Wrapper for Bank Account Details and Important Note with 24px gap */}
+            
                 <div className="flex flex-col space-y-[24px]">
-                    {/* Bank Account Details Section - MOVED TO TOP OF THIS BLOCK */}
+
                     <div>
                       <h3 className="font-inter font-medium text-sm leading-none tracking-normal capitalize text-[#101928] mb-4">Bank Account Details</h3>
                       <div className="border border-gray-200 rounded-lg p-4 space-y-3">
@@ -262,21 +262,21 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
                       </div>
                     </div>
 
-                    {/* Important Note - MOVED TO TOP OF THIS BLOCK (after Bank Account Details) */}
+
                     <p className="font-inter font-normal text-[12px] leading-[145%] tracking-normal text-[#F68D2B]">
                       <span className="font-semibold">Important:</span> Use the reference code provided to you for easier tracking.
                     </p>
                 </div>
 
-                {/* NEW: Wrapper for input fields with 18px gap */}
+              
                 <div className="flex flex-col space-y-[18px]">
-                    {/* Deposit Amount Section - Now inside manualDeposit block */}
+                   
                     <div>
                         <label htmlFor="depositAmountManual" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
                           Deposit Amount (₦)
                         </label>
                         <input
-                          id="depositAmountManual" // Unique ID for manual deposit
+                          id="depositAmountManual"
                           type="text"
                           placeholder="enter the amount to fund"
                           className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-[#5604F6]
@@ -284,7 +284,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
                         />
                     </div>
 
-                    {/* Transaction Reference Input - NOW AFTER INFO SECTIONS AND DEPOSIT AMOUNT */}
+                   
                     <div>
                       <label htmlFor="transactionReference" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
                         Transaction Reference
@@ -298,7 +298,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
                       />
                     </div>
 
-                    {/* Upload Proof (Optional) Input - NOW AFTER INFO SECTIONS AND DEPOSIT AMOUNT */}
+                
                     <div>
                       <label htmlFor="uploadProof" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
                         Upload Proof (Optional)
@@ -306,11 +306,11 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
                       <div className="relative">
                         <input
                           id="uploadProof"
-                          type="text" // Using text for visual mock-up, can be changed to type="file"
+                          type="text" 
                           placeholder="click to upload your deposit slip"
                           className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-[#5604F6]
                                      font-inter font-normal text-sm leading-[145%] tracking-normal placeholder-[#98A2B3] pr-10"
-                          readOnly // To prevent direct typing, implying click-to-upload
+                          readOnly 
                         />
                         <div className="absolute inset-y-0 right-0 flex items-center px-2 text-[#98A2B3] cursor-pointer">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -324,7 +324,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
             </>
             )}
         </div>
-        {/* Footer Button for Fund Wallet Modal */}
+  
         <div className="p-8 pt-0">
           {selectedPaymentMethod === 'onlineBanking' && (
             <button
@@ -338,14 +338,14 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
           {selectedPaymentMethod === 'manualDeposit' && (
             <div className="flex justify-center gap-4">
               <button
-                onClick={onClose} // Cancel button closes the main modal
+                onClick={onClose} 
                 className="w-full h-[44px] bg-white border-[1px] border-[#E6E7EA] shadow-[0px_1px_2px_0px_#0520510D] text-[#121212]/80 font-urbanist font-semibold text-base leading-[24px] tracking-normal capitalize rounded-lg
                            hover:bg-gray-100 transition-colors duration-200"
               >
                 Cancel
               </button>
               <button
-                // onClick={handleSubmitDeposit} // Implement actual submit logic here
+                
                 className="w-full h-[44px] bg-[#5604F6] text-white font-urbanist font-semibold text-sm leading-none tracking-[0.02em] capitalize rounded-lg
                            hover:bg-[#4a03e0] active:text-[#2E0234] transition-colors duration-200"
               >
@@ -356,11 +356,11 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
         </div>
       </div>
 
-      {/* Confirmation Modal - Conditionally rendered (remains unchanged) */}
+   
       {showConfirmModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-[12px] shadow-lg w-[500px] h-[280px] relative">
-            {/* Close Button for Confirmation Modal */}
+           
             <button
               onClick={handleCancelConfirm}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -377,9 +377,9 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
               </svg>
             </button>
 
-            {/* Main content wrapper for title, subtitle, and buttons */}
+           
             <div className="w-[490px] h-[209px] pt-6 pr-5 pb-3 pl-5 gap-6 absolute top-[35.5px] left-[5px] flex flex-col justify-center items-center">
-              {/* Confirmation Modal Header */}
+            
               <div className="text-center w-full">
                 <h2 className="font-urbanist font-semibold text-2xl leading-[24px] tracking-normal capitalize text-black mb-2">
                   Confirm Online Payment
@@ -391,7 +391,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
                 </p>
               </div>
 
-              {/* Confirmation Modal Buttons Wrapper */}
+              
               <div className="w-[338px] h-[44px] flex justify-center gap-6">
                 <button
                   onClick={handleCancelConfirm}

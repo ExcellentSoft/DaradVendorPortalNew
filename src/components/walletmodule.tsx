@@ -1,10 +1,10 @@
-// components/CustomerWalletHistory.tsx
+
 
 import React, { useState } from 'react';
-import FundWalletForm from './FundWalletForm'; // Import the new component
+import FundWalletForm from './FundWalletForm'; 
 
 const CustomerWalletHistory: React.FC = () => {
-  // Sample data for the table - in a real application, this would come from an API
+ 
   const transactions = [
     {
       id: 1,
@@ -53,9 +53,9 @@ const CustomerWalletHistory: React.FC = () => {
     },
   ];
 
-  // State to manage the active tab for table filtering
+  
   const [activeTab, setActiveTab] = useState('allTransactions');
-  // New state to manage the current view (history table or fund form)
+ 
   const [showFundForm, setShowFundForm] = useState(false);
 
   const handleTabClick = (tabName: string) => {
@@ -79,16 +79,16 @@ const CustomerWalletHistory: React.FC = () => {
       className="absolute w-[950px] h-[782px] top-[148px] left-[290px] rounded-2xl bg-white shadow-md
                  flex flex-col gap-0"
     >
-      {/* Header/Navigation Bar */}
+  
       <header
         className="relative w-full h-[99px] left-[1px] rounded-t-2xl
                    border-b border-[#121212]/10 p-5 gap-2
                    bg-[#2E0234] text-white flex items-center justify-between"
       >
-        {/* New div for title and review text */}
+        
         <div className="flex flex-col w-[426px] h-[59px] gap-2">
           <h1 className="text-2xl font-semibold">Customer Wallet Fund History</h1>
-          {/* Extracted review text */}
+         
           <p className="text-sm text-gray-200">
             Review customer proof of payment and fund wallets accordingly
           </p>
@@ -102,11 +102,11 @@ const CustomerWalletHistory: React.FC = () => {
         </button>
       </header>
 
-      {/* Main Content Area - now only contains Tab Navigation and Search */}
+     
       <div className="p-6">
-        {/* Tab Navigation and Search */}
+   
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-          {/* Tab button container */}
+        
           <div
             className="flex rounded border-b border-[#121212]/10 gap-3
                        pt-3 pr-5 pb-3 pl-5 bg-white"
@@ -160,7 +160,7 @@ const CustomerWalletHistory: React.FC = () => {
               Deleted
             </button>
           </div>
-          {/* Search Input field and Icon container */}
+          
           <div className="relative w-[272px] h-[44px]">
             <input
               type="text"
@@ -190,14 +190,14 @@ const CustomerWalletHistory: React.FC = () => {
         </div>
       </div>
 
-      {/* Transaction Table Wrapper div */}
+   
       <div
         className="absolute w-[912px] h-[556px] top-[226px] left-[19px] rounded-t-[16px] overflow-hidden bg-white border border-[#D2D1D6]"
       >
         <table className="min-w-full divide-y divide-gray-200 table-fixed">
           <thead className="bg-[#C2C3C5] h-[76px]">
             <tr>
-              {/* Customer Email header width adjusted and is now the first header */}
+            
               <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left w-[191px]">
                 Customer Email
               </th>
@@ -211,11 +211,11 @@ const CustomerWalletHistory: React.FC = () => {
                 <div className="px-2">Amount Paid</div>
                 <div>(₦)</div>
               </th>
-              {/* Bank Account Name - width increased to w-[144px] */}
+             
               <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-center w-[144px]">
                 Bank Account Name
               </th>
-              {/* Paid From Bank - text-left changed to text-center */}
+             
               <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-center w-[120px]">
                 Paid From Bank
               </th>
@@ -230,7 +230,7 @@ const CustomerWalletHistory: React.FC = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {transactions.map((transaction) => (
               <tr key={transaction.id}>
-                {/* 1. Customer Email */}
+              
                 <td
                   className="px-3 py-4 w-[191px] flex items-center justify-start"
                   style={{ verticalAlign: 'middle' }}
@@ -245,7 +245,7 @@ const CustomerWalletHistory: React.FC = () => {
                     >
                       {transaction.id}
                     </div>
-                    {/* Applying Group 1 styles to customerEmail span */}
+                    
                     <span
                       className="font-medium text-base leading-[160%] capitalize text-[#121212] min-w-0 flex-grow break-words"
                     >
@@ -253,46 +253,42 @@ const CustomerWalletHistory: React.FC = () => {
                     </span>
                   </div>
                 </td>
-                {/* 2. Depositor Name */}
-                {/* Applying Group 2 styles to Depositor Name td */}
+              
                 <td
                   className="px-3 py-4 whitespace-nowrap font-normal text-base leading-[100%] text-center text-[#121212]/80 w-[150px] overflow-hidden text-ellipsis"
                   style={{ verticalAlign: 'middle' }}
                 >
                   {transaction.depositorName}
                 </td>
-                {/* 3. Amount Paid */}
-                {/* Applying Group 2 styles to Amount Paid td */}
+               
                 <td
                   className="px-3 py-4 whitespace-nowrap font-normal text-base leading-[100%] text-center text-[#121212]/80 w-[100px]"
                   style={{ verticalAlign: 'middle' }}
                 >
                   {transaction.amountPaid}
                 </td>
-                {/* 4. Bank Account Name - width increased to w-[144px] */}
+              
                 <td
                   className="px-3 py-4 whitespace-nowrap font-medium text-base leading-[160%] capitalize text-[#121212] w-[144px] overflow-hidden text-ellipsis text-left"
                   style={{ verticalAlign: 'middle' }}
                 >
                   {transaction.bankAccountName}
                 </td>
-                {/* 5. Paid From Bank */}
-                {/* Applying Group 1 styles to Paid From Bank td */}
+               
                 <td
                   className="px-3 py-4 whitespace-nowrap font-medium text-base leading-[160%] capitalize text-[#121212] w-[120px] overflow-hidden text-ellipsis text-left"
                   style={{ verticalAlign: 'middle' }}
                 >
                   {transaction.paidFromBank}
                 </td>
-                {/* 6. Paid Date */}
-                {/* Applying Group 1 styles to Paid Date td */}
+              
                 <td
                   className="px-3 py-4 whitespace-nowrap font-medium text-base leading-[160%] capitalize text-[#121212] w-[100px] text-left"
                   style={{ verticalAlign: 'middle' }}
                 >
                   {transaction.paidDate}
                 </td>
-                {/* 7. Action - No changes requested */}
+             
                 <td
                   className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium w-[70px]"
                   style={{ verticalAlign: 'middle' }}
