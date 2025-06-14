@@ -1,66 +1,25 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import { FiEdit2 } from "react-icons/fi";
-import AccountPreferences from "./accountpreference";
-import BusinessForm from "./business";
-import NotificationsPage from "./notification";
-import SecuritySettingsPage from "./security";
-import PaymentSettings from "./payment";
 
-const ProfileForm: React.FC = () => {
+const BusinessForm: React.FC = () => {
   const [name, setName] = useState("Temitope Soremekun");
   const [email] = useState("temitopesoremekun2@gmail.com");
   const [phone, setPhone] = useState("09029717250");
-const [activeTab, setActiveTab] = useState("Profile");
 
   const [isEditingName] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Tabs */}
-
-
-           <h2 className="text-xl font-semibold text-gray-800 mb-1">
-          Update Your Profile – Keep Your Account Up To Date
-        </h2>
-        <p className="text-gray-800  mb-6 p-6">
-          Manage your personal details, contact information, and preferences effortlessly.
-        </p>
-        <div className="flex space-x-2 bg-white p-2 rounded-lg shadow mb-6">
-       {[
-  "Profile",
-  "Account Preference",
-  "Account Management",
-  "Business",
-  "Notification",
-  "Payment",
-  "Security",
-].map((tab, i) => (
-  <button
-    key={i}
-    onClick={() => setActiveTab(tab)}
-    className={`px-4 py-2 rounded-md text-sm ${
-      activeTab === tab
-        ? "bg-[#5F04F6] text-white"
-        : "text-gray-700 hover:bg-gray-100"
-    }`}
-  >
-    {tab}
-  </button>
-))}
-
-        </div>
-
-        {/* Profile Info Section */}
-      <div className="flex justify-center  ">
-         {activeTab === "Profile" && (
-      <div className="w-full max-w-lg bg-white  shadow-md">
+       <div className="w-full max-w-lg  ">
+       <div className="w-full max-w-[1000px] bg-white rounded-t-xl   ">
         {/* Header */}
-        <div className="bg-[#2E0234] rounded-t-xl  w-full max-w-lg text-white text-center py-4 mb-6">
-          <h2 className="text-lg font-semibold">Profile Information Section</h2>
-          <p className="text-sm">Your profile details help us personalize your experience on My Darads.</p>
-        </div>
+      <div className="w-full max-w-[1000px]    text-black border-b border-[#1212121A] text-center py-4 mb-6">
+  <h2 className="text-lg font-semibold mb-2">Take Full Control of Your Store</h2>
+  <p className="w-96 mx-auto text-Color/80 text-sm font-normal leading-snug">
+    Manage your store details, business operations, and visibility settings effortlessly.
+  </p>
+</div>
+
 
         {/* Profile Image Upload */}
         <div className="flex flex-col items-center mb-6   relative">
@@ -165,29 +124,9 @@ const [activeTab, setActiveTab] = useState("Profile");
           </button>
         </div>
       </div>
-        )}
-
-
-          {activeTab === "Account Preference" && (
-<AccountPreferences/>
-  )}
-
-          {activeTab === "Business" && (
-<BusinessForm/>
-  )}
-           {activeTab === "Notification" && (
-<NotificationsPage/>
-  )}
-            {activeTab === "Security" && (
-<SecuritySettingsPage/>
-  )}
-             {activeTab === "Payment" && (
-<PaymentSettings/>
-  )}
-    </div>
       </div>
-    </div>
+   
   );
 };
 
-export default ProfileForm;
+export default BusinessForm;
