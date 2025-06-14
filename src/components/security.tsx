@@ -8,12 +8,12 @@ export default function SecuritySettingsPage() {
     const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [deviceList] = useState([
+const [deviceList] = useState([
+  { id: 1, device: '📱 iPhone 13', location: 'Lagos, NG', time: ' Active Now' },
+  { id: 2, device: ' 💻 MacBook Pro ', location: 'Lagos, NG', time: ' Active 2 Days Ago' },
+  { id: 3, device: '🖥️ Windows PC ', location: 'Abuja, NG', time: ' Active 1 week ago' },
+]);
 
-    { id: 1, device: '📱 iPhone 13', location: 'Lagos, NG', time: ' Active Now' },
-        { id: 1, device: ' 💻 MacBook Pro ', location: 'Lagos, NG', time: ' Active 2 Days Ago' },
-    { id: 2, device: '🖥️ Windows PC ', location: 'Abuja, NG', time: ' Active 1 week ago' },
-  ]);
 
   return (
          <div className="w-full bg-white  shadow-md">

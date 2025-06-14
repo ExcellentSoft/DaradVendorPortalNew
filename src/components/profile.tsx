@@ -5,6 +5,7 @@ import BusinessForm from "./business";
 import NotificationsPage from "./notification";
 import SecuritySettingsPage from "./security";
 import PaymentSettings from "./payment";
+import AccountManagent from "./accountmanagement";
 
 const ProfileForm: React.FC = () => {
   const [name, setName] = useState("Temitope Soremekun");
@@ -183,6 +184,9 @@ const [activeTab, setActiveTab] = useState("Profile");
   )}
              {activeTab === "Payment" && (
 <PaymentSettings/>
+  )}
+               {activeTab === "Account Management" && (
+<AccountManagent/>
   )}
     </div>
       </div>

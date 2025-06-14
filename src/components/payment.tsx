@@ -6,11 +6,13 @@ export default function PaymentSettings() {
   const [showConfirmPin, setShowConfirmPin] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 md:p-8 font-sans">
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 max-w-6xl mx-auto">
+   <div className="min-h-screen bg-gray-100 p-4 md:p-8 font-sans w-full">
+  <div className="grid grid-cols-1 md:grid-cols-10 gap-4 w-full">
         {/* Left Panel */}
-        <div className="md:col-span-2 bg-white rounded-lg shadow p-6">
-          <div className="bg-purple-900 text-white p-4 rounded-md mb-6">
+
+          <div className="bg-white  h-[550px] rounded-t-md md:col-span-6">
+        {/* Header */}
+        <div className="bg-[#2E0234] rounded-t-xl  w-full max-w-lg text-white text-center p-4 mb-6">
             <h2 className="text-lg font-semibold">
               💳 Payment Settings – Manage Your Payouts
             </h2>
@@ -19,10 +21,10 @@ export default function PaymentSettings() {
             </p>
           </div>
 
-          <form className="space-y-4">
+          <form className="space-y-8 p-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Bank Name</label>
-              <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+              <select className="w-full border border-gray-300 text-gray-700 rounded-md px-3 py-3 text-sm">
                 <option value="">Select your bank</option>
                 <option value="gtb">GTBank</option>
                 <option value="access">Access Bank</option>
@@ -37,7 +39,7 @@ export default function PaymentSettings() {
                 type="text"
                 maxLength={10}
                 placeholder="Enter your 10-digit account number"
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+                className="w-full border border-gray-300 text-gray-700 rounded-md px-3 py-3 text-sm"
               />
             </div>
 
@@ -48,7 +50,7 @@ export default function PaymentSettings() {
                   type={showPin ? 'text' : 'password'}
                   maxLength={4}
                   placeholder="Create a 4-digit PIN"
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm pr-10"
+                  className="w-full border border-gray-300 rounded-md px-3 py-3 text-sm pr-10"
                 />
                 <button
                   type="button"
@@ -64,7 +66,7 @@ export default function PaymentSettings() {
                   type={showConfirmPin ? 'text' : 'password'}
                   maxLength={4}
                   placeholder="Re-enter PIN"
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm pr-10"
+                  className="w-full border border-gray-300 rounded-md px-3 py-3 text-sm pr-10"
                 />
                 <button
                   type="button"
@@ -78,7 +80,7 @@ export default function PaymentSettings() {
 
             <button
               type="submit"
-              className="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded-md text-sm font-medium"
+              className="w-full bg-purple-700 hover:bg-purple-800 text-white py-3 px-4 rounded-md text-sm font-medium"
             >
               Save Changes
             </button>
@@ -86,17 +88,17 @@ export default function PaymentSettings() {
         </div>
 
         {/* Right Panel */}
-        <div className="md:col-span-3 bg-white rounded-lg shadow p-6">
+        <div className="md:col-span-4 bg-white rounded-lg px-3 py-2">
           <div className="mb-4">
             <h3 className="text-sm font-semibold text-gray-800 mb-2">Recent Payment</h3>
             <div className="flex gap-2 text-xs text-gray-600">
-              <button className="bg-gray-200 px-2 py-1 rounded">All</button>
-              <button className="bg-gray-200 px-2 py-1 rounded">Withdrawal</button>
-              <button className="bg-gray-200 px-2 py-1 rounded">Transfer To Account Wallet</button>
+              <button className="bg-gray-200 p-1 rounded">All</button>
+              <button className="bg-white px-1 border border-[#1212121A] rounded">Withdrawal</button>
+              <button className="bg-white px-1 border border-[#1212121A] rounded">Transfer To Account Wallet</button>
             </div>
           </div>
 
-          <ul className="space-y-3 max-h-[400px] overflow-y-auto text-sm">
+          <ul className="space-y-3 max-h-[600px]  text-sm">
             {Array(6).fill(null).map((_, i) => (
               <li key={i} className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-gray-200"></div>
