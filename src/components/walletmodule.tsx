@@ -82,13 +82,13 @@ const CustomerWalletHistory: React.FC = () => {
 
   return (
     <div
-      className="absolute w-[950px] h-[782px] top-[148px] left-[290px] rounded-2xl bg-white shadow-md
-                 flex flex-col gap-0"
+      className=" border rounded-2xl bg-white 
+                 "
     >
  
       <header
-        className="relative w-full h-[99px] left-[1px] rounded-t-2xl
-                   border-b border-[#121212]/10 p-5 gap-2
+        className=" w-full  rounded-t-2xl
+                    p-5 gap-2
                    bg-[#2E0234] text-white flex items-center justify-between"
       >
        
@@ -200,10 +200,10 @@ const CustomerWalletHistory: React.FC = () => {
 
    
       <div
-        className="absolute w-[912px] h-[556px] top-[226px] left-[19px] rounded-t-[16px] overflow-hidden bg-white border border-[#D2D1D6]"
+        className=" w-[912px] h-[556px] m-4  rounded-md overflow-hidden bg-white border border-[#D2D1D6]"
       >
         <table className="min-w-full divide-y divide-gray-200 table-fixed">
-          <thead className="bg-[#C2C3C5] h-[76px]">
+          <thead className="bg-[#C2C3C5] h-[76px] rounded-t-lg">
             <tr>
            
               <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left w-[191px]">
