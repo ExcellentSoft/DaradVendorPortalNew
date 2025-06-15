@@ -3,7 +3,8 @@ import FundWalletModal from './fundwalletmodal';
 import Image from "next/image";
 
 
-const FundWallet: React.FC = () => {
+const FundWalletForm: React.FC = () => {
+
   const [showFundWalletModal, setShowFundWalletModal] = useState(false);
 
   const handleSendButtonClick = () => {
@@ -153,4 +154,4 @@ const FundWallet: React.FC = () => {
   );
 };
 
-export default FundWallet;
+export default FundWalletForm;

@@ -56,7 +56,9 @@ const [selectedPromotionTab, setSelectedPromotionTab] = useState<string>('Curren
     {
       section: 'Finance & Transactions',
       items: [
-        { icon: '/wallet.svg', label: 'Wallet' },
+        { icon: '/wallet.svg', label: 'Wallet' ,children: ['Sales Wallet', 'Account Wallet','Fund Customer Wallet'],
+
+        },
        
            {
       icon: '/transaction.svg',
