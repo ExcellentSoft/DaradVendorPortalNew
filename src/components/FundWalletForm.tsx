@@ -1,36 +1,22 @@
-// components/FundWalletForm.tsx
+
 
 import React, { useState } from 'react';
-import FundWalletModal from './FundWalletModal'; // Import the new component
+import FundWalletModal from './FundWalletModal'; 
 
-// NOTE: For 'Urbanist' and 'Inter' font families to work,
-// ensure they are configured in your tailwind.config.js file:
-/*
-  module.exports = {
-    theme: {
-      extend: {
-        fontFamily: {
-          urbanist: ['Urbanist', 'sans-serif'],
-          inter: ['Inter', 'sans-serif'],
-        },
-      },
-    },
-  };
-*/
 
 interface FundWalletFormProps {
-  onGoBack?: () => void; // Optional handler to go back to the previous view
+  onGoBack?: () => void; 
 }
 
 const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
-  const [showFundWalletModal, setShowFundWalletModal] = useState(false); // New state to control modal visibility
+  const [showFundWalletModal, setShowFundWalletModal] = useState(false); 
 
   const handleSendButtonClick = () => {
-    setShowFundWalletModal(true); // Show the new modal when button is clicked
+    setShowFundWalletModal(true); 
   };
 
   const handleCloseModal = () => {
-    setShowFundWalletModal(false); // Function to close the modal
+    setShowFundWalletModal(false); 
   };
 
   return (
@@ -59,13 +45,13 @@ const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
           </div>
         </header>
 
-        {/* Main Content Area - pb-6 changed to pb-12 here */}
+     
         <div
           className="absolute w-[500px] h-[605px] top-[24px] left-[75px]
                      rounded-lg border border-[#121212]/20
                      relative pb-12" // Increased bottom padding by 24px (from pb-6 to pb-12)
         >
-          {/* Search Input for Customer container div */}
+       
           <div
             className="absolute w-[336px] h-[44px] top-[24px] left-0 right-0 mx-auto
                        rounded-lg bg-[#FBFCFC] border border-[#121212]/20
@@ -96,13 +82,13 @@ const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
             </svg>
           </div>
 
-          {/* New Horizontal Line */}
+       
           <div
             className="absolute w-[500px] h-[1px] top-[92px] left-0 right-0 mx-auto
                        rounded-md bg-[#121212]/10"
           ></div>
 
-          {/* Funding Details Section Container Div - Now fixed width for centering */}
+   
           <div className="absolute w-[400px] top-[113px] left-0 right-0 mx-auto
                            p-6">
             <h2 className="font-urbanist font-bold text-base leading-[16px] tracking-[0.04em] capitalize text-[#121212] mb-2 text-center">Enter Funding Details</h2>
@@ -110,7 +96,7 @@ const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
               Specify the amount and choose a funding method.
             </p>
 
-            {/* Amount to Credit - Wrapped div, now w-full of its 352px parent */}
+           
             <div className="w-full mb-6">
               <label htmlFor="amountToCredit" className="block font-inter font-normal text-xs leading-[12px] tracking-normal text-[#121212]/80 mb-2">
                 Amount to Credit
@@ -124,11 +110,11 @@ const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
                   className="w-full h-[43px] rounded-lg border border-[#1E0156] bg-[#FBFCFC]
                              pl-9 pr-4 py-3 focus:outline-none text-lg text-[#121212] font-semibold"
                 />
-                {/* Original SVG icon removed */}
+             
               </div>
             </div>
 
-            {/* Confirm Customer Email - Wrapped div, now w-full of its 352px parent */}
+
             <div className="w-full mb-6">
               <label htmlFor="confirmEmail" className="block font-inter font-normal text-xs leading-[12px] tracking-normal text-[#121212]/80 mb-2">
                 Confirm Customer Email
@@ -142,11 +128,11 @@ const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
               />
             </div>
 
-            {/* Transfer From - Spacing adjusted */}
+            
             <div className="w-[295px] h-[117px] rounded-lg flex flex-col gap-[17px] pt-2 pr-3 pb-2 pl-3
                             bg-[#F8F8F8] border border-[#121212]/10 mx-auto mb-6">
               <span className="block font-inter font-normal text-xs leading-[12px] tracking-normal text-[#121212]/80">Transfer From</span>
-              <div className="flex flex-col gap-6"> {/* gap-4 changed to gap-6 (16px + 8px = 24px) */}
+              <div className="flex flex-col gap-6"> 
                 <label className="inline-flex items-center text-base text-[#121212]">
                   <input
                     type="radio"
@@ -170,13 +156,13 @@ const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
               </div>
             </div>
 
-            {/* Send Button - Typography, width, centering, and hover state adjusted */}
+         
             <button
               className="w-full h-[56px] bg-[#5604F6] text-white rounded-lg
                          flex items-center justify-center
                          font-urbanist font-semibold text-sm leading-[14px] tracking-[0.02em] capitalize
                          "
-              onClick={handleSendButtonClick} // Call the new handler
+              onClick={handleSendButtonClick} 
             >
               Send ₦75,000 From Account Wallet
             </button>
@@ -184,7 +170,7 @@ const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
         </div>
       </div>
 
-      {/* Conditionally render the new FundWalletModal */}
+      
       {showFundWalletModal && <FundWalletModal onClose={handleCloseModal} />}
     </>
   );
