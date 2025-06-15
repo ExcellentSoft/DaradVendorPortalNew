@@ -3,8 +3,9 @@ import { useState } from "react";
 import { FiX } from "react-icons/fi"; 
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
-import Overview from "../../components/AirtimeDataTopUp";
+import Overview from "../../components/overview";
 import Product from "@/components/product";
+import Support from "../../components/Brand";
 
 
 export default function Dashboard() {
@@ -20,6 +21,8 @@ export default function Dashboard() {
     switch (activePage) {
       case "Overview":
         return <Overview />;
+        case "Support":
+        return <Support />;
       case "Products":
           return <Product onOpenLogProduct={onOpenLogProduct} />;
       default:
