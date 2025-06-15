@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'; // Icon for copying
 
 const StoreLinkClaim: React.FC = () => {
-  const [defaultStoreLink, setDefaultStoreLink] = useState('www.mydarads.com/ayomidehub'); // [cite: Store link (2).png]
+  const [defaultStoreLink, setDefaultStoreLink] = useState('www.mydarads.com/ayomidehub');
   const [customStoreLink, setCustomStoreLink] = useState(''); // New state for the editable input
   const [copySuccess, setCopySuccess] = useState('');
 
@@ -25,9 +25,9 @@ const StoreLinkClaim: React.FC = () => {
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg overflow-hidden">
         {/* Header Section */}
         <div className="bg-purple-950 text-white p-6 rounded-t-lg">
-          <h1 className="text-2xl font-bold mb-2">Claim Your Unique Store Link [cite: Store link (2).png]</h1>
+          <h1 className="text-2xl font-bold mb-2">Claim Your Unique Store Link</h1>
           <p className="text-purple-200 text-sm">
-            Enhance your brand with your default store link. [cite: Store link (2).png]
+            Enhance your brand with your default store link.
           </p>
         </div>
 
@@ -35,7 +35,7 @@ const StoreLinkClaim: React.FC = () => {
         <div className="p-6">
           {/* Existing "Your Default Store Link" section */}
           <label htmlFor="default-store-link" className="block text-gray-700 text-sm font-medium mb-2">
-            Your Default Store Link [cite: Store link (2).png]
+            Your Default Store Link
           </label>
           <div className="flex items-center border border-gray-300 rounded-lg p-2 pr-0 focus-within:ring-1 focus-within:ring-purple-500 focus-within:border-purple-500 transition-all duration-200">
             <input
@@ -51,7 +51,7 @@ const StoreLinkClaim: React.FC = () => {
               className="p-3 text-gray-500 hover:text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-lg"
               title="Copy to clipboard"
             >
-              <DocumentDuplicateIcon className="h-6 w-6" /> [cite: Store link (2).png]
+              <DocumentDuplicateIcon className="h-6 w-6" />
             </button>
           </div>
           {copySuccess && (
@@ -66,7 +66,7 @@ const StoreLinkClaim: React.FC = () => {
             <input
               type="text"
               id="custom-store-link"
-              placeholder="Your unique store link" // [NEW] Placeholder
+              placeholder="Your unique store link"
               value={customStoreLink}
               onChange={(e) => setCustomStoreLink(e.target.value)}
               className="flex-grow bg-transparent outline-none text-gray-800 text-base py-2 px-3 rounded-lg"
@@ -77,7 +77,7 @@ const StoreLinkClaim: React.FC = () => {
 
           {/* Descriptive text */}
           <p className="text-sm text-gray-500 mt-3">
-            This is your unique store link provided by the platform. [cite: Store link (2).png]
+            This is your unique store link provided by the platform.
           </p>
         </div>
 
@@ -88,7 +88,7 @@ const StoreLinkClaim: React.FC = () => {
             type="submit"
             className="px-6 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200"
           >
-            Save & Continue [cite: Store link (2).png]
+            Save & Continue
           </button>
         </div>
       </div>

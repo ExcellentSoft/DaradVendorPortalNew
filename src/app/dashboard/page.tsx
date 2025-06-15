@@ -5,7 +5,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import Overview from "../../components/overview";
 import Product from "@/components/product";
-import Support from "../../components/Brand";
+import Support from "../../components/Storelink";
 
 
 export default function Dashboard() {
