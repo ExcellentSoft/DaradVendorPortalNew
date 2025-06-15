@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState, useRef } from "react";
 import { FiEdit2 } from "react-icons/fi";
 
@@ -42,7 +43,7 @@ const BusinessForm: React.FC = () => {
         <div className="flex flex-col items-center mb-6 relative">
           <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden relative">
             {profileImage ? (
-              <img src={profileImage} alt="Profile" className="w-full h-full object-cover rounded-full" />
+              <Image src={profileImage} alt="Profile" className="w-full h-full object-cover rounded-full" />
             ) : (
               <span className="text-gray-500 text-sm">No Image</span>
             )}

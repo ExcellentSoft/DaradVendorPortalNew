@@ -277,8 +277,8 @@ const [deviceList] = useState([
     </p>
 
     <select className="w-full p-3 mb-3 border rounded-t-lg bg-[#1E0156]  text-sm">
-      <option>What Is Your Mother's Maiden Name?</option>
-      <option>What Is Your First Pet's Name?</option>
+      <option>What Is Your Mother&apos;s Maiden Name?</option>
+      <option>What Is Your First Pet&apos;s Name?</option>
       <option>What Was the Name of Your First School?</option>
     </select>
 

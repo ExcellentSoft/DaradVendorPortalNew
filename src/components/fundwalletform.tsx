@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import FundWalletModal from './fundwalletmodal';
 import Image from "next/image";
-interface FundWalletFormProps {
-  onGoBack?: () => void;
-}
 
-const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
+
+const FundWalletForm: React.FC = () => {
+
   const [showFundWalletModal, setShowFundWalletModal] = useState(false);
 
   const handleSendButtonClick = () => {
@@ -28,7 +27,7 @@ const FundWalletForm: React.FC<FundWalletFormProps> = ({ onGoBack }) => {
               Fund Customer Wallet – Quick & Secure Funding
             </h1>
             <p className="font-inter font-normal text-sm leading-[160%] tracking-normal text-gray-200">
-              Easily credit your customer's wallet for seamless transactions and purchases.
+              Easily credit your customer&apos;s wallet for seamless transactions and purchases.
             </p>
           </div>
         </header>

@@ -8,7 +8,11 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  TooltipProps
 } from 'recharts';
+
+import { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
+
 
 const data = [
   { month: 'Jan', sneakers: 200, hoodie: 100, wallet: 150 },
@@ -25,7 +29,11 @@ const data = [
   { month: 'Dec', sneakers: 400, hoodie: 50, wallet: 320 },
 ];
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({
+  active,
+  payload,
+ 
+}: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white border border-gray-200 rounded-md px-4 py-2 shadow-md text-xs text-gray-700">

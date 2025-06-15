@@ -70,13 +70,11 @@ const CustomerWalletHistory: React.FC = () => {
   };
 
 
-  const handleGoBackFromForm = () => {
-    setShowFundForm(false);
-  };
+
 
 
   if (showFundForm) {
-    return <FundWalletForm onGoBack={handleGoBackFromForm} />;
+    return <FundWalletForm  />;
   }
 
 

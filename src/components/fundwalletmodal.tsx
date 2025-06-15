@@ -156,7 +156,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
             {selectedPaymentMethod === 'onlineBanking' && (
               <div className="mt-8 rounded-lg w-full h-[54px] p-6 bg-[#F8F8F8] border-[0.5px] border-[#121212]/10 flex items-center">
                 <p className="font-inter font-normal text-[15px] text-gray-700 text-center">
-                  Securely complete your transaction via your bank's online service.
+                  Securely complete your transaction via your bank&apos;s online service.
                 </p>
               </div>
             )}
@@ -418,7 +418,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
                   Confirm Online Payment
                 </h2>
                 <p className="font-inter font-normal text-sm text-[#121212]/80 text-center leading-[160%] w-[450px] h-[66px] mx-auto">
-                  You are about to be redirected to your bank's secure online portal to
+                  You are about to be redirected to your bank&apos;s secure online portal to
                   complete your payment of ₦5,000. Please ensure you have your
                   bank login credentials ready.
                 </p>
