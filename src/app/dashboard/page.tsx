@@ -18,7 +18,7 @@ import Wallet from "../../components/wallet";
 import AccountWallet from "../../components/walletmodule";
 import FundWallet from "../../components/FundWallet";
 import WebsiteStatistics from "@/components/websitestatistic";
-
+import VendorStatistics from "@/components/vendorwebsite";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview");
@@ -46,6 +46,8 @@ const renderPage = () => {
       return <Order />;
        case "Website Statistics":
       return <WebsiteStatistics />;
+case "Vendor Website Setup":
+  return <VendorStatistics  />;
 
        case "Sales Transactions":
       return <Transactions />;

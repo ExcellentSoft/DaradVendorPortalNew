@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ExportDataModal from './editcustomer'; 
 import Image from 'next/image';
+import StatisticsModal from './statisticmodal';
 
 import {
   CalendarDays,
@@ -276,8 +278,9 @@ const customers: Customer[] = [
 
 // --- Sub-components ---
 const PerformanceCard: React.FC<{ metric: PerformanceMetric }> = ({ metric }) => {
-  
+ 
 
+  
   return (
     <div className="bg-white w-[350px] h-[150px] rounded-[16px] shadow-sm p-4 flex flex-col justify-between">
       {/* Top Part: Header (Title, Icon, Dropdown) */}
@@ -353,6 +356,16 @@ const PerformanceCard: React.FC<{ metric: PerformanceMetric }> = ({ metric }) =>
 
 
 const Dashboard: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+const [exportModalOpen, setExportModalOpen] = useState(false);
+
+  const handleExport = () => {
+    console.log("Exporting data...");
+    setIsModalOpen(false);
+  };
+
+  const openModal = () => setIsModalOpen(true); 
+  const closeModal = () => setIsModalOpen(false); 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
   
@@ -469,10 +482,15 @@ const Dashboard: React.FC = () => {
            </div>
        
            {/* Export Button */}
-           <button className="flex items-center justify-center gap-2 bg-[#7C3AED] text-white text-sm px-4 py-2 rounded-md hover:bg-[#6B21A8] w-full sm:w-auto">
-             <Download size={16} />
-             Export
-           </button>
+    <button
+              onClick={openModal}
+              className="flex items-center gap-2  rounded-md px-4 py-2 text-sm text-[#FFFFF] bg-[#5604F6]"
+            >
+              <Download size={16} />
+              Export
+            </button>
+
+
          </div>
        </div>
         </div>
@@ -515,9 +533,17 @@ const Dashboard: React.FC = () => {
     </tbody>
   </table>
 </div>
+{/* Modal */}
+      {isModalOpen && (
+        <StatisticsModal isOpen={isModalOpen} onClose={closeModal} onExport={handleExport} />
+      )}
 
 
-
+ <ExportDataModal
+        isOpen={exportModalOpen}
+        onClose={() => setExportModalOpen(false)}
+        onExport={() => setExportModalOpen(false)}
+      />
         
       </div>
    
