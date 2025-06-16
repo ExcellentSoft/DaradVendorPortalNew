@@ -1,35 +1,19 @@
+import React from 'react';
 
-import React, { useState } from 'react';
-
-
-// Close Icon for the modal (reusable)
-const CloseIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
+// Removed unused CloseIcon import or declaration (if any)
 
 interface ExportDataModalProps {
   isOpen: boolean;
-  onClose: () => void;
-  onExport: () => void;
+  onClose: () => void;  // currently unused, decide if you want to use or remove
+  onExport: () => void; // currently unused, decide if you want to use or remove
 }
 
-
-const ExportDataModal: React.FC<ExportDataModalProps> = ({ isOpen, onClose, onExport }) => {
-  const [showCustomerDetails, setShowCustomerDetails] = useState(false);
-
+const ExportDataModal: React.FC<ExportDataModalProps> = ({ isOpen /*, onClose, onExport */ }) => {
   if (!isOpen) {
     return null;
   }
 
-
- 
-
-
-  // Define types and sample data for Order History
+  // Sample orders data
   interface Order {
     id: number;
     orderId: string;
@@ -38,15 +22,13 @@ const ExportDataModal: React.FC<ExportDataModalProps> = ({ isOpen, onClose, onEx
     status: 'Completed' | 'Failed';
   }
 
-
   const orders: Order[] = [
     { id: 1, orderId: '#Ord-1023', dateTime: '22 Feb 2025', amount: '₦15,000', status: 'Completed' },
     { id: 2, orderId: '#Ord-1024', dateTime: '22 Feb 2025', amount: '₦5,500', status: 'Completed' },
     { id: 3, orderId: '#Ord-1025', dateTime: '22 Feb 2025', amount: '₦150,000', status: 'Failed' },
   ];
 
-
-  // Component for Order History content
+  // OrderHistoryContent component used below
   const OrderHistoryContent: React.FC = () => {
     return (
       <div className="w-full flex flex-col items-center">
@@ -55,7 +37,6 @@ const ExportDataModal: React.FC<ExportDataModalProps> = ({ isOpen, onClose, onEx
             View All Orders History
           </a>
         </div>
-
 
         <div className="rounded-[24px] border border-[#1E0156]/10 overflow-hidden bg-white">
           <table className="min-w-full table-auto divide-y divide-[#E6E7EA]">
@@ -110,13 +91,19 @@ const ExportDataModal: React.FC<ExportDataModalProps> = ({ isOpen, onClose, onEx
     );
   };
 
+  // Render the modal content and include OrderHistoryContent to fix "unused" error
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content p-4 bg-white rounded-lg shadow-lg">
+        <h2 className="text-xl font-semibold mb-4">Export Data</h2>
 
+        {/* Render order history */}
+        <OrderHistoryContent />
 
-
- 
-
-}
-
+        {/* You can add buttons for onClose and onExport here if you want */}
+      </div>
+    </div>
+  );
+};
 
 export default ExportDataModal;
-

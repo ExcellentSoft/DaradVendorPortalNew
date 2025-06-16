@@ -135,15 +135,7 @@ interface PerformanceMetric {
 
 
 
-interface Customer {
-  id: string;
-  email: string;
-  customerName: string;
-  dateJoined: string;
-  orders: number;
-  totalSpend: string;
-  status: 'Active' | 'Inactive' | 'Pending';
-}
+
 
 
 
@@ -182,98 +174,7 @@ const performanceMetrics: PerformanceMetric[] = [
 
 
 
-const customers: Customer[] = [
-  {
-    id: '1',
-    email: 'john.doe@example.com',
-    customerName: 'John Doe',
-    dateJoined: '2023-01-15',
-    orders: 5,
-    totalSpend: '$250.00',
-    status: 'Active',
-  },
-  {
-    id: '2',
-    email: 'jane.smith@example.com',
-    customerName: 'Jane Smith',
-    dateJoined: '2023-02-20',
-    orders: 3,
-    totalSpend: '$120.50',
-    status: 'Active',
-  },
-  {
-    id: '3',
-    email: 'bob.johnson@example.com',
-    customerName: 'Bob Johnson',
-    dateJoined: '2023-03-10',
-    orders: 1,
-    totalSpend: '$45.00',
-    status: 'Inactive',
-  },
-  {
-    id: '4',
-    email: 'alice.williams@example.com',
-    customerName: 'Alice Williams',
-    dateJoined: '2023-04-01',
-    orders: 8,
-    totalSpend: '$500.00',
-    status: 'Active',
-  },
-  {
-    id: '5',
-    email: 'charlie.brown@example.com',
-    customerName: 'Charlie Brown',
-    dateJoined: '2023-05-22',
-    orders: 2,
-    totalSpend: '$75.00',
-    status: 'Pending',
-  },
-  {
-    id: '6',
-    email: 'diana.prince@example.com',
-    customerName: 'Diana Prince',
-    dateJoined: '2023-06-01',
-    orders: 10,
-    totalSpend: '$1200.00',
-    status: 'Active',
-  },
-  {
-    id: '7',
-    email: 'clark.kent@example.com',
-    customerName: 'Clark Kent',
-    dateJoined: '2023-07-10',
-    orders: 0,
-    totalSpend: '$0.00',
-    status: 'Inactive',
-  },
-  {
-    id: '8',
-    email: 'bruce.wayne@example.com',
-    customerName: 'Bruce Wayne',
-    dateJoined: '2023-08-05',
-    orders: 6,
-    totalSpend: '$300.00',
-    status: 'Active',
-  },
-  {
-    id: '9',
-    email: 'lois.lane@example.com',
-    customerName: 'Lois Lane',
-    dateJoined: '2023-09-18',
-    orders: 4,
-    totalSpend: '$180.00',
-    status: 'Active',
-  },
-  {
-    id: '10',
-    email: 'arthur.curry@example.com',
-    customerName: 'Arthur Curry',
-    dateJoined: '2023-10-25',
-    orders: 1,
-    totalSpend: '$60.00',
-    status: 'Pending',
-  },
-];
+
 
 
 // --- Sub-components ---
