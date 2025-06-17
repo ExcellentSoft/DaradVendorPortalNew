@@ -5,6 +5,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import Overview from "../../components/overview";
 import Product from "@/components/product";
+import Welcome from "@/components/welcomewallet";
 import ApiUtility from "@/components/utility";
 import Order from "@/components/Order";
 import Transactions from "@/components/salesaccount";
@@ -12,19 +13,28 @@ import AccountTransactions from "@/components/acounttransaction";
 import Promotion from "@/components/promotion";
 import CreatePromotion from "@/components/createpromotion";
 import Support from "@/components/support";
-// import Settings from "@/components/settings";
-
+import Settings from "@/components/profile";
+import Wallet from "../../components/wallet";
+import AccountWallet from "../../components/walletmodule";
+import FundWallet from "../../components/FundWallet";
+import WebsiteStatistics from "@/components/websitestatistic";
+import VendorStatistics from "@/components/vendorwebsite";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-
+ const [showWalletModal, setShowWalletModal] = useState(false);
+  const [pendingWalletPage, setPendingWalletPage] = useState<string | null>(null);
     const onOpenLogProduct = () => {
     console.log("Log Product opened");
   };
 
 const renderPage = () => {
+  if (activePage === "Sales Wallet") {
+      return <Wallet />;
+    }
+
   switch (activePage) {
     case "Overview":
       return <Overview />;
@@ -34,6 +44,10 @@ const renderPage = () => {
       return <ApiUtility />;
     case "Orders":
       return <Order />;
+       case "Website Statistics":
+      return <WebsiteStatistics />;
+case "Vendor Website Setup":
+  return <VendorStatistics  />;
 
        case "Sales Transactions":
       return <Transactions />;
@@ -49,7 +63,14 @@ const renderPage = () => {
       return <Promotion />;
       case "Support":
       return <Support/>;
-  
+   case "Settings":
+      return <Settings/>;
+        case "Fund Customer Wallet":
+      return <FundWallet/>;
+       case "Account Wallet":
+      return <AccountWallet/>;
+       case "Wallet":
+      return <Wallet/>;
     default:
       return <Overview />;
   }
@@ -80,7 +101,16 @@ const renderPage = () => {
         <FiX className="w-6 h-6 text-gray-700" />
       </button>
     </div>
-    <Sidebar setActivePage={setActivePage} />
+   <Sidebar
+          setActivePage={(page) => {
+            if (page === "Sales Wallet") {
+              setPendingWalletPage(page); 
+              setShowWalletModal(true); 
+            } else {
+              setActivePage(page);
+            }
+          }}
+        />
   </aside>
 
   {/* Main Content */}
@@ -96,6 +126,18 @@ const renderPage = () => {
 
       <div className="container">{renderPage()}</div>
     </main>
+
+
+     <Welcome
+        isOpen={showWalletModal}
+        onClose={() => {
+          setShowWalletModal(false);
+          if (pendingWalletPage) {
+            setActivePage(pendingWalletPage);
+            setPendingWalletPage(null);
+          }
+        }}
+      />
 
     {/* Footer */}
     <div className="container">
