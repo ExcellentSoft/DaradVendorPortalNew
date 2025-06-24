@@ -20,13 +20,13 @@ const ElectricityBillForm = () => {
       return;
     }
 
-    setShowModal(true); // Show confirmation modal
+    setShowModal(true); 
   };
 
   const confirmPayment = () => {
     setShowModal(false);
     alert(`Payment Confirmed: ₦${amount} for meter ${meterNumber} to ${provider}`);
-    // Proceed with actual payment logic here
+   
   };
 
 
