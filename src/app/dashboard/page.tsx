@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi"; 
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
@@ -29,6 +29,10 @@ export default function Dashboard() {
     const onOpenLogProduct = () => {
     console.log("Log Product opened");
   };
+
+
+  const [isMounted, setIsMounted] = useState(false);
+useEffect(() => setIsMounted(true), []);
 
 const renderPage = () => {
   if (activePage === "Sales Wallet") {
@@ -81,7 +85,7 @@ case "Vendor Website Setup":
   return (
     <div className="flex min-h-screen bg-gray-100">
   {/* Sidebar and overlay stay full-screen */}
-  <div
+   <div
     className={`fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden transition-opacity ${
       sidebarOpen ? "block" : "hidden"
     }`}
@@ -90,28 +94,32 @@ case "Vendor Website Setup":
 
   {/* Sidebar */}
   <aside
-    className={`
-      fixed top-0 left-0 z-50 h-full bg-white shadow transform transition-transform
-      ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-      w-64 md:w-[20%] md:translate-x-0
-    `}
-  >
-    <div className="flex justify-end md:hidden p-4">
+  className={`
+    fixed top-0 left-0 z-50 h-full bg-white shadow w-64 md:w-[20%]
+    ${sidebarOpen ? "block" : "hidden"}
+    md:block
+  `}
+
+
+>
+<div className="flex justify-end md:hidden p-4">
       <button onClick={() => setSidebarOpen(false)} aria-label="Close sidebar">
-        <FiX className="w-6 h-6 text-gray-700" />
-      </button>
-    </div>
-   <Sidebar
-          setActivePage={(page) => {
-            if (page === "Sales Wallet") {
-              setPendingWalletPage(page); 
-              setShowWalletModal(true); 
-            } else {
-              setActivePage(page);
-            }
-          }}
-        />
-  </aside>
+      {isMounted && <FiX className="w-6 h-6 text-gray-700" />}
+    </button>
+  </div>
+
+  <Sidebar
+    setActivePage={(page) => {
+      if (page === "Sales Wallet") {
+        setPendingWalletPage(page);
+        setShowWalletModal(true);
+      } else {
+        setActivePage(page);
+      }
+    }}
+  />
+</aside>
+
 
   {/* Main Content */}
   <div className="flex flex-col flex-1 md:ml-[20%]">
