@@ -85,9 +85,9 @@ const OrdersDashboard = () => {
     const COLORS = ["#EF4444", "#FACC15", "#10B981"];
 
   return (
-    <div className="p-6 space-y-6  min-h-screen">
-      {/* Header */}
-      <div className="bg-white rounded-xl shadow p-6">
+   <div className="p-4 md:p-6 space-y-6 min-h-screen">
+  {/* Header */}
+  <div className="bg-white rounded-xl shadow p-4 md:p-6">
         <h2 className="text-[24px] font-bold text-[#121212]">Orders</h2>
         <p className="text-sm text-[#121212CC] mt-1">
           Track, manage, and fulfill orders seamlessly with real-time updates and smart insights.
@@ -95,9 +95,9 @@ const OrdersDashboard = () => {
       </div>
 
       {/* Stats */}
-     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 ">
-      {/* Orders Completed */}
-      <div className="flex items-center gap-4 p-6 bg-white rounded-2xl shadow">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+    {/* Orders Completed */}
+    <div className="flex items-center gap-4 p-4 md:p-6 bg-white rounded-2xl shadow">
         <Image src="/progress.png" alt="Darads Logo" width={100} height={100} />
         <div>
          
@@ -117,7 +117,7 @@ const OrdersDashboard = () => {
       </div>
 
       {/* Total Revenue */}
-      <div className="flex items-center gap-4 px-12 py-6 bg-white rounded-2xl shadow">
+    <div className="flex items-center gap-4 p-4 md:px-12 md:py-6 bg-white rounded-2xl shadow">
         <div className="p-3  rounded-full">
            <Image src="/wallet.png" alt="Darads Logo" width={100} height={100} />
         </div>
@@ -130,10 +130,10 @@ const OrdersDashboard = () => {
     </div>
 
       {/* Breakdown Section */}
-   <div className="grid grid-cols-3 gap-6 max-h-[600px] overflow-y-auto">
-  {/* Left Side - 2/3 width */}
-  <div className="col-span-2 p-6 bg-white rounded-2xl shadow-md w-full">
-    <div className="flex justify-between items-center mb-6">
+ <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+    {/* Left Chart */}
+    <div className="col-span-1 md:col-span-2 p-4 bg-white rounded-2xl shadow-md w-full">
+      <div className="flex justify-between items-center mb-4">
       <h2 className="text-xl font-semibold text-gray-800">Revenue Breakdown</h2>
       <div className="text-sm text-[#121212CC] border border-[#12121266] px-3 py-1 rounded-md cursor-pointer">
         Last 7 days
@@ -171,12 +171,13 @@ const OrdersDashboard = () => {
   </div>
 
   {/* Right Side - 1/3 width */}
-  <div className="col-span-1 max-w-xs mx-auto p-4 bg-white rounded-xl shadow-md">
-    <div className="flex justify-end">
+    <div className="col-span-1 w-full md:max-w-xs mx-auto p-4 bg-white rounded-xl shadow-md">
+      <div className="flex justify-end mb-2">
+
       <div className="text-sm text-[#121212CC] border border-[#12121266] px-2 py-1 rounded">Last 7 days</div>
     </div>
-    <div className="flex items-center gap-3">
-     <div className="w-56 h-56">
+  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+        <div className="w-full sm:w-56 h-56 mx-auto sm:mx-0">
   <ResponsiveContainer width="100%" height="100%">
 
   <PieChart>

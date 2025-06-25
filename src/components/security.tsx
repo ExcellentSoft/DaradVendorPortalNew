@@ -18,12 +18,15 @@ const [deviceList] = useState([
   return (
          <div className="w-full bg-white  shadow-md">
         {/* Header */}
-        <div className="bg-[#2E0234] rounded-t-xl  w-full text-white text-center py-4 mb-6">
-      <h1 className="text-2xl font-bold  mb-1">Security Settings – Protect Your Account</h1>
-      <p className=" mb-6 max-w-2xl">
-        For security & your privacy. Manage your login credentials, enable extra protection, and track active devices.
-      </p>
+     <div className="bg-[#2E0234] rounded-t-xl w-full text-white text-center py-4 mb-6">
+  <div className="max-w-2xl mx-auto px-4">
+    <h1 className="text-2xl font-bold mb-1">Security Settings – Protect Your Account</h1>
+    <p className="mb-6">
+      For security & your privacy. Manage your login credentials, enable extra protection, and track active devices.
+    </p>
+  </div>
 </div>
+
            <div className="flex flex-col md:flex-row gap-6 mb-6 p-6">
       <div className="w-full md:w-[50%] bg-white rounded-2xl border border-[#1212121A]">
   <div className="text-center mb-6 border-b border-[#1212121A] py-4">
@@ -173,7 +176,8 @@ const [deviceList] = useState([
         </div>
 
         {/* Active Devices & Login History */}
-        <div className="flex flex-col md:flex-row gap-6 p-6">
+     <div className="flex flex-col md:flex-row gap-6 mb-6 p-4 md:p-6">
+
        <div className="w-full md:w-[55%] bg-white border border-[#1212121A] rounded-2xl p-6 shadow space-y-6">
   {/* Section Header */}
    <div className="mb-6 border-b border-[#1212121A] p-4">
@@ -183,7 +187,8 @@ const [deviceList] = useState([
   <p className="text-sm text-gray-500 mt-1">Track where your account is logged in and manage your access securely.</p>
   {/* Search Field */}
   </div>
-<div className="relative flex bg-[#FBFCFC] ml-40 ">
+<div className="relative flex bg-[#FBFCFC] ml-0 md:ml-40">
+
   
   <input
     type="text"

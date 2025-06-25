@@ -74,146 +74,165 @@ const statusColor = {
 
 const SalesTransactions = () => {
   return (
-    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
-      {/* Header Section */}
-      <div>
-        <div className='bg-white p-6'>
-        <h1 className="text-2xl text-gray-800 font-bold flex items-center space-x-2">
-          <span>📊</span>
-          <span>Sales Transactions</span>
-        </h1>
-        <p className="text-gray-600 mt-1">
-          View all sales payments, including timestamps, transaction status, payment methods, transfers, and withdrawals.
-        </p>
-        </div>
+   <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
+  {/* Header Section */}
+  <div>
+    <div className="bg-white p-6">
+      <h1 className="text-2xl text-gray-800 font-bold flex items-center space-x-2">
+        <span>📊</span>
+        <span>Sales Transactions</span>
+      </h1>
+      <p className="text-gray-600 mt-1">
+        View all sales payments, including timestamps, transaction status, payment methods, transfers, and withdrawals.
+      </p>
+    </div>
 
-        {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-  <div className="bg-white p-6 rounded-2xl min-h-[150px]">
+    {/* ✅ Summary Cards - responsive grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+      <div className="bg-white p-6 rounded-2xl min-h-[150px]">
+        <p className="text-gray-500 text-sm">Total Revenue Generated</p>
+        <p className="font-semibold text-xl">₦0.00</p>
+      </div>
+      <div className="bg-white p-6 rounded-2xl">
+        <p className="text-gray-500 text-sm">Total Amount Withdrawn</p>
+        <p className="font-semibold text-xl">₦0.00</p>
+      </div>
+      <div className="bg-white p-6 rounded-2xl">
+        <p className="text-gray-500 text-sm">Total Revenue Generated</p>
+        <p className="font-semibold text-xl">₦0.00</p>
+      </div>
+    </div>
+  </div>
 
-            <p className="text-gray-500 text-sm">Total Revenue Generated</p>
-            <p className="font-semibold text-xl">₦0.00</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl">
-            <p className="text-gray-500 text-sm">Total Amount Withdrawn</p>
-            <p className="font-semibold text-xl">₦0.00</p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl">
-            <p className="text-gray-500 text-sm">Total Revenue Generated</p>
-            <p className="font-semibold text-xl">₦0.00</p>
-          </div>
-        </div>
+  {/* History Header */}
+  <div className="bg-gray-100 p-5 rounded-lg space-y-3">
+    <div className="flex flex-col sm:flex-row justify-between gap-2">
+      <h2 className="text-lg font-semibold text-[#121212]">Transaction History</h2>
+      <RefreshCcw size={16} className="text-[#121212] cursor-pointer opacity-70 hover:opacity-100" />
+    </div>
+
+    <div className="flex flex-col sm:flex-row justify-between gap-2">
+      <p className="text-[#121212CC] text-[14px]">
+        View, manage, and track all your logs in one place.
+      </p>
+      <div className="flex gap-2 sm:gap-5 items-center text-[#12121299]">
+        <span>Page 1 of 5</span>
+        <ChevronLeft size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
+        <ChevronRight size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
+      </div>
+    </div>
+  </div>
+
+  {/* ✅ Filters & Search */}
+  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10 mb-4 font-sans text-sm">
+    <div className="relative w-full sm:w-60">
+      <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+      <input
+        type="text"
+        placeholder="Search Transaction..."
+        className="pl-10 pr-3 py-2 border border-[#E5E7EB] rounded-md w-full placeholder:text-[#6E6B7B] focus:outline-none"
+      />
+    </div>
+
+    <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-4 sm:gap-3">
+      <div className="relative w-full sm:w-40">
+        <select className="border border-[#E5E7EB] rounded-md px-6 py-2 pl-9 text-sm text-[#12121299] w-full">
+          <option>Date Range</option>
+          <option>Today</option>
+          <option>This Week</option>
+          <option>This Month</option>
+          <option>Custom Range</option>
+        </select>
+        <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
       </div>
 
- <div className="bg-gray-100 p-5 rounded-lg space-y-3">
-       <div className="flex flex-col sm:flex-row justify-between gap-2">
-                       <h2 className="text-lg font-semibold text-[#121212]">Transaction History</h2>
-                       <RefreshCcw size={16} className="text-[#121212] cursor-pointer opacity-70 hover:opacity-100" />
-                     </div>
-             
-                     <div className="flex flex-col sm:flex-row justify-between gap-2">
-                       <p className="text-[#121212CC] text-[14px]">
-                         View, manage, and track all your logs in one place.
-                       </p>
-          <div className="flex gap-2 sm:gap-5 items-center text-[#12121299]">
-            <span>Page 1 of 5</span>
-            <ChevronLeft size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
-            <ChevronRight size={16} className="cursor-pointer hover:opacity-80 border rounded-full" />
-          </div>
-        </div>
+      <div className="relative w-full sm:w-32">
+        <select className="border border-[#E5E7EB] rounded-md pl-9 px-6 py-2 text-sm text-[#12121299] w-full">
+          <option>Status</option>
+          <option>Completed</option>
+          <option>Pending</option>
+          <option>Failed</option>
+        </select>
       </div>
 
-
-
-      {/* Filter/Search Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10 mb-4 font-sans text-sm">
-        <div className="relative w-full sm:w-60">
-          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-          <input
-            type="text"
-            placeholder="Search Transaction..."
-            className="pl-10 pr-3 py-2 border border-[#E5E7EB] rounded-md w-full placeholder:text-[#6E6B7B] focus:outline-none"
-          />
-        </div>
-
-        <div className="flex flex-col sm:flex-row w-full sm:w-auto items-stretch sm:items-center gap-4 sm:gap-3">
-          <div className="relative w-full sm:w-40">
-            <select className="border border-[#E5E7EB] rounded-md px-6 py-2 pl-9 text-sm text-[#12121299] w-full">
-              <option>Date Range</option>
-              <option>Today</option>
-              <option>This Week</option>
-              <option>This Month</option>
-              <option>Custom Range</option>
-            </select>
-            <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-          </div>
-
-          <div className="relative w-full sm:w-32">
-            <select className="border border-[#E5E7EB] rounded-md pl-9 px-6 py-2 text-sm text-[#12121299] w-full">
-              <option>Status</option>
-              <option>Completed</option>
-              <option>Pending</option>
-              <option>Failed</option>
-            </select>
-          </div>
-
-          <div className="relative w-full sm:w-40">
-            <select className="border border-[#E5E7EB] rounded-md px-6 py-2 pl-9 text-sm text-[#12121299] w-full">
-              <option>Sort By</option>
-              <option>Newest</option>
-              <option>Oldest</option>
-              <option>Highest Amount</option>
-              <option>Lowest Amount</option>
-            </select>
-          </div>
-
-          <button className="flex items-center justify-center gap-2 bg-[#7C3AED] text-white text-sm px-4 py-2 rounded-md hover:bg-[#6B21A8] w-full sm:w-auto">
-            Export As Csv/Pdf
-            <Download size={16} />
-          </button>
-        </div>
+      <div className="relative w-full sm:w-40">
+        <select className="border border-[#E5E7EB] rounded-md px-6 py-2 pl-9 text-sm text-[#12121299] w-full">
+          <option>Sort By</option>
+          <option>Newest</option>
+          <option>Oldest</option>
+          <option>Highest Amount</option>
+          <option>Lowest Amount</option>
+        </select>
       </div>
 
-      {/* Transactions Table */}
-   <div className="hidden sm:block overflow-x-auto rounded-lg shadow mx-auto my-6 max-w-full text-gray-800">
-  <table className="w-full text-sm table-fixed">
-    <thead className="font-semibold">
-      <tr className="bg-gray-200 text-gray-800 text-[16px]">
-        <th className="p-4 text-left">Transaction I.D</th>
-        <th className="p-4 text-left">Date & Time</th>
-        <th className="p-4 text-left">Type</th>
-        <th className="p-4 text-left">Name/Customer</th>
-        <th className="p-4 text-left">Amount</th>
-        <th className="p-4 text-left">Wallet Balance</th>
-        <th className="p-4 text-center">Status</th>
-        <th className="p-4 text-center">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {orders.map((order, idx) => (
-        <tr key={idx} className="border-b border-[#D2D1D6] text-center">
-          <td className="py-4 px-4 flex items-center gap-3 font-semibold text-left">
-            <span className="border px-2 py-1 rounded text-xs">{idx + 1}</span>
-            {order.id}
-          </td>
-          <td className="p-4 text-left">{order.date}</td>
-          <td className="p-4 text-left">{order.product}</td>
-          <td className="p-4 font-semibold text-left">{order.customer}</td>
-          <td className="p-4 font-semibold text-left">{order.amount}</td>
-          <td className="p-4 text-left">{order.wallet}</td>
-          <td className="p-4">
-            <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColor[order.status as keyof typeof statusColor]}`}>
-              {order.status}
-            </span>
-          </td>
-          <td className="p-4 text-[24px] text-gray-800">⋮</td>
+      <button className="flex items-center justify-center gap-2 bg-[#7C3AED] text-white text-sm px-4 py-2 rounded-md hover:bg-[#6B21A8] w-full sm:w-auto">
+        Export As Csv/Pdf
+        <Download size={16} />
+      </button>
+    </div>
+  </div>
+
+  {/* ✅ Desktop Table View */}
+  <div className="hidden sm:block overflow-x-auto rounded-lg shadow mx-auto my-6 max-w-full text-gray-800">
+    <table className="w-full text-sm table-fixed">
+      <thead className="font-semibold">
+        <tr className="bg-gray-200 text-gray-800 text-[16px]">
+          <th className="p-4 text-left">Transaction I.D</th>
+          <th className="p-4 text-left">Date & Time</th>
+          <th className="p-4 text-left">Type</th>
+          <th className="p-4 text-left">Name/Customer</th>
+          <th className="p-4 text-left">Amount</th>
+          <th className="p-4 text-left">Wallet Balance</th>
+          <th className="p-4 text-center">Status</th>
+          <th className="p-4 text-center">Action</th>
         </tr>
-      ))}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {orders.map((order, idx) => (
+          <tr key={idx} className="border-b border-[#D2D1D6] text-center">
+            <td className="py-4 px-4 flex items-center gap-3 font-semibold text-left">
+              <span className="border px-2 py-1 rounded text-xs">{idx + 1}</span>
+              {order.id}
+            </td>
+            <td className="p-4 text-left">{order.date}</td>
+            <td className="p-4 text-left">{order.product}</td>
+            <td className="p-4 font-semibold text-left">{order.customer}</td>
+            <td className="p-4 font-semibold text-left">{order.amount}</td>
+            <td className="p-4 text-left">{order.wallet}</td>
+            <td className="p-4">
+              <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColor[order.status as keyof typeof statusColor]}`}>
+                {order.status}
+              </span>
+            </td>
+            <td className="p-4 text-[24px] text-gray-800">⋮</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  {/* ✅ Mobile-Friendly View */}
+  <div className="sm:hidden space-y-4 mt-6">
+    {orders.map((order, idx) => (
+      <div key={idx} className="bg-white rounded-lg p-4 shadow">
+        <div className="flex justify-between items-center">
+          <h3 className="font-semibold text-sm">#{order.id}</h3>
+          <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColor[order.status as keyof typeof statusColor]}`}>
+            {order.status}
+          </span>
+        </div>
+        <p className="text-xs text-gray-500">{order.date}</p>
+        <div className="mt-2 space-y-1 text-sm">
+          <div><strong>Type:</strong> {order.product}</div>
+          <div><strong>Customer:</strong> {order.customer}</div>
+          <div><strong>Amount:</strong> {order.amount}</div>
+          <div><strong>Balance:</strong> {order.wallet}</div>
+        </div>
+      </div>
+    ))}
+  </div>
 </div>
 
-    </div>
   );
 };
 

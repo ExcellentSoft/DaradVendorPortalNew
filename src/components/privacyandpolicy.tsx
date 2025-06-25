@@ -53,12 +53,12 @@ const TermsAndConditions: React.FC = () => {
          
    
          {/* Main Content */}
-         <main className="w-[750px] flex-1 bg-white">
+        <main className="w-full md:w-[750px] flex-1 bg-white">
            {/* Contact Us Tab */}
           
                <div className="bg-[#2E0234] text-white p-6 text-center rounded-t-lg">
                   <h2 className="text-2xl font-semibold">Privacy Policy</h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm ">
             Your data security is our priority.
           </p>
                </div>

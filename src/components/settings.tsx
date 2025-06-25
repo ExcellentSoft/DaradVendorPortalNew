@@ -7,7 +7,7 @@ export default function BusinessSettings() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
-      <div className="w-full max-w-4xl px-6">
+      <div className=" px-6">
         <h2 className="text-2xl font-semibold mb-1 text-center">Update Your Profile – Keep Your Account Up To Date</h2>
         <p className="text-center text-sm text-gray-600 mb-8">
           Manage your personal details, contact information, and preferences effortlessly.

@@ -20,9 +20,9 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="flex w-full min-h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row w-full min-h-screen bg-gray-100">
       {/* Sidebar Card */}
-      <aside className="w-[350px] p-4">
+      <aside className="w-full md:w-[350px] p-4">
         <div className="bg-white rounded-xl shadow p-8 space-y-6">
           {tabs.map((tab) => (
             <div
@@ -32,8 +32,8 @@ export default function ContactForm() {
                 ${activeTab === tab ? "bg-[#5604F6] text-white border border-white" : " text-[#121212CC] "}`}
             >
               <span
-                className={`w-8 h-8 pb-0.5  rounded-full border-2 flex items-center  justify-center text-3xl
-                  ${activeTab === tab ? " pb-0.5 border-white text-white" : "bg-gray-100 pb-0.5 border-gray-400 text-gray-400"}`}
+                className={`w-8 h-8 pb-0.5 rounded-full border-2 flex items-center justify-center text-3xl
+                  ${activeTab === tab ? "pb-0.5 border-white text-white" : "bg-gray-100 pb-0.5 border-gray-400 text-gray-400"}`}
               >
                 ●
               </span>
@@ -44,10 +44,10 @@ export default function ContactForm() {
       </aside>
 
       {/* Main Content */}
-      <main className="w-[750px] flex-1 bg-white">
+      <main className="">
         {/* Contact Us Tab */}
         {activeTab === "Contact Us" && (
-          <>
+          <main className="w-full md:w-[750px] flex-1 bg-white">
             {/* Header */}
             <div className="bg-[#2E0234] text-white p-6 text-center rounded-t-lg">
               <h1 className="text-[24px] font-semibold flex justify-center gap-4">
@@ -58,8 +58,8 @@ export default function ContactForm() {
             </div>
 
             {/* Form */}
-            <div className="mt-20 flex items-center justify-center">
-              <form className="p-6 space-y-6">
+            <div className="mt-10 md:mt-20 flex items-center justify-center px-4">
+              <form className="p-6 space-y-6 w-full max-w-xl">
                 <div>
                   <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Full Name</label>
                   <input
@@ -135,7 +135,7 @@ export default function ContactForm() {
                 <div className="flex justify-center">
                   <button
                     type="submit"
-                    className="bg-[#5604F6] w-[300px] text-white px-8 py-4 rounded-lg "
+                    className="bg-[#5604F6] w-full md:w-[300px] text-white px-8 py-4 rounded-lg "
                   >
                     Submit Request
                   </button>
@@ -144,7 +144,7 @@ export default function ContactForm() {
             </div>
 
             {/* Support Info */}
-            <div className="border-t-2 border-dashed border-purple-500 mb-6"></div>
+            <div className="border-t-2 border-dashed border-purple-500 mb-6 mt-10"></div>
             <div className="pt-4 text-sm px-4">
               <div className="bg-white rounded-lg shadow p-6 space-y-4 max-w-md mx-auto">
                 {/* Phone Support */}
@@ -177,24 +177,23 @@ export default function ContactForm() {
                 </div>
               </div>
             </div>
-          </>
+          </main>
         )}
 
         {/* Terms & Conditions Tab */}
         {activeTab === "Terms & Conditions" && (
-          <div className="">
-            <TermsandCondition />
-          </div>
+        <div className="p-4 md:p-8 overflow-auto max-h-screen">
+  <TermsandCondition />
+</div>
+
         )}
 
         {/* Privacy Policy Tab */}
-       {/* Privacy Policy Tab */}
-{activeTab === "Privacy Policy" && (
-  <div className="">
-    <Policy />
-  </div>
-)}
-
+        {activeTab === "Privacy Policy" && (
+          <div className="p-4 md:p-8 overflow-auto max-h-screen">
+            <Policy />
+          </div>
+        )}
       </main>
     </div>
   );

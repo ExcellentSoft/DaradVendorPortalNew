@@ -1,11 +1,10 @@
 "use client";
-
-import Image from "next/image";
+import { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import Link from "next/link";
 import axios from "axios";
-import { useState } from "react";
+
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 
@@ -20,7 +19,11 @@ export default function LoginPage() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
+const [mounted, setMounted] = useState(false);
 
+useEffect(() => {
+  setMounted(true);
+}, []);
   const validateEmail = (email: string): boolean => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -132,8 +135,9 @@ export default function LoginPage() {
         <div className="flex w-full h-[900px]">
           <div className="flex flex-col w-full md:w-[760px]">
             <div className="flex bg-white p-8 w-full">
-              <Image src="/logo.svg" alt="Darads Logo" width={40} height={40} />
-              <Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
+           <img src="/logo.svg" alt="Darads Logo" width="40" height="40" />
+<img src="/logo-name.svg" alt="Darads Logo" width="152" height="40" />
+
             </div>
 
             {error && <div className="text-red-600 text-center">{error}</div>}
@@ -174,9 +178,12 @@ export default function LoginPage() {
                       passwordError ? "border border-red-500" : "border border-[#E3E5E5]"
                     }`}
                   />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-4 text-gray-500">
-                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
+                  {mounted && (
+  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-4 text-gray-500">
+    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+)}
+
                 </div>
                 <p className={`text-sm w-full ${passwordError ? "text-red-500" : "text-[#121212B3]"} mb-4`}>
                   {passwordError || "Password can’t be empty—enter yours."}
@@ -212,14 +219,14 @@ export default function LoginPage() {
               </div>
 
               <button className="w-full max-w-[350px] flex items-center justify-start gap-3 pl-6 mt-4 text-[16px] text-[#121212CC] border py-4 rounded-lg font-medium">
-                <Image src="/google.svg" alt="Google" width={20} height={20} />
+                <img src="/google.svg" alt="Google" width={20} height={20} />
                 Continue With Google
               </button>
             </div>
           </div>
 
           <div className="w-[520px] relative hidden md:block">
-            <Image src="/female.svg" alt="Happy vendor" layout="fill" objectFit="cover" className="rounded-r-lg" />
+            <img src="/female.svg" alt="Happy vendor"  className="rounded-r-lg" />
           </div>
         </div>
 

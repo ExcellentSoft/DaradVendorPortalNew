@@ -37,7 +37,7 @@ export default function Home() {
   <div className="flex justify-between items-center bg-[#F8F8F8] p-4 mt-4 rounded-md">
     <div>
       <p className="text-gray-500 text-sm">Daily Sales Stats</p>
-      <p className="font-medium">₦150,000 Sales Today</p>
+      <p className="font-medium text-gray-500">₦150,000 Sales Today</p>
     </div>
     <Image src="/Line.svg" alt="trend" width={96} height={24} />
 
@@ -46,7 +46,7 @@ export default function Home() {
   {/* Pending Withdrawal */}
   <div className="bg-[#F8F8F8] p-4 rounded-md">
     <p className="text-gray-500 text-sm">Pending Withdrawal</p>
-    <p className="text-sm">Next Withdrawal Available On Mar 05, 2025</p>
+    <p className="text-sm text-gray-500">Next Withdrawal Available On Mar 05, 2025</p>
   </div>
 
   {/* Recent Transaction */}
@@ -85,7 +85,7 @@ export default function Home() {
       <div className='flex  bg-[#F8F8F8] p-2'>
         <div>
         <p className="text-gray-500 text-sm">Daily Credit</p>
-        <p className="text-sm">₦35,000 credited today</p>
+        <p className="text-sm text-gray-500">₦35,000 credited today</p>
          
         </div>
        
@@ -97,7 +97,7 @@ export default function Home() {
         <div className='flex justify-between bg-[#F8F8F8] p-2'>
         <div>
           <p className="text-gray-500 text-sm">Transaction Count</p>
-          <p className="font-medium">12 transactions today</p>
+          <p className="font-medium text-gray-500">12 transactions today</p>
          
         </div>
         <Image src="/Line.svg" alt="trend" width={96} height={24} />
