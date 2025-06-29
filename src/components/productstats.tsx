@@ -32,7 +32,7 @@ const ProductsOrders = () => {
                  
     },
     {
-      title: "Phone Numbers",
+      title: "Verification Numbers",
       sold: 150,
       revenue: "₦450,000",
       icon:  <Image src="/phone.svg" alt="Darads Logo" width={40} height={40} />

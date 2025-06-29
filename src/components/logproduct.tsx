@@ -55,7 +55,7 @@ const logtypeData = [
           <p className="text-[14px] text-[#121212CC]">Sell logs efficiently with seamless uploads and easy management.</p>
         </div>
          <div className="flex gap-4">
-          <button className="bg-[#E6D9FE]  text-[#5604F6] px-6 py-3 rounded-md text-sm font-medium">Create New Log Type</button>
+          <button className="bg-[#E6D9FE]  text-[#5604F6] px-6 py-3 rounded-md text-sm font-medium"> Log Type</button>
           <button className="bg-[#5604F6] text-white px-6 py-3 rounded-md text-[14px] font-medium">Upload New Log</button>
         </div>
       </div>

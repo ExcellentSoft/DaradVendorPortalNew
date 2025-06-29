@@ -61,21 +61,21 @@ const GiftDashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
 
   return (
     <div className="min-h-screen p-6">
-      {/* Header */}
+       {/* Header */}
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
-        <div>
-          <h1 className="text-xl font-bold text-gray-800">Manage Gift Products For Sale.</h1>
-          <p className="text-sm text-gray-500">Effortlessly add, track, and manage your physical and digital gift inventory to boost sales and streamline operations.</p>
+        <div className=''>
+          <h1 className="font-urbanist font-bold text-2xl leading-[100%] tracking-[0.04em] capitalize text-[#121212]">Manage Gift Products For Sale.</h1>
+          <p className="font-inter font-normal text-sm leading-[160%] tracking-normal text-[#121212CC] w-[436px] mt-4">Effortlessly add, track, and manage your physical and digital gift inventory to boost sales and streamline operations.</p>
         </div>
         <div className="flex gap-2">
-          <button className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium">Create Category</button>
-          <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">Add New Gift Item</button>
+          <button className="bg-[#EEE6FE] text-[#5604F6] px-4 py-3 rounded-md text-sm font-medium w-[205px]">Create Gift Item</button>
+          <button className="bg-[#5604F6] text-white px-4 py-3 rounded-md text-sm font-medium w-[180px]">Add  Gift Item</button>
         </div>
       </div>
 
       {/* Stats */}
       <div
-        className="grid grid-cols-4 bg-[#1E0156] text-white p-6 rounded-md mb-6 bg-cover bg-center"
+        className="grid grid-cols-4 bg-[#1E0156] text-white p-16 rounded-2xl mb-6 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgImage.src})` }}
       >
         {[
