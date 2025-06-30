@@ -1,3 +1,5 @@
+
+"use client";
 import React from "react";
 import {
   CalendarDays,
@@ -135,7 +137,7 @@ export default function RecentOrders() {
     {/* Product Category */}
     <div className="relative w-full sm:w-52">
      <select className="text-center border border-[#E5E7EB] rounded-md pl-9 px-6 py-2 text-sm text-[#12121299] w-full">
-         <option>Product Category</option>
+         <option>Select Category</option>
         <option>Digital Course</option>
         <option>Phone Numbers</option>
         <option>Logs</option>

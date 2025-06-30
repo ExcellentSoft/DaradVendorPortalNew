@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
+import { IoArrowBack } from "react-icons/io5";
+
 
 type ProductCourse = {
   id: number;
@@ -49,15 +51,27 @@ const digitalCourses: DigitalCourse[] = [
   { id: 10, name: 'How To Start A P...', category: 'Entrepreneurship', date: '09/06/2025', price: '₦10,000.00', totalSales: '152 Unit', status: 'Out Of Stock' },
 ];
 
-const Digitaldashboard = () => {
+
+interface LogProductProps {
+  onGoBack: () => void;
+}
+const Digitaldashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [viewLogType, setViewLogType] = useState(true);
 
-  const onGoBack = () => setDropdownOpen(false);
+  
 
   return (
     <div className="min-h-screen p-6">
       {/* Header */}
+
+       <button
+                    onClick={onGoBack}
+                    className="w-full text-left px-4 py-3 text-sm font-semibold text-[#000000] hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    <IoArrowBack size={18} />
+                    Back
+                  </button>
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
         <div>
           <h1 className="text-xl font-bold text-gray-800">Digital Courses</h1>
@@ -72,7 +86,7 @@ const Digitaldashboard = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 bg-[#1E0156] text-white p-6 rounded-md mb-6 bg-cover bg-center" style={{ backgroundImage: `url('/assets/doodle.png')` }}>
+      <div className="grid grid-cols-4 bg-[#1E0156] text-white p-16 rounded-md mb-6 bg-cover bg-center" style={{ backgroundImage: `url('/assets/doodle.png')` }}>
         {[['Total Digital Course Uploaded', 25], ['Available Digital Course For Sale', 10], ['Total Digital Course Type Name', 20], ['Pending Customer Requests', 5]].map(([label, value], index, arr) => (
           <div key={label} className={`flex flex-col items-center px-2 ${index !== arr.length - 1 ? 'border-r-2 border-white' : ''}`}>
             <span className="text-2xl font-bold">{value}</span>
@@ -94,10 +108,10 @@ const Digitaldashboard = () => {
 
             {dropdownOpen && (
               <div className="absolute top-14 text-[#000000] left-4 w-48 bg-white border rounded-md shadow-md z-10">
-                <button onClick={() => { setViewLogType(false); onGoBack(); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                <button onClick={() => { setViewLogType(false); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
                   Digital course categories
                 </button>
-                <button onClick={() => { setViewLogType(true); onGoBack(); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                <button onClick={() => { setViewLogType(true);  }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
                   Digital course products
                 </button>
               </div>
@@ -145,7 +159,8 @@ const Digitaldashboard = () => {
         {viewLogType ? (
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <table className="min-w-full table-auto text-sm text-left">
-              <thead className="bg-gray-100 text-gray-600">
+          <thead className="px-10 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold rounded-tl-3xl bg-[#C2C3C5]">
+          
                 <tr>
                   <th className="px-4 py-3">Digital Course Name</th>
                   <th className="px-4 py-3">Category</th>
@@ -181,7 +196,8 @@ const Digitaldashboard = () => {
         ) : (
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <table className="min-w-full table-auto text-sm text-left">
-              <thead className="bg-gray-50 text-gray-600 text-sm uppercase">
+              <thead className="px-10 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold rounded-tl-3xl bg-[#C2C3C5]">
+          
                 <tr>
                   <th className="px-4 py-3">Digital Course Category</th>
                   <th className="px-4 py-3">A-Z</th>
@@ -194,18 +210,18 @@ const Digitaldashboard = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-100 text-sm">
                 {productCourses.map((course) => (
-                  <tr key={course.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3">{course.category}</td>
-                    <td className="px-4 py-3">{course.id}</td>
-                    <td className="px-4 py-3">{course.dateCreated}</td>
+                  <tr key={course.id} className="border-b border-[#D2D1D6]">
+                    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">{course.category}</td>
+                    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">{course.id}</td>
+                    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">{course.dateCreated}</td>
                     <td className="px-4 py-3 text-red-600">{course.feeDeducted}</td>
                     <td className="px-4 py-3">
                       <span className={`px-2 py-1 text-xs rounded font-medium ${course.stockStatus === 'In Stock' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                         {course.stockStatus}
                       </span>
                     </td>
-                    <td className="px-4 py-3">{course.productUnit}</td>
-                    <td className="px-4 py-3 text-gray-400">⋮</td>
+                    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">{course.productUnit}</td>
+                    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold text-gray-400">⋮</td>
                   </tr>
                 ))}
               </tbody>
