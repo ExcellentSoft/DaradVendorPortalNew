@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from "react";
 import bgImage from '../../public/assets/doodle.png';
 import { ChevronDown,ChevronRight,ChevronLeft } from "lucide-react";
-
+import { IoArrowBack } from "react-icons/io5";
 interface LogProductProps {
   onGoBack: () => void;
 }
@@ -18,27 +18,34 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   return (
     <div className="min-h-screen  p-6">
       {/* Header */}
+        <button
+                    onClick={onGoBack}
+                    className="w-full text-left px-4 py-3 text-sm font-semibold text-[#000000] hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    <IoArrowBack size={18} />
+                    Back
+                  </button>
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
         <div className=''>
-          <h1 className="text-xl font-bold text-gray-800">Manage & Sell Your Tutorials Easily</h1>
-          <p className="text-sm text-gray-500">Upload, track, and organize your educational content for maximum engagement and sales.</p>
+          <h1 className="font-urbanist font-bold text-2xl leading-[100%] tracking-[0.04em] capitalize text-[#121212]">Manage & Sell Your Tutorials Easily</h1>
+          <p className="font-inter font-normal text-sm leading-[160%] tracking-normal text-[#121212CC] w-[436px] mt-4">Upload, track, and organize your educational content for maximum engagement and sales.</p>
         </div>
         <div className="flex gap-2">
-          <button className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium">Create New Log Type</button>
-          <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">Upload New Log</button>
+          <button className="bg-[#EEE6FE] text-[#5604F6] px-4 py-3 rounded-md text-sm font-medium w-[205px]">Create tutorial type</button>
+          <button className="bg-[#5604F6] text-white px-4 py-3 rounded-md text-sm font-medium w-[180px]">Upload Tutorial</button>
         </div>
       </div>
 
       {/* Stats */}
 <div
-  className="grid grid-cols-4 bg-[#1E0156] text-white p-6 rounded-md mb-6 bg-cover bg-center"
+  className="grid grid-cols-4 bg-[#1E0156] text-white p-16 rounded-2xl mb-6 bg-cover bg-center"
   style={{ backgroundImage: `url(${bgImage.src})` }}
 >
   {[
-    ['Total tutorials Uploaded', 25],
+  ['Total tutorials Uploaded', 25],
     ['Available tutorials for Sale', 10],
-    ['Total tutorials type name', 20],
-    [' Pending Customer Requests', 5],
+    ['total tutorials type name', 20],
+    ['Pending Customer Requests', 5],
   ].map(([label, value], index, arr) => (
     <div
       key={label}
@@ -87,13 +94,7 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   Tutorial Type Name
 </button>
 
-<button
-           
-            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-            onClick={onGoBack}
-          >
-            Product
-          </button>
+
 
         </div>
       )}

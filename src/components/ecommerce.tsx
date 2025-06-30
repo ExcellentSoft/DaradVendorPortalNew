@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import bgImage from "../../public/assets/doodle.png";
 import { ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
+import { IoArrowBack } from "react-icons/io5";
+import Commerce from "../../public/assets/digital.svg";
+
 
 type Product = {
   id: number;
@@ -210,17 +213,27 @@ const categories: Category[] = [
   },
 ];
 
-const LogProductComponent = () => {
+
+
+interface LogProductProps {
+  onGoBack: () => void;
+}
+const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [viewLogType, setViewLogType] = useState(false);
 
-  const onGoBack = () => {
-    setViewLogType(false);
-  };
+  
 
   return (
     <div className="min-h-screen p-6">
       {/* Header */}
+        <button
+        onClick={onGoBack}
+        className="w-full text-left px-4 py-3 text-sm font-semibold text-[#000000] hover:bg-gray-100 flex items-center gap-2"
+      >
+        <IoArrowBack size={18} />
+        Back
+      </button>
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
         <div>
           <h1 className="text-xl font-bold text-gray-800">E-Commerce</h1>
@@ -230,7 +243,7 @@ const LogProductComponent = () => {
         </div>
         <div className="flex gap-2">
           <button className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium">
-            Create New Category
+            Create E-Commerce
           </button>
           <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">
             Upload E-Commerce Products
@@ -240,7 +253,7 @@ const LogProductComponent = () => {
 
       {/* Stats */}
       <div
-        className="grid grid-cols-4 bg-[#1E0156] text-white p-6 rounded-md mb-6 bg-cover bg-center"
+        className="grid grid-cols-4 bg-[#1E0156] text-white p-16 rounded-md mb-6 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgImage.src})` }}
       >
         {[
@@ -287,12 +300,7 @@ const LogProductComponent = () => {
                 >
                   E-Commerce Category
                 </button>
-                <button
-                  onClick={onGoBack}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                >
-                  Product
-                </button>
+               
               </div>
             )}
 
@@ -348,9 +356,9 @@ const LogProductComponent = () => {
         {viewLogType ? (
             // Log Type Name Table
           <div className="overflow-x-auto rounded-lg border border-gray-200">
-            <table className="min-w-full table-auto text-sm text-left">
-              <thead>
-          <tr className="bg-gray-100 text-left text-gray-700 text-sm">
+            <table className="max-w-[1350px]  table-auto text-[16px] text-left">
+  <thead className="bg-[#C2C3C5] text-[#121212] ">
+          <tr className="">
             <th className="py-3 px-4">Categories Name</th>
             <th className="py-3 px-4">Sub Categories</th>
             <th className="py-3 px-4">Monthly Sales</th>
@@ -363,19 +371,21 @@ const LogProductComponent = () => {
           {categories.map((cat) => (
             <tr
               key={cat.id}
-              className="border-t hover:bg-gray-50 text-sm text-gray-900"
+              className="border-b border-[#D2D1D6]"
             >
               <td className="py-3 px-4 flex items-center gap-2 font-medium">
-                <div className="w-6 h-6 bg-yellow-500 text-white text-xs flex items-center justify-center rounded-full font-bold">
+                <div className="w-6 h-6 bg-yellow-500 text-[#121212] text-xs flex items-center justify-center rounded-full font-bold">
                   {cat.id}
                 </div>
+                <div className="px-8 py-3 text-[#121212] text-[16px] ">
                 {cat.name}
+                </div>
               </td>
-              <td className="py-3 px-4">{cat.subCategories}</td>
-              <td className="py-3 px-4">{cat.monthlySales}</td>
-              <td className="py-3 px-4">{cat.totalProducts}</td>
-              <td className="py-3 px-4">{cat.dateCreated}</td>
-              <td className="py-3 px-4">{cat.lastModified}</td>
+              <td className=" text-[#121212] text-[16px] ">{cat.subCategories}</td>
+              <td className="px-8 py-3 text-[#121212] text-[16px] ">{cat.monthlySales}</td>
+              <td className="px-8 py-3 text-[#121212] text-[16px] ">{cat.totalProducts}</td>
+              <td className="px-8 py-3 text-[#121212] text-[16px] ">{cat.dateCreated}</td>
+              <td className="px-8 py-3 text-[#121212] text-[16px] ">{cat.lastModified}</td>
             </tr>
           ))}
         </tbody>
@@ -385,7 +395,7 @@ const LogProductComponent = () => {
             // Default Logs Table
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <table className="min-w-full table-auto text-sm text-left">
-              <thead className="bg-gray-100 text-gray-700">
+              <thead className="px-10 py-5 whitespace-nowrap text-[#121212] bg-[#C2C3C5] text-sm font-semibold rounded-tl-3xl">
                 <tr>
                   <th className="px-4 py-3">#</th>
                   <th className="px-4 py-3">Product Name</th>
@@ -395,18 +405,19 @@ const LogProductComponent = () => {
                   <th className="px-4 py-3">Stock</th>
                 </tr>
               </thead>
-              <tbody className="bg-white">
+              <tbody className=" text-[#121212]">
                 {products.map((product) => (
-                  <tr key={product.id} className="border-t hover:bg-gray-50">
+                  <tr key={product.id} className=" border-b border-[#D2D1D6]">
                     <td className="px-4 py-3">{product.id}</td>
                     <td className="px-4 py-3 flex items-center gap-2">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        width={30}
-                        height={30}
-                        className="rounded"
-                      />
+                     <Image
+  src={Commerce}
+  alt="Product"
+  width={30}
+  height={30}
+  className="rounded"
+/>
+
                       {product.name}
                     </td>
                     <td className="px-4 py-3">{product.category}</td>

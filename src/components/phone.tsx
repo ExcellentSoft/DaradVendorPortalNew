@@ -2,8 +2,8 @@
 
 
 
-import Image from 'next/image';
 
+import { IoArrowBack } from "react-icons/io5";
 import React, { useState } from "react";
 import bgImage from '../../public/assets/doodle.png';
 import { ChevronDown,ChevronRight,ChevronLeft } from "lucide-react";
@@ -167,6 +167,13 @@ const countries: Country[] = [
   return (
     <div className="min-h-screen  p-6">
       {/* Header */}
+        <button
+              onClick={onGoBack}
+              className="w-full text-left px-4 py-3 text-sm font-semibold text-[#000000] hover:bg-gray-100 flex items-center gap-2"
+            >
+              <IoArrowBack size={18} />
+              Back
+            </button>
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
         <div className=''>
           <h1 className="text-xl font-bold text-gray-800">Phone Numbers</h1>
@@ -180,7 +187,7 @@ const countries: Country[] = [
 
       {/* Stats */}
 <div
-  className="grid grid-cols-4 bg-[#1E0156] text-white p-6 rounded-md mb-6 bg-cover bg-center"
+  className="grid grid-cols-4 bg-[#1E0156] text-white p-16 rounded-md mb-6 bg-cover bg-center"
   style={{ backgroundImage: `url(${bgImage.src})` }}
 >
   {[
@@ -236,13 +243,7 @@ const countries: Country[] = [
   Country Dial Codes
 </button>
 
-<button
-           
-            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-            onClick={onGoBack}
-          >
-            Product
-          </button>
+
 
         </div>
       )}
@@ -286,7 +287,8 @@ const countries: Country[] = [
   // Log Type Name Table
   <div className="overflow-x-auto rounded-lg border border-gray-200">
     <table className="min-w-full table-auto text-sm text-left">
-      <thead className="bg-gray-100 text-xs font-semibold uppercase">
+      <thead className="px-10 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold rounded-tl-3xl bg-[#C2C3C5]">
+          
           <tr>
             <th className="px-4 py-3">#</th>
             <th className="px-4 py-3">Countries</th>
@@ -301,22 +303,17 @@ const countries: Country[] = [
       <tbody className="divide-y divide-gray-200">
           {countries.map((country, index) => (
             <tr key={country.id} className="hover:bg-gray-50">
-              <td className="px-4 py-3">{index + 1}</td>
+              <td className="px-4 py-3 text-[#121212] text-[16px]">{index + 1}</td>
               <td className="px-4 py-3 flex items-center gap-2">
-                <Image
-                  src={country.flag}
-                  alt={country.name}
-                  width={20}
-                  height={15}
-                  className="rounded-sm"
-                />
-                {country.name}
+                  <span className="px-4 py-3 text-[#121212] text-[16px] ">{country.flag}</span>
+                <div className='px-4 py-3 text-[#121212] text-[16px]'>{country.name}</div>
+                
               </td>
-              <td className="px-4 py-3">{country.dialCode}</td>
-              <td className="px-4 py-3">{country.dateCreated}</td>
-              <td className="px-4 py-3">{country.pricePerUnit}</td>
-              <td className="px-4 py-3">{country.productsQty}</td>
-              <td className="px-4 py-3">
+              <td className="px-4 py-3 text-[#121212] text-[16px] ">{country.dialCode}</td>
+              <td className="px-4 py-3  text-[#121212] text-[16px]">{country.dateCreated}</td>
+              <td className="px-4 py-3  text-[#121212] text-[16px]">{country.pricePerUnit}</td>
+              <td className="px-4 py-3  text-[#121212] text-[16px]">{country.productsQty}</td>
+              <td className="px-4 py-3  text-[#121212] text-[16px]">
                 <button className="text-blue-600 hover:underline text-sm">View</button>
               </td>
             </tr>
@@ -328,7 +325,8 @@ const countries: Country[] = [
   // Default Logs Table
   <div className="overflow-x-auto rounded-lg border border-gray-200">
     <table className="min-w-full table-auto text-sm text-left">
-       <thead className="bg-gray-100 text-gray-700 text-sm">
+      <thead className="px-10 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold rounded-tl-3xl bg-[#C2C3C5]">
+          
           <tr>
             <th className="px-4 py-3 text-left font-semibold">Phone Numbers</th>
             <th className="px-4 py-3 text-left font-semibold">Countries</th>
@@ -343,15 +341,15 @@ const countries: Country[] = [
       <tbody className="divide-y divide-gray-200 text-sm">
           {data.map((item, index) => (
             <tr key={index}>
-              <td className="px-4 py-3">{item.phone}</td>
+              <td className=" px-4 py-3 text-[#121212] text-[16px]">{item.phone}</td>
               <td className="px-4 py-3 flex items-center gap-2">
                 <span>{item.flag}</span>
-                <span>{item.country}</span>
+                <span className='px-4 py-3 text-[#121212] text-[16px]'>{item.country}</span>
               </td>
-              <td className="px-4 py-3">{item.date}</td>
-              <td className="px-4 py-3">{item.price}</td>
-              <td className="px-4 py-3">{item.sales}</td>
-              <td className="px-4 py-3">
+              <td className="px-4 py-3 text-[#121212] text-[16px]">{item.date}</td>
+              <td className="px-4 py-3 text-[#121212] text-[16px]">{item.price}</td>
+              <td className="px-4 py-3 text-[#121212] text-[16px]">{item.sales}</td>
+              <td className="px-4 py-3 text-[#121212] text-[16px]">
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColor[item.status]}`}>
                   {item.status}
                 </span>

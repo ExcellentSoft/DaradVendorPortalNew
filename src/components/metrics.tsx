@@ -24,12 +24,12 @@ export default function Home() {
   </div>
 
   {/* Buttons */}
-  <div className="flex space-x-3 border-b border-gray-200 w-full pb-4 mt-6">
-    <button className="border border-[#5604F6] text-indigo-600 font-medium py-1.5 px-4 rounded-md">
-      Transfer Funds
+  <div className="flex justify-center space-x-3 border-b border-gray-200 w-full pb-4 mt-6">
+    <button className="border border-[#5604F6] text-indigo-600 font-medium py-1.5 px-6 rounded-md">
+      Transfer
     </button>
-    <button className="bg-indigo-700 text-white font-medium py-1.5 px-4 rounded-md">
-      Withdraw Funds
+    <button className="bg-indigo-700 text-white font-medium py-1.5 px-6 rounded-md">
+      Withdraw
     </button>
   </div>
 
@@ -68,7 +68,7 @@ export default function Home() {
                        <Image src="/yellowwallet.svg" alt="Darads Logo" width={40} height={40} />
            
          
-          <h2 className="text-[#161A41C7] font-semibold">Sale Wallet Balance</h2>
+          <h2 className="text-[#161A41C7] font-semibold">Account wallet balance</h2>
         </div>
         <p className="text-[40px] font-bold flex justify-center text-[#121212]">₦120,000</p>
       </div>

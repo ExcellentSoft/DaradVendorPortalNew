@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import bgImage from '../../public/assets/doodle.png';
 import { ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
+import { IoArrowBack } from "react-icons/io5";
+
 
 interface GiftCategory {
   id: number;
@@ -61,21 +63,28 @@ const GiftDashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
 
   return (
     <div className="min-h-screen p-6">
-      {/* Header */}
+       {/* Header */}
+         <button
+               onClick={onGoBack}
+               className="w-full text-left px-4 py-3 text-sm font-semibold text-[#000000] hover:bg-gray-100 flex items-center gap-2"
+             >
+               <IoArrowBack size={18} />
+               Back
+             </button>
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
-        <div>
-          <h1 className="text-xl font-bold text-gray-800">Manage Gift Products For Sale.</h1>
-          <p className="text-sm text-gray-500">Effortlessly add, track, and manage your physical and digital gift inventory to boost sales and streamline operations.</p>
+        <div className=''>
+          <h1 className="font-urbanist font-bold text-2xl leading-[100%] tracking-[0.04em] capitalize text-[#121212]">Manage Gift Products For Sale.</h1>
+          <p className="font-inter font-normal text-sm leading-[160%] tracking-normal text-[#121212CC] w-[436px] mt-4">Effortlessly add, track, and manage your physical and digital gift inventory to boost sales and streamline operations.</p>
         </div>
         <div className="flex gap-2">
-          <button className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium">Create Category</button>
-          <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">Add New Gift Item</button>
+          <button className="bg-[#EEE6FE] text-[#5604F6] px-4 py-3 rounded-md text-sm font-medium w-[205px]">Create Gift Item</button>
+          <button className="bg-[#5604F6] text-white px-4 py-3 rounded-md text-sm font-medium w-[180px]">Add  Gift Item</button>
         </div>
       </div>
 
       {/* Stats */}
       <div
-        className="grid grid-cols-4 bg-[#1E0156] text-white p-6 rounded-md mb-6 bg-cover bg-center"
+        className="grid grid-cols-4 bg-[#1E0156] text-white p-16 rounded-2xl mb-6 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgImage.src})` }}
       >
         {[
@@ -119,12 +128,7 @@ const GiftDashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
                 >
                   Gift Item Product
                 </button>
-                <button
-                  onClick={onGoBack}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                >
-                  Product
-                </button>
+               
               </div>
             )}
 
@@ -192,14 +196,14 @@ const GiftDashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
           </thead>
           <tbody className="text-sm text-gray-800">
             {gifts.map((gift, index) => (
-              <tr key={index} className="border-t border-gray-200 hover:bg-gray-50">
-                <td className="p-4">{index + 1}</td>
-                <td className="p-4 truncate max-w-[180px]">{gift.name}</td>
-                <td className="p-4 truncate max-w-[180px]">{gift.category}</td>
-                <td className="p-4">{gift.dateAdded}</td>
-                <td className="p-4">{gift.price}</td>
-                <td className="p-4">{gift.totalSales}</td>
-                <td className="p-4">
+              <tr key={index} className="border-b border-[#D2D1D6]">
+                <td className="px-4 py-3 text-[#121212] text-[16px]">{index + 1}</td>
+                <td className="px-4 py-3 text-[#121212] text-[16px] ">{gift.name}</td>
+                <td className="px-4 py-3 text-[#121212] text-[16px] ">{gift.category}</td>
+                <td className="px-4 py-3 text-[#121212] text-[16px] ">{gift.dateAdded}</td>
+                <td className="px-4 py-3 text-[#121212] text-[16px] ">{gift.price}</td>
+                <td className="px-4 py-3 text-[#121212] text-[16px] ">{gift.totalSales}</td>
+                <td className="px-4 py-3 text-[#121212] text-[16px] ">
                   <span
                     className={`px-2 py-1 text-xs font-medium rounded-md ${
                       gift.status === 'In Stock'
@@ -245,17 +249,17 @@ const GiftDashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
               </thead>
               <tbody className="text-[#121212]">
              {data.map((category, idx) => (
-  <tr key={category.id} className="border-b bg-white hover:bg-gray-50">
+  <tr key={category.id} className="border-b border-[#D2D1D6] ">
     <td className="px-4 py-2">
       <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
         {idx + 1}
       </div>
     </td>
-    <td className="px-4 py-3">{category.name}</td>
-    <td className="px-4 py-3">{category.dateCreated}</td>
-    <td className="px-4 py-3">₦12,000</td> {/* Static or you can add a price field to data */}
-    <td className="px-4 py-3">₦500</td>     {/* Static or you can calculate from price */}
-    <td className="px-4 py-3">
+    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">{category.name}</td>
+    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">{category.dateCreated}</td>
+    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">₦12,000</td> 
+    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">₦500</td>   
+    <td className="px-4 py-3 text-[#121212] text-[16px] font-semibold">
       <span
         className={`px-2 py-1 text-xs font-medium rounded-md ${
           category.stockStatus === 'In Stock'

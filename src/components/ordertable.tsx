@@ -78,7 +78,7 @@ const OrderHistoryTable: React.FC = () => {
               <option>Sort By</option>
             </select>
             <select className="border border-gray-100 rounded-md px-3 py-1.5 text-sm text-[#121212]">
-              <option>Product Category</option>
+              <option>Select  Category</option>
             </select>
             <button
               
@@ -92,8 +92,8 @@ const OrderHistoryTable: React.FC = () => {
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border rounded-lg shadow-sm">
-          <thead>
-            <tr className="bg-gray-100 text-left text-[14px] font-semibold text-[#121212]">
+                   <thead className="px-10 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold rounded-tl-3xl bg-[#C2C3C5]">
+            <tr className="">
               <th className="p-6">#</th>
               <th className="p-6">Order ID</th>
               <th className="p-6">Product Name</th>

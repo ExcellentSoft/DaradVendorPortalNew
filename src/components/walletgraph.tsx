@@ -51,7 +51,7 @@ export default function SalesWalletChart() {
         </div>
 
         <div className="flex justify-center gap-2 mb-4">
-          {['1D', '1W', '1M', '1Y'].map((label) => (
+          {['1M', '1Y'].map((label) => (
             <button
               key={label}
               className={`px-3 py-1 text-sm rounded-md ${

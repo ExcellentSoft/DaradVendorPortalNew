@@ -47,7 +47,7 @@ export default function OrdersOverTimeChart({ ordersData }: OrdersOverTimeChartP
 
       {/* Time range selection buttons */}
       <div className="flex space-x-2 mb-4">
-        {['1D', '1W', '1M', '1Y'].map((range) => (
+        {[ '1M', '1Y'].map((range) => (
           <button
             key={range}
             onClick={() => setTimeRange(range)}
