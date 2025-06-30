@@ -51,190 +51,253 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
 </div>
 
 
-      {/* Log Product Section */}
-   
-  <div className="bg-white p-8 rounded-lg shadow">
-        <div className="border rounded-lg p-4 mb-4 bg-white shadow-sm relative">
-    
-    <div className="flex justify-between items-center mt-2 mb-2">  {/* Header section with dropdown toggle */}
-      <div
-        className="flex gap-6 items-center space-x-2 cursor-pointer"
-        onClick={() => setDropdownOpen(!dropdownOpen)}
-      >
-    <h2 className="text-lg font-semibold text-[#000000]">
-  {viewLogType ? 'Tutorial Type Name' : 'Tutorial Products'}
-</h2>
-
-        <ChevronDown className="w-6 h-6 text-gray-500" />
-      </div>
-
-      {/* Dropdown */}
-      {dropdownOpen && (
-        <div className="absolute top-14 text-[#000000] left-4 w-48 bg-white border rounded-md shadow-md z-10">
-        
-        
-        <button
-  onClick={() => setViewLogType(false)}
-  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
->
-  Tutorial Product
-</button>
-
-         <button
-  onClick={() => setViewLogType(true)}
-  className="w-full text-left px-4 py-2 text-sm"
->
-  Tutorial Type Name
-</button>
-
-<button
-           
-            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-            onClick={onGoBack}
-          >
-            Product
-          </button>
-
+{/* Log Product Section */}
+<div className="p-8 rounded-2xl border border-[#1212121A] bg-white">
+  <div className="bg-[#F1F0F233] border rounded-2xl p-4 mb-4">
+    <div className="border p-4 rounded-2xl relative">
+      <div className="flex justify-between items-center mt-2 mb-2 relative">
+        <div
+          className="flex gap-6 items-center cursor-pointer"
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+        >
+          <h2 className="text-[32px] font-semibold text-[#000000]">
+            {viewLogType ? 'Tutorial Type Name' : 'Tutorial Products'}
+          </h2>
+          <ChevronDown className="w-6 h-6 text-gray-500" />
         </div>
-      )}
-<div className="flex items-center space-x-2 text-sm text-gray-600">
-          <button className="w-6 h-6 flex items-center justify-center border rounded-full bg-white text-gray-500">
-            <ChevronLeft className="w-6 h-6 text-gray-500" />
-          </button>
-          <span>Page 1 Of 5</span>
-          <button className="w-6 h-6 flex items-center justify-center border rounded-full bg-white text-gray-500">
-          <ChevronRight className="w-6 h-6 text-gray-500" />
-          </button>
-        </div>
-        </div>
-      {/* Pagination and description */}
-      
-        <p className="text-sm text-gray-600">
-          View, manage, and track all your logs in one place.
-        </p>
-        
-      </div>
-  
 
-        {/* Tabs and Filters */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex gap-2">
-            <button className="bg-[#5604F6] text-white px-4 py-1.5 rounded-md text-sm">Uploaded Logs</button>
-            <button className="border border-[#12121266] text-[#121212CC] px-4 py-1.5 rounded-md text-sm">Sold Logs</button>
-            <button className=" border border-[#12121266]  text-[#121212CC] px-4 py-1.5 rounded-md text-sm">Log Request</button>
+        {/* Dropdown */}
+        {dropdownOpen && (
+          <div className="absolute top-14 left-4 w-56 bg-white border rounded-md shadow-md z-10">
+            <button
+              onClick={() => setViewLogType(false)}
+              className="w-full text-left px-4 py-3 text-[14px] font-semibold text-[#000000] hover:bg-gray-100"
+            >
+              Tutorial Product
+            </button>
+            <button
+              onClick={() => setViewLogType(true)}
+              className="w-full text-left px-4 py-3 text-[16px] font-semibold text-[#000000] hover:bg-gray-100"
+            >
+              Tutorial Type Name
+            </button>
+            <button
+              onClick={onGoBack}
+              className="w-full text-left px-4 py-3 text-[1px] font-semibold text-[#000000] hover:bg-gray-100"
+            >
+              Product
+            </button>
           </div>
-          <div className="flex gap-2 items-center">
-            <label htmlFor="logType" className="text-sm text-[#121212CC]">Tutorial type</label>
-            <select id="logType" className="border-gray-300 text-[#121212CC] rounded-md text-sm">
+        )}
+
+        <div className="flex items-center space-x-2 text-[18px] font-semibold text-[#000000]">
+          <button className="w-6 h-6 flex items-center justify-center border rounded-full bg-white text-gray-500">
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <span>Page 1 of 5</span>
+          <button className="w-6 h-6 flex items-center justify-center border rounded-full bg-white text-gray-500">
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Pagination and description */}
+      <div className="w-full flex justify-between items-center gap-4">
+  <p className="text-[16px] text-[#121212CC]">
+    View, manage, and track all your logs in one place.
+  </p>
+
+  <div className="flex items-center w-[320px] border border-gray-300 rounded-md px-3 py-2 bg-[#FBFCFC]">
+    <svg
+      className="w-5 h-5 text-gray-400 mr-2"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
+      />
+    </svg>
+    <input
+      type="text"
+      placeholder="Search Tutorial name"
+      className="w-full outline-none text-[16px] text-[#6E6B7B] placeholder-gray-400 bg-transparent"
+    />
+  </div>
+</div>
+
+    </div>
+     {/* Tabs and Filters */}
+        <div className="flex items-center justify-between mb-4 mt-8">
+          <div className="flex gap-2">
+<button className="bg-[#5604F6] text-white px-4 py-2 rounded-md text-[14px] leading-[100%] tracking-normal capitalize font-medium font-inter"> Most sold</button>
+            <button className="border border-[#12121266] text-[#121212CC] px-4 py-2 rounded-md text-[14px] leading-[100%] tracking-normal capitalize font-medium font-inter">Recently Added</button>
+
+          </div>
+          <div className="flex gap-4 items-center">
+           <div className="flex gap-2 items-center">
+  <select
+    id="tutorialType"
+    className="text-[#121212CC] rounded-md text-sm px-3 py-1.5 focus:outline-none"
+  >
+    <option value="all" className="text-[#121212CC]">Tutorial type</option>
+  </select>
+</div>
+            <select id="logType" className="text-[#121212CC] rounded-md text-sm">
               <option className='text-[#121212CC]'>All Status</option>
             </select>
           </div>
         </div>
+  </div>
+</div>
+
+  
+
+       
 
         {/* Logs Table */}
  {/* Logs Table */}
 {viewLogType ? (
   // Log Type Name Table
   <div className="overflow-x-auto rounded-lg border border-gray-200">
-    <table className="min-w-full table-auto text-sm text-left">
-      <thead>
-        <tr>
-          {['', 'Tutorial Type Name', 'Date Created', 'Price Per Unit', 'Fee Deducted', 'Products Qty', 'Action'].map(
-            (header, i, arr) => (
-              <th
-                key={header}
-                className={`px-4 py-4 whitespace-nowrap bg-[#C2C3C5] text-[#121212] font-semibold ${
-                  i === 0 ? 'rounded-tl-lg' : ''
-                } ${i === arr.length - 1 ? 'rounded-tr-lg' : ''}`}
-              >
-                {header}
-              </th>
-            )
-          )}
-        </tr>
-      </thead>
+<table className="max-w-[1350px] w-full table-auto text-left text-[16px]">
+ <thead className="bg-[#C2C3C580] text-center">
+  <tr>
+    {[
+      "Tutorial type name",
+      "Date Created",
+      "Price Per Unit",
+      "Fee Deducted",
+      "Products Qty",
+      "Action",
+    ].map((header, i, arr) => (
+      <th
+        key={header}
+        className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
+          i === 0 ? "rounded-tl-3xl" : ""
+        } ${i === arr.length - 1 ? "rounded-tr-3xl" : ""}`}
+      >
+        {header}
+      </th>
+    ))}
+  </tr>
+</thead>
 
-      <tbody className="text-[#121212]">
-        {[
-          'Social Media',
-          'Email Marketing',
-          'Messaging',
-          'Facebook Ad Leads',
-          'Facebook Ad Leads',
-          'Facebook Ad Leads',
-          'Facebook Ad Leads',
-          'Facebook Ad Leads',
-          'Facebook Ad Leads',
-          'Facebook Ad Leads',
-        ].map((type, idx) => (
-          <tr
-            key={idx}
-            className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50"
-          >
-            <td className="px-4 py-3">
-              <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold text-sm">
-                {idx + 1}
-              </div>
-            </td>
-            <td className="px-4 py-3">{type}</td>
-            <td className="px-4 py-3">31/04/2024</td>
-            <td className="px-4 py-3">₦10,000.00</td>
-            <td className="px-4 py-3 text-red-600 font-semibold">₦500</td>
-            <td className="px-4 py-3 font-semibold">12</td>
-            <td className="px-4 py-3 text-lg font-bold cursor-pointer">⋮</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+<tbody className="text-[#121212]">
+  {[
+    "Social Media",
+    "Email Marketing",
+    "Messaging",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+  ].map((type, idx) => (
+    <tr key={idx} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
+      <td className="px-8 py-4 font-semibold text-[#121212] align-top">
+        <div className="flex items-center gap-4 whitespace-nowrap text-center">
+          <span className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
+            {idx + 1}
+          </span>
+          <span className="text-[#121212] whitespace-nowrap text-center">{type}</span>
+        </div>
+      </td>
+      <td className="px-8 py-4 text-[#121212B2] text-[16px] font-medium whitespace-nowrap text-center">
+        31/04/2024
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-semibold whitespace-nowrap text-center">
+        ₦10,000.00
+      </td>
+      <td className="px-8 py-4 text-[#ED0423] text-[16px] font-semibold whitespace-nowrap text-center">
+        -₦500
+      </td>
+      <td className="px-8 py-4 text-[#121212] text-[16px] font-semibold whitespace-nowrap text-center">
+        12
+      </td>
+      <td className="px-8 py-4 text-[#B6B6B6] text-[16px] font-semibold cursor-pointer whitespace-nowrap text-center">
+        ⋮
+      </td>
+    </tr>
+  ))}
+</tbody>
+</table>
+
   </div>
 ) : (
   // Default Logs Table
   <div className="overflow-x-auto rounded-lg border border-gray-200">
-    <table className="min-w-full table-auto text-sm text-left">
-      <thead>
-        <tr>
-          {['', 'Tutorial name', 'Tutorial type', 'Date Uploaded', 'Price Per Unit', 'Total Sales', 'Status/QTY', 'Action'].map((header, i, arr) => (
-            <th
-              key={header}
-              className={`px-4 py-4 whitespace-nowrap bg-[#C2C3C5] text-[#121212] ${
-                i === 0 ? 'rounded-tl-lg' : ''
-              } ${i === arr.length - 1 ? 'rounded-tr-lg' : ''}`}
-            >
-              {header}
-            </th>
-          ))}
-        </tr>
-      </thead>
+   <table className="max-w-[1350px] w-full table-auto text-left text-[16px]">
+ <thead className="bg-[#C2C3C580] text-center">
+  <tr>
+    {[
+      '',
+      'Tutorial Name',
+      'Tutorial Type',
+      'Date Uploaded',
+      'Price Per Unit',
+      'Total Sales',
+      'Status / QTY',
+      'Action',
+    ].map((header, i, arr) => (
+      <th
+        key={header || `index-${i}`}
+        className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
+          i === 0 ? 'rounded-tl-3xl' : ''
+        } ${i === arr.length - 1 ? 'rounded-tr-3xl' : ''}`}
+      >
+        {header}
+      </th>
+    ))}
+  </tr>
+</thead>
 
-      <tbody className="text-[#121212]">
-        {[...Array(10)].map((_, idx) => (
-          <tr
-            key={idx}
-            className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50"
-          >
-            <td className="px-4 py-3">
-              <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold text-sm">
-                {idx + 1}
-              </div>
-            </td>
-            <td className="px-4 py-3">Facebook Ad Mastery</td>
-            <td className="px-4 py-3">Social media</td>
-            <td className="px-4 py-3">31/04/2024</td>
-            <td className="px-4 py-3">₦10,000.00</td>
-            <td className="px-4 py-3">12 Unit Sold</td>
-            <td className="px-4 py-3">
-              <div className="flex items-center gap-2">
-                <span className="text-green-600 font-semibold">Available</span>
-                <span className="bg-green-600 text-white text-xs font-medium px-2 py-1 rounded-md">
-                  12
-                </span>
-              </div>
-            </td>
-            <td className="px-4 py-3 text-lg font-bold cursor-pointer">⋮</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+<tbody className="text-[#121212]">
+  {[...Array(10)].map((_, idx) => (
+    <tr key={idx} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
+      <td className="px-8 py-4 font-semibold text-[#121212] align-top">
+        <div className="flex items-center gap-4 whitespace-nowrap text-center">
+          <span className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
+            {idx + 1}
+          </span>
+        </div>
+      </td>
+      <td className="px-8 py-4 text-[#121212] text-[16px] font-semibold whitespace-nowrap text-center">
+        Facebook Ad Mastery
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-medium whitespace-nowrap text-center">
+        Social Media
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-medium whitespace-nowrap text-center">
+        31/04/2024
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-semibold whitespace-nowrap text-center">
+        ₦10,000.00
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-semibold whitespace-nowrap text-center">
+        12 Units Sold
+      </td>
+      <td className="px-8 py-4 whitespace-nowrap text-center">
+        <div className="flex items-center justify-center gap-2">
+          <span className="text-green-600 text-[16px] font-semibold">Available</span>
+          <span className="bg-green-600 text-white text-xs font-medium px-2 py-1 rounded-md">
+            12
+          </span>
+        </div>
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-semibold cursor-pointer whitespace-nowrap text-center">
+        ⋮
+      </td>
+    </tr>
+  ))}
+</tbody>
+</table>
+
   </div>
 )}
 
@@ -243,7 +306,7 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
       </div>
       
 
-    </div>
+    
   );
 };
 

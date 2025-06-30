@@ -177,104 +177,144 @@ const GiftDashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
 {viewLogType ? (
   // Log Type Name Table
  <div className="overflow-x-auto rounded-lg border border-gray-200">
-        <table className="min-w-full table-auto text-sm text-left">
-           <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
-            <tr>
-              <th className="p-4">#</th>
-              <th className="p-4">Gift Name</th>
-              <th className="p-4">Gift Category</th>
-              <th className="p-4">Date Added</th>
-              <th className="p-4">Price Per Unit</th>
-              <th className="p-4">Total Sales</th>
-              <th className="p-4">Status/Qty</th>
-              <th className="p-4">Action</th>
-            </tr>
-          </thead>
-          <tbody className="text-sm text-gray-800">
-            {gifts.map((gift, index) => (
-              <tr key={index} className="border-t border-gray-200 hover:bg-gray-50">
-                <td className="p-4">{index + 1}</td>
-                <td className="p-4 truncate max-w-[180px]">{gift.name}</td>
-                <td className="p-4 truncate max-w-[180px]">{gift.category}</td>
-                <td className="p-4">{gift.dateAdded}</td>
-                <td className="p-4">{gift.price}</td>
-                <td className="p-4">{gift.totalSales}</td>
-                <td className="p-4">
-                  <span
-                    className={`px-2 py-1 text-xs font-medium rounded-md ${
-                      gift.status === 'In Stock'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}
-                  >
-                    {gift.status}
-                  </span>
-                  {gift.status === 'In Stock' && (
-                    <span className="ml-2 inline-block px-2 py-0.5 text-xs bg-gray-100 rounded-md">
-                      {gift.quantity}
-                    </span>
-                  )}
-                </td>
-                <td className="p-4">
-                  <button className="text-gray-500 hover:text-gray-700">⋮</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+  <table className="max-w-[1350px] w-full table-auto text-left text-[16px]">
+  <thead className="bg-[#C2C3C5]">
+    <tr>
+      {[
+        '#',
+        'Gift Name',
+        'Gift Category',
+        'Date Added',
+        'Price Per Unit',
+        'Total Sales',
+        'Status / Qty',
+        'Action',
+      ].map((header, i, arr) => (
+        <th
+          key={header}
+          className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
+            i === 0 ? 'rounded-tl-3xl' : ''
+          } ${i === arr.length - 1 ? 'rounded-tr-3xl' : ''}`}
+        >
+          {header}
+        </th>
+      ))}
+    </tr>
+  </thead>
+
+  <tbody className="text-[#121212]">
+    {gifts.map((gift, index) => (
+      <tr key={index} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
+        <td className="px-8 py-3">
+          <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
+            {index + 1}
+          </div>
+        </td>
+        <td className="px-8 py-3 truncate max-w-[180px] text-[#121212] font-semibold">
+          {gift.name}
+        </td>
+        <td className="px-8 py-3 truncate max-w-[180px] text-[#121212CC] font-medium">
+          {gift.category}
+        </td>
+        <td className="px-8 py-3 text-[#121212CC] font-medium">
+          {gift.dateAdded}
+        </td>
+        <td className="px-8 py-3 text-[#121212CC] font-semibold">
+          {gift.price}
+        </td>
+        <td className="px-8 py-3 text-[#121212CC] font-semibold">
+          {gift.totalSales}
+        </td>
+        <td className="px-8 py-3">
+          <div className="flex items-center gap-2">
+            <span
+              className={`px-2 py-1 text-xs font-medium rounded-md ${
+                gift.status === 'In Stock'
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-red-100 text-red-700'
+              }`}
+            >
+              {gift.status}
+            </span>
+            {gift.status === 'In Stock' && (
+              <span className="inline-block px-2 py-0.5 text-xs bg-gray-200 rounded-md text-[#121212CC]">
+                {gift.quantity}
+              </span>
+            )}
+          </div>
+        </td>
+        <td className="px-8 py-3 text-[#121212CC] font-semibold cursor-pointer text-lg">
+          ⋮
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
       </div>
 ) : (
   // Default Logs Table
  <div className="overflow-x-auto rounded-lg border border-gray-200">
-            <table className="min-w-full table-auto text-sm text-left">
-              <thead>
-                <tr className="bg-gray-200 text-gray-700">
-                  {["", "Log Type Name", "Date Created", "Price Per Unit", "Fee Deducted", "Products Stock", "Action"].map(
-                    (header, idx, arr) => (
-                      <th
-                        key={header}
-                        className={`px-4 py-4 bg-[#C2C3C5] text-[#121212] ${
-                          idx === 0 ? "rounded-tl-lg" : ""
-                        } ${idx === arr.length - 1 ? "rounded-tr-lg" : ""}`}
-                      >
-                        {header}
-                      </th>
-                    )
-                  )}
-                </tr>
-              </thead>
-              <tbody className="text-[#121212]">
-             {data.map((category, idx) => (
-  <tr key={category.id} className="border-b bg-white hover:bg-gray-50">
-    <td className="px-4 py-2">
-      <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
-        {idx + 1}
-      </div>
-    </td>
-    <td className="px-4 py-3">{category.name}</td>
-    <td className="px-4 py-3">{category.dateCreated}</td>
-    <td className="px-4 py-3">₦12,000</td> {/* Static or you can add a price field to data */}
-    <td className="px-4 py-3">₦500</td>     {/* Static or you can calculate from price */}
-    <td className="px-4 py-3">
-      <span
-        className={`px-2 py-1 text-xs font-medium rounded-md ${
-          category.stockStatus === 'In Stock'
-            ? 'bg-green-100 text-green-800'
-            : 'bg-red-100 text-red-800'
-        }`}
-      >
-        {category.stockStatus}
-      </span>
-      <span className="ml-2 inline-block px-2 py-0.5 text-xs bg-gray-100 rounded-md">
-        {category.productsUnit}
-      </span>
-    </td>
-    <td className="px-4 py-3">Edit | Delete</td>
-  </tr>
-))}
+     <table className="max-w-[1350px] w-full table-auto text-left text-[16px]">
+  <thead className="bg-[#C2C3C5]">
+    <tr>
+      {[
+        '',
+        'Log Type Name',
+        'Date Created',
+        'Price Per Unit',
+        'Fee Deducted',
+        'Products Stock',
+        'Action',
+      ].map((header, idx, arr) => (
+        <th
+          key={header}
+          className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
+            idx === 0 ? 'rounded-tl-3xl' : ''
+          } ${idx === arr.length - 1 ? 'rounded-tr-3xl' : ''}`}
+        >
+          {header}
+        </th>
+      ))}
+    </tr>
+  </thead>
 
-              </tbody>
-            </table>
+  <tbody className="text-[#121212]">
+    {data.map((category, idx) => (
+      <tr key={category.id} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
+        <td className="px-8 py-3">
+          <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
+            {idx + 1}
+          </div>
+        </td>
+        <td className="px-8 py-3 font-semibold text-[#121212]">{category.name}</td>
+        <td className="px-8 py-3 text-[#121212CC] font-medium">{category.dateCreated}</td>
+        <td className="px-8 py-3 text-[#121212CC] font-semibold">₦12,000</td>
+        <td className="px-8 py-3 text-[#121212CC] font-semibold">₦500</td>
+        <td className="px-8 py-3">
+          <div className="flex items-center gap-2">
+            <span
+              className={`px-2 py-1 text-xs font-medium rounded-md ${
+                category.stockStatus === 'In Stock'
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-red-100 text-red-700'
+              }`}
+            >
+              {category.stockStatus}
+            </span>
+            <span className="inline-block px-2 py-0.5 text-xs bg-gray-200 rounded-md text-[#121212CC]">
+              {category.productsUnit}
+            </span>
+          </div>
+        </td>
+        <td className="px-8 py-3 text-[#5604F6] font-medium cursor-pointer whitespace-nowrap">
+          Edit | Delete
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
           </div>
 )}
         {/* Table Placeholder (incomplete originally) */}

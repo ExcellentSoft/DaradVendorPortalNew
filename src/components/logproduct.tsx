@@ -31,12 +31,12 @@ const logsData = [
 
 
 const logtypeData = [
-  { name: "Google Ads Campaign", type: "Advertising", date: "12/03/2024", price: "₦15,000.00", sales: "25 Pcs", value: "Add Your Log Value Content" ,action:"⋮"},
-  { name: "Instagram Influencer Logs", type: "Social media", date: "18/04/2025", price: "₦12,000.00", sales: "10 Pcs", value: "Add Your Log Value Content",action:"⋮" },
-  { name: "LinkedIn Outreach Logs", type: "Email marketing", date: "25/05/2025", price: "₦7,500.00", sales: "18 Pcs", value: "Add Your Log Value Content",action:"⋮" },
-  { name: "Twitter Engagement Logs", type: "Social media", date: "05/06/2025", price: "₦9,000.00", sales: "14 Pcs", value: "Add Your Log Value Content",action:"⋮" },
+  { name: "Social media", type: "Advertising", date: "12/03/2024", price: "₦15,000.00", sales: "25 Pcs", value: "Add Your Log Value Content" ,action:"⋮"},
+  { name: "Email marketing", type: "Social media", date: "18/04/2025", price: "₦12,000.00", sales: "10 Pcs", value: "Add Your Log Value Content",action:"⋮" },
+  { name: "Messaging", type: "Email marketing", date: "25/05/2025", price: "₦7,500.00", sales: "18 Pcs", value: "Add Your Log Value Content",action:"⋮" },
+  { name: "Facebook Ad Leads", type: "Social media", date: "05/06/2025", price: "₦9,000.00", sales: "14 Pcs", value: "Add Your Log Value Content",action:"⋮" },
   ...Array(6).fill({
-    name: "Telegram Channel Logs",
+    name: "Facebook Ad Leads",
     type: "Messaging",
     date: "20/05/2025",
     price: "₦11,000.00",
@@ -90,9 +90,9 @@ const logtypeData = [
  {/* Logs Table */}
 {viewLogType ? (
   // Log Type Name Table
- <div className=" p-8 rounded-lg  border border-[#1212121A]">
-    <div className='bg-white border rounded-lg p-4 mb-4'>
-        <div className=" border p-4 rounded-md  relative">
+ <div className=" p-8 rounded-2xl  border border-[#1212121A] bg-white">
+    <div className='bg-[#F1F0F233] border rounded-2xl p-4 mb-4'>
+        <div className=" border p-4 rounded-2xl  relative">
     
    <div className="flex justify-between items-center mt-2 mb-2 relative">
   <div
@@ -210,51 +210,80 @@ const logtypeData = [
        
  
        
-     <table className="max-w-[1350px]  table-auto text-[16px] text-left">
-  <thead className="bg-[#C2C3C5]">
-          <tr>
-            <th className="px-10 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold rounded-tl-3xl" />
-            {["Log Type Name",  "Date Created", "Price Per Unit", "Fee Deducted", "Product Stock","Action"].map((header, i, arr) => (
-              <th
-                key={header}
-                className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
-                  i === arr.length - 1 ? "rounded-tr-3xl" : ""
-                }`}
-              >
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
+     <table className="max-w-[1350px] w-full table-auto text-left text-[16px]">
+ <thead className="bg-[#C2C3C580] text-center">
+  <tr>
+    {[
+      "Log type name",
+      "Date Created",
+      "Price Per Unit",
+      "Fee Deducted",
+      "products stock",
+      "Action",
+    ].map((header, i, arr) => (
+      <th
+        key={header}
+        className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
+          i === 0 ? "rounded-tl-3xl" : ""
+        } ${i === arr.length - 1 ? "rounded-tr-3xl" : ""}`}
+      >
+        {header}
+      </th>
+    ))}
+  </tr>
+</thead>
 
-  <tbody className="text-[#121212]">
-          {logtypeData.map((log, idx) => (
-            <tr key={idx} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
-              <td className="px-10 py-2">
-                <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
-                  {idx + 1}
-                </div>
-              </td>
-              <td className="px-8 py-3 text-[#121212] text-[16px] font-semibold">{log.name}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-medium">{log.type}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-medium">{log.date}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-semibold">{log.price}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-semibold">{log.sales}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-semibold cursor-pointer">
-                {log.value}
-              </td>
-            </tr>
-          ))}
-        </tbody>
+<tbody className="text-[#121212]">
+  {[
+    "Social Media",
+    "Email Marketing",
+    "Messaging",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+    "Facebook Ad Leads",
+  ].map((type, idx) => (
+    <tr key={idx} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
+      <td className="px-8 py-4 font-semibold text-[#121212] align-top">
+        <div className="flex items-center gap-4 whitespace-nowrap text-center">
+          <span className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
+            {idx + 1}
+          </span>
+          <span className="text-[#121212] whitespace-nowrap text-center">{type}</span>
+        </div>
+      </td>
+      <td className="px-8 py-4 text-[#121212B2] text-[16px] font-medium whitespace-nowrap text-center">
+        31/04/2024
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-semibold whitespace-nowrap text-center">
+        ₦10,000.00
+      </td>
+      <td className="px-8 py-4 text-[#ED0423] text-[16px] font-semibold whitespace-nowrap text-center">
+        -₦500
+      </td>
+      <td className="px-8 py-4 text-[#121212] text-[16px] font-semibold whitespace-nowrap text-center">
+        12
+      </td>
+      <td className="px-8 py-4 text-[#B6B6B6] text-[16px] font-semibold cursor-pointer whitespace-nowrap text-center">
+        ⋮
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+
   </table>
       </div>
       </div>
 ) : (
   // Default Logs Table
 
-   <div className=" p-8 rounded-lg  border border-[#1212121A]">
-<div className='bg-white border rounded-lg p-4 mb-4'>
-        <div className=" border p-4 rounded-md  relative">
+   <div className=" p-8 rounded-2xl  border border-[#1212121A] bg-white">
+<div className='bg-[#F1F0F233] border rounded-2xl p-4 mb-4'>
+        <div className="  border p-4 rounded-2xl  relative">
     
    <div className="flex justify-between items-center mt-2 mb-2 relative">
   <div
@@ -335,41 +364,60 @@ const logtypeData = [
 
   
   <table className="max-w-[1350px]  table-auto text-[16px] text-left">
-  <thead className="bg-[#C2C3C5]">
-          <tr>
-            <th className="px-10 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold rounded-tl-3xl" />
-            {["Log Name", "Log Type", "Date Uploaded", "Price Per Unit", "Total Sales", "Log Value"].map((header, i, arr) => (
-              <th
-                key={header}
-                className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
-                  i === arr.length - 1 ? "rounded-tr-3xl" : ""
-                }`}
-              >
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
+ <thead className="bg-[#C2C3C580] text-center">
+  <tr>
+    {[
+      'Log Name',
+      'Log Type',
+      'Date Uploaded',
+      'Price Per Unit',
+      'Total Sales',
+      'Log Value',
+    ].map((header, i, arr) => (
+      <th
+        key={header}
+        className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
+          i === 0 ? 'rounded-tl-3xl' : ''
+        } ${i === arr.length - 1 ? 'rounded-tr-3xl' : ''}`}
+      >
+        {header}
+      </th>
+    ))}
+  </tr>
+</thead>
 
-  <tbody className="text-[#121212]">
-          {logsData.map((log, idx) => (
-            <tr key={idx} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
-              <td className="px-10 py-2">
-                <div className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
-                  {idx + 1}
-                </div>
-              </td>
-              <td className="px-8 py-3 text-[#121212] text-[16px] font-semibold">{log.name}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-medium">{log.type}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-medium">{log.date}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-semibold">{log.price}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-semibold">{log.sales}</td>
-              <td className="px-8 py-3 text-[#121212CC] text-[16px] font-semibold cursor-pointer">
-                {log.value}
-              </td>
-            </tr>
-          ))}
-        </tbody>
+<tbody className="text-[#121212]">
+  {logsData.map((log, idx) => (
+    <tr key={idx} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
+      <td className="px-8 py-4 font-semibold text-[#121212] align-top">
+        <div className="flex items-center gap-4 whitespace-nowrap text-center">
+          <span className="inline-block px-2 py-1 border border-[#D2D1D6] text-[#000000] rounded-md font-semibold">
+            {idx + 1}
+          </span>
+          <span className="text-[#121212] whitespace-nowrap text-center">
+            {log.name}
+          </span>
+        </div>
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-medium whitespace-nowrap text-center">
+        {log.type}
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-medium whitespace-nowrap text-center">
+        {log.date}
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-semibold whitespace-nowrap text-center">
+        {log.price}
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-semibold whitespace-nowrap text-center">
+        {log.sales}
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] text-[16px] font-semibold cursor-pointer whitespace-nowrap text-center">
+        {log.value}
+      </td>
+    </tr>
+  ))}
+</tbody>
+
   </table>
 </div>
 </div>

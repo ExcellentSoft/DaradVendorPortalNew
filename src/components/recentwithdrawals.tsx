@@ -158,43 +158,61 @@ export default function RecentOrders() {
       {/* Table Section */}
     
 <div className="hidden sm:block overflow-x-auto rounded-lg shadow mx-auto my-6 max-w-full">
-  <table className="w-full text-sm  table-fixed">
-    <thead className="font-semibold ">
-      <tr className="bg-gray-200 text-[#121212]  text-[16px] rounded-t-lg">
-        <th className="p-6 font-semibold text-[#121212] ">Order I.D</th>
-        <th className="p-6 font-semibold text-[16px]">Date & Time</th>
-        <th className="p-6 font-semibold text-[16px]">Product Name</th>
-        <th className="p-6 font-semibold text-[16px]">Customer Name</th>
-        <th className="p-6 font-semibold text-[16px]">Total Price</th>
-        <th className="p-6 font-semibold text-[16px]">Status</th>
-        <th className="p-6 font-semibold text-[16px]">Action</th>
-      </tr>
-    </thead>
-    <tbody className="text-center">
-      {orders.map((order, idx) => (
-        <tr key={idx} className="border-b  border-[#D2D1D6]">
-          <td className="py-8 px-4 text-[#121212] flex gap-6 font-semibold">
-            <span className="border px-2  ">{idx + 1}</span>
-            {order.id}
-          </td>
-          <td className="p-4 text-[#121212B2]">{order.date}</td>
-          <td className="p-4 text-[#121212]">{order.product}</td>
-          <td className="p-4 text-[#121212] font-semibold">{order.customer}</td>
-          <td className="p-4 text-[#121212] font-semibold">{order.amount}</td>
-          <td className="p-4">
-            <span
-              className={`px-3 py-1 rounded-full text-xs font-medium ${
-                statusColor[order.status as keyof typeof statusColor]
-              }`}
-            >
-              {order.status}
-            </span>
-          </td>
-          <td className="py-3 px-4 text-gray-500 text-[24px]">⋮</td>
-        </tr>
+<table className="max-w-[1350px] w-full table-auto text-left text-[16px]">
+  <thead className="bg-[#C2C3C580] text-center">
+    <tr>
+      {[
+        'Order I.D',
+        'Date & Time',
+        'Product Name',
+        'Customer Name',
+        'Total Price',
+        'Status',
+        'Action',
+      ].map((header, i, arr) => (
+        <th
+          key={header}
+          className={`px-8 py-5 whitespace-nowrap text-[#121212] text-sm font-semibold ${
+            i === 0 ? 'rounded-tl-3xl' : ''
+          } ${i === arr.length - 1 ? 'rounded-tr-3xl' : ''}`}
+        >
+          {header}
+        </th>
       ))}
-    </tbody>
-  </table>
+    </tr>
+  </thead>
+
+<tbody className="text-[#121212]">
+  {orders.map((order, idx) => (
+    <tr key={idx} className="border-b border-[#D2D1D6] bg-white hover:bg-gray-50">
+      <td className="px-8 py-4 font-semibold text-[#121212] align-top">
+        <div className="flex gap-4 flex items-center whitespace-nowrap text-center">
+          <span className="inline-block px-2 py-1 border border-[#D2D1D6] rounded-md">
+            {idx + 1}
+          </span>
+          <span className="whitespace-nowrap text-center text-[#121212]">{order.id}</span>
+        </div>
+      </td>
+      <td className="px-8 py-4 text-[#121212CC] font-medium whitespace-nowrap text-center">{order.date}</td>
+      <td className="px-8 py-4 text-[#121212B2] font-medium whitespace-normal text-center">{order.product}</td>
+      <td className="px-8 py-4 text-[#121212E5] font-semibold whitespace-nowrap text-center">{order.customer}</td>
+      <td className="px-8 py-4 text-[#121212] font-semibold whitespace-nowrap text-center">{order.amount}</td>
+      <td className="px-8 py-4 whitespace-nowrap text-center">
+        <span
+          className={`px-3 py-2 rounded text-xs font-medium ${
+            statusColor[order.status as keyof typeof statusColor]
+          }`}
+        >
+          {order.status}
+        </span>
+      </td>
+      <td className="px-8 py-4 text-[#121212] text-lg cursor-pointer whitespace-nowrap text-center">⋮</td>
+    </tr>
+  ))}
+</tbody>
+
+</table>
+
 </div>
 
 {/* Mobile Cards - visible only below small screens */}
