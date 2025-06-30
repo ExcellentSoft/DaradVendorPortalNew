@@ -5,6 +5,8 @@ import LogProduct from "@/components/logproduct";
 import ProductDetails from "@/components/producttutorial";
 import Phone from "@/components/phone";
 import GiftDashboard from "./gift";
+import Ecommerce from "./ecommerce";
+import Digital from "./digital";
 
 const stats = [
   {
@@ -121,6 +123,25 @@ const Dashboard: FC<DashboardProps> = ({ onOpenLogProduct }) => {
     );
   }
 
+
+
+
+  if (activeSubProduct === "Digital Courses") {
+    return (
+      <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+        <Digital onGoBack={() => setActiveSubProduct(null)} />
+      </div>
+    );
+  }
+
+
+  if (activeSubProduct === "E-Commerce") {
+    return (
+      <div className="bg-gray-100 min-h-screen flex flex-col items-center">
+        <Ecommerce onGoBack={() => setActiveSubProduct(null)} />
+      </div>
+    );
+  }
   // Default dashboard view
   return (
     <div className="bg-gray-100 min-h-screen space-y-8 flex flex-col items-center">

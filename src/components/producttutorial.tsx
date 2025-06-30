@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from "react";
 import bgImage from '../../public/assets/doodle.png';
 import { ChevronDown,ChevronRight,ChevronLeft } from "lucide-react";
-
+import { IoArrowBack } from "react-icons/io5";
 interface LogProductProps {
   onGoBack: () => void;
 }
@@ -18,6 +18,13 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   return (
     <div className="min-h-screen  p-6">
       {/* Header */}
+        <button
+                    onClick={onGoBack}
+                    className="w-full text-left px-4 py-3 text-sm font-semibold text-[#000000] hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    <IoArrowBack size={18} />
+                    Back
+                  </button>
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
         <div className=''>
           <h1 className="font-urbanist font-bold text-2xl leading-[100%] tracking-[0.04em] capitalize text-[#121212]">Manage & Sell Your Tutorials Easily</h1>
@@ -87,13 +94,7 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   Tutorial Type Name
 </button>
 
-<button
-           
-            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-            onClick={onGoBack}
-          >
-            Product
-          </button>
+
 
         </div>
       )}

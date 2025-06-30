@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from "react";
 import bgImage from '../../public/assets/doodle.png';
 import { ChevronDown,ChevronRight,ChevronLeft } from "lucide-react";
+import { IoArrowBack } from "react-icons/io5";
 
 interface LogProductProps {
   onGoBack: () => void;
@@ -49,6 +50,13 @@ const logtypeData = [
   return (
     <div className="min-h-screen  p-6">
       {/* Header */}
+      <button
+  onClick={onGoBack}
+  className="w-full text-left px-4 py-3 text-sm font-semibold text-[#000000] hover:bg-gray-100 flex items-center gap-2"
+>
+  <IoArrowBack size={18} />
+  Back
+</button>
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
         <div className=''>
           <h1 className="text-[24px] font-bold text-[#121212] mb-3">Upload & Manage Logs For Sale</h1>
@@ -120,12 +128,7 @@ const logtypeData = [
       >
         Log Type Name
       </button>
-      <button
-        onClick={onGoBack}
-        className="w-full text-left px-4 py-3 text-[1px] font-semibold text-[#000000] hover:bg-gray-100"
-      >
-        Product
-      </button>
+     
     </div>
   )}
 
@@ -282,12 +285,7 @@ const logtypeData = [
       >
         Log Type Name
       </button>
-      <button
-        onClick={onGoBack}
-        className="w-full text-left px-4 py-3 text-[16px] font-semibold text-[#000000] hover:bg-gray-100"
-      >
-        Product
-      </button>
+      
     </div>
   )}
 
