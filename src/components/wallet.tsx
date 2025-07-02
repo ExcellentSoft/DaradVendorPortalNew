@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Image from "next/image";
 import { FaArrowDown} from 'react-icons/fa';
 import { FiInfo } from "react-icons/fi"; 
-import WalletChart from "./chartwallet";
+
 
 
 
