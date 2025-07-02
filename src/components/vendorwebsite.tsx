@@ -17,7 +17,7 @@ export default function ContactForm() {
     "Brand Customization",
     "Product Showcase",
     "Domain Setup",
-    "Preview & Publish"
+    " Publish"
   ];
 
 
@@ -63,7 +63,7 @@ export default function ContactForm() {
           </p>
         </div>
         <div className="flex space-x-4">
-          <button className="text-[#5604F6] border border-[#E6D9FE] rounded-md px-3">Preview Website</button>
+
           <button className="bg-[#5604F6] text-white px-4 py-2 rounded">Publish Website</button>
         </div>
       </header>
@@ -299,7 +299,7 @@ export default function ContactForm() {
           )}
 
           {/* Preview & Publish Tab */}
-          {activeTab === "Preview & Publish" && (
+          {activeTab === " Publish" && (
             <div>
               <Preview />
             </div>

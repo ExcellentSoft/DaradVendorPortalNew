@@ -192,7 +192,7 @@ const countries: Country[] = [
 >
   {[
     ['Total phone no’s Uploaded', 25],
-    ['Available phone no’s for Sale', 10],
+    ['Total Order ', 10],
     ['Total phone no’s categories', 20],
     ['  Pending Customer Requests', 5],
   ].map(([label, value], index, arr) => (

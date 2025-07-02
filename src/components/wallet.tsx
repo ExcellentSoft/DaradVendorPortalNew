@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Image from "next/image";
 import { FaArrowDown} from 'react-icons/fa';
 import { FiInfo } from "react-icons/fi"; 
-import WalletChart from "./chartwallet";
+
 
 
 
@@ -109,7 +109,6 @@ Track your sales revenue and withdraw your earnings whenever you need.
               className="border border-[#12121233] text-[#12121299] rounded-full text-sm px-2 py-1"
             >
               <option>Monthly</option>
-              <option>Weekly</option>
               <option>Yearly</option>
             </select>
           </div>
@@ -189,8 +188,7 @@ Track your sales revenue and withdraw your earnings whenever you need.
    
 
 
-      {/* Order History Table */}
-     <WalletChart/>
+     
     </div>
   );
 };

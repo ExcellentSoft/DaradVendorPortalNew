@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import OrdersOverTimeChart from "./orderovertime";
 
@@ -82,6 +82,11 @@ const ordersChartData = [
 
 
 const OrdersDashboard = () => {
+   const [timeRange, setTimeRange] = useState("7 months");
+  
+      const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setTimeRange(e.target.value);
+    };
     const COLORS = ["#EF4444", "#FACC15", "#10B981"];
 
   return (
@@ -135,9 +140,18 @@ const OrdersDashboard = () => {
     <div className="col-span-1 md:col-span-2 p-4 bg-white rounded-2xl shadow-md w-full">
       <div className="flex justify-between items-center mb-4">
       <h2 className="text-xl font-semibold text-gray-800">Revenue Breakdown</h2>
-      <div className="text-sm text-[#121212CC] border border-[#12121266] px-3 py-1 rounded-md cursor-pointer">
-        Last 7 days
-      </div>
+    <div className="flex justify-end mb-2">
+  <select
+    value={timeRange}
+    onChange={handleChange}
+    className="text-sm text-gray-600 border border-gray-300 px-2 py-1 rounded-md cursor-pointer"
+  >
+    <option value="7 months">Last 7 months</option>
+    <option value="1 month">Last 1 month</option>
+    <option value="1 year">Last 1 year</option>
+  </select>
+</div>
+
     </div>
 <ResponsiveContainer width="100%" height={300}>
   <BarChart data={data} barCategoryGap={40}>
@@ -174,7 +188,15 @@ const OrdersDashboard = () => {
     <div className="col-span-1 w-full md:max-w-xs mx-auto p-4 bg-white rounded-xl shadow-md">
       <div className="flex justify-end mb-2">
 
-      <div className="text-sm text-[#121212CC] border border-[#12121266] px-2 py-1 rounded">Last 7 days</div>
+   <select
+    value={timeRange}
+    onChange={handleChange}
+    className="text-sm text-gray-600 border border-gray-300 px-3 py-1 rounded-md cursor-pointer"
+  >
+    <option value="7 months">Last 7 months</option>
+    <option value="1 month">Last 1 month</option>
+    <option value="1 year">Last 1 year</option>
+  </select>
     </div>
   <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
         <div className="w-full sm:w-56 h-56 mx-auto sm:mx-0">

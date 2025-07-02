@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
 import { useRouter } from 'next/navigation';
 
 type MenuItem = {
@@ -20,7 +22,7 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
   const [hasMounted, setHasMounted] = useState(false);
   const [activePage, setPage] = useState<string>('Overview');
   const [expandedMenus, setExpandedMenus] = useState<{ [label: string]: boolean }>({});
-  const [selectedPromotionTab, setSelectedPromotionTab] = useState<string>('Current Promotion');
+  const [selectedPromotionTab, setSelectedPromotionTab] = useState<string>('Promotion Analytics');
 
   const router = useRouter();
 
@@ -79,7 +81,7 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
         {
           icon: '/promotion.svg',
           label: 'Promotion',
-          children: ['Current Promotion', 'Create Promotion'],
+          children: ['Promotion Analytics', 'Create Promotion'],
         },
       ],
     },
@@ -87,7 +89,7 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
       section: 'Account And Utilities',
       items: [
         { icon: '/settingss.svg', label: 'Settings' },
-        { icon: '/utility.svg', label: 'API & Utilities' },
+        // { icon: '/utility.svg', label: 'API & Utilities' },
         { icon: '/support.svg', label: 'Support' },
       ],
     },
@@ -101,9 +103,10 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
     <aside className="flex flex-col h-screen bg-white border-r shadow-sm">
    <div className="p-4">
   <div className="ml-16 flex items-center" style={{ minWidth: 192 }}>
-    <img src="/logo.svg" alt="Logo" width={40} height={40} />
-    <img src="/logo-name.svg" alt="Logo Name" width={152} height={40} />
-  </div>
+  <Image src="/logo.svg" alt="Logo" width={40} height={40} />
+  <Image src="/logo-name.svg" alt="Logo Name" width={152} height={40} />
+</div>
+
 </div>
 
 
@@ -136,7 +139,8 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
             : 'text-[#121212]'
         }`}
       >
-        <img src={item.icon} alt={item.label} width={20} height={20} />
+<Image src={item.icon} alt={item.label} width={20} height={20} />
+
         <span>{item.label}</span>
         {item.children && (
           <span className="ml-auto text-lg">
@@ -179,7 +183,8 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
         className="bg-[#5604F6] text-white flex items-center justify-between px-4 py-3 rounded-t-2xl cursor-pointer"
       >
         <div className="flex items-center gap-4">
-          <img src="/user.svg" alt="User" width={32} height={32} />
+        <Image src="/user.svg" alt="User" width={32} height={32} />
+
           <div className="text-sm flex flex-col">
             <p className="text-xs text-gray-200 truncate w-28">
               {hasMounted ? (userEmail ?? 'Temitope.....@gmail.com') : null}

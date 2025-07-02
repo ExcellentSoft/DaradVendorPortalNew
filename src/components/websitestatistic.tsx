@@ -211,7 +211,7 @@ const PerformanceCard: React.FC<{ metric: PerformanceMetric }> = ({ metric }) =>
             "
             defaultValue="Weekly"
           >
-            <option>Weekly</option>
+           
             <option>Monthly</option>
             <option>Annually</option>
           </select>

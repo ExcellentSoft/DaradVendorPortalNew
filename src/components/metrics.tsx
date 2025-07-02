@@ -137,10 +137,9 @@ export default function Home() {
       </div>
       <div className="flex justify-center">
   <div className="bg-gray-100 rounded-md w-full max-w-[207px] gap-4 flex justify-center p-3 text-sm font-medium text-gray-700">
-    <button className="bg-white text-indigo-600 rounded-md px-2">1D</button>
-    <button>1W</button>
+  
     <button>1M</button>
-    <button>1Y</button>
+    <button className='bg-white text-indigo-600 rounded-md px-2'>1Y</button>
   </div>
 </div>
 

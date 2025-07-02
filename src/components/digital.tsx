@@ -75,19 +75,19 @@ const Digitaldashboard: React.FC<LogProductProps> = ({ onGoBack }) => {
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
         <div>
           <h1 className="text-xl font-bold text-gray-800">Digital Courses</h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm  p-2 text-gray-500">
             Empower learners and grow your revenue with seamless course management. Upload, track, and optimize your digital courses effortlessly.
           </p>
         </div>
         <div className="flex gap-2">
           <button className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium">Create Category</button>
-          <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">Add New Digital Course</button>
+          <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">Add New Course</button>
         </div>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-4 bg-[#1E0156] text-white p-16 rounded-md mb-6 bg-cover bg-center" style={{ backgroundImage: `url('/assets/doodle.png')` }}>
-        {[['Total Digital Course Uploaded', 25], ['Available Digital Course For Sale', 10], ['Total Digital Course Type Name', 20], ['Pending Customer Requests', 5]].map(([label, value], index, arr) => (
+        {[['Total Digital Course Uploaded', 25], ['Total Order', 10], ['Total Digital Course Type Name', 20], ['Pending Customer Requests', 5]].map(([label, value], index, arr) => (
           <div key={label} className={`flex flex-col items-center px-2 ${index !== arr.length - 1 ? 'border-r-2 border-white' : ''}`}>
             <span className="text-2xl font-bold">{value}</span>
             <span className="text-sm text-center">{label}</span>

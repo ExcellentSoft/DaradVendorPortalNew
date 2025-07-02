@@ -1,6 +1,8 @@
 "use client";
 import { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
 
 import Link from "next/link";
 import axios from "axios";
@@ -135,8 +137,10 @@ useEffect(() => {
         <div className="flex w-full h-[900px]">
           <div className="flex flex-col w-full md:w-[760px]">
             <div className="flex bg-white p-8 w-full">
-           <img src="/logo.svg" alt="Darads Logo" width="40" height="40" />
-<img src="/logo-name.svg" alt="Darads Logo" width="152" height="40" />
+        <Image src="/logo.svg" alt="Darads Logo" width={40} height={40} />
+
+<Image src="/logo-name.svg" alt="Darads Logo" width={152} height={40} />
+
 
             </div>
 
@@ -219,14 +223,22 @@ useEffect(() => {
               </div>
 
               <button className="w-full max-w-[350px] flex items-center justify-start gap-3 pl-6 mt-4 text-[16px] text-[#121212CC] border py-4 rounded-lg font-medium">
-                <img src="/google.svg" alt="Google" width={20} height={20} />
+              <Image src="/google.svg" alt="Google" width={20} height={20} />
+
                 Continue With Google
               </button>
             </div>
           </div>
 
           <div className="w-[520px] relative hidden md:block">
-            <img src="/female.svg" alt="Happy vendor"  className="rounded-r-lg" />
+           <Image
+  src="/female.svg"
+  alt="Happy vendor"
+  width={520}
+  height={900}
+  className="rounded-r-lg w-full h-full object-cover"
+/>
+
           </div>
         </div>
 

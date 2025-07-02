@@ -82,7 +82,7 @@ export default function Onboarding() {
               'Brand Customization',
               'Product Showcase',
               'Domain Setup',
-              'Preview & Publish'
+              ' Publish'
             ].map((step, index) => (
               <li
                 key={index}
