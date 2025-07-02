@@ -130,7 +130,7 @@ export default function App() {
 
 <div className="bg-[#FFFFFF] p-4 rounded-xl shadow-[0px_4px_6px_0px_#2121210A,_0px_4px_50px_0px_#21212114] mt-8">
   <div className="flex flex-col mb-4 gap-2">
-    <h3 className="font-[Urbanist] font-bold text-lg leading-[1.75rem] tracking-[0.005em] text-[#0B0B0B] capitalize">
+    <h3 className="block text-lg font-urbanist font-bold leading-[1.75rem] tracking-[0.02em] text-[#0B0B0B] capitalize">
       image & video upload
     </h3>
     <p className="font-inter font-normal text-sm leading-[1.5rem] tracking-[0.01em] text-[#6D6D6D]">
