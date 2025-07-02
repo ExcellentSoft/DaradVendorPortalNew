@@ -27,7 +27,6 @@ const CustomTooltip = ({
   return null;
 };
 
-
 interface OrdersDataPoint {
   name: string;
   orders: number;
@@ -38,29 +37,29 @@ interface OrdersOverTimeChartProps {
 }
 
 export default function OrdersOverTimeChart({ ordersData }: OrdersOverTimeChartProps) {
-  const [timeRange, setTimeRange] = useState('1M');
+  const [selectedYear, setSelectedYear] = useState('2025');
+
+  const years = Array.from({ length: 8 }, (_, i) => (2025 - i).toString());
 
   return (
     <div className="bg-white rounded-xl shadow p-8">
-        <div className='flex justify-between'>
-      <h4 className="text-[24px] font-semibold mb-4 text-black font-bold">Promotion Engagement Over Time</h4>
+      <div className="flex justify-between items-center mb-4">
+        <h4 className="text-[24px] font-semibold text-black font-bold">
+          Promotion Engagement Over Time
+        </h4>
 
-      {/* Time range selection buttons */}
-      <div className="flex space-x-2 mb-4">
-        {['1D', '1W', '1M', '1Y'].map((range) => (
-          <button
-            key={range}
-            onClick={() => setTimeRange(range)}
-            className={`px-3 py-1 rounded ${
-              timeRange === range
-                ? 'bg-violet-600 text-white'
-                : 'bg-gray-100 text-gray-600'
-            }`}
-          >
-            {range}
-          </button>
-        ))}
-      </div>
+        {/* Year selection dropdown */}
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+          className="bg-gray-100 text-gray-700 px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
       </div>
 
       <ResponsiveContainer width="100%" height={440}>
@@ -77,15 +76,14 @@ export default function OrdersOverTimeChart({ ordersData }: OrdersOverTimeChartP
             activeDot={{ r: 6 }}
           />
           {/* Highlight October’s peak */}
-         <ReferenceDot
-  x="Oct"
-  y={950}
-  r={10}
-  fill="#6976EB4A" 
-  strokeWidth={2}
-  isFront={true}
-/>
-
+          <ReferenceDot
+            x="Oct"
+            y={950}
+            r={10}
+            fill="#6976EB4A"
+            strokeWidth={2}
+            isFront={true}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>

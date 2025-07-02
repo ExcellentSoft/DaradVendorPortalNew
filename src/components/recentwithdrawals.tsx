@@ -62,6 +62,7 @@ const statusColor = {
 };
 
 export default function RecentOrders() {
+  const [search, setSearch] = React.useState("");
   return (
     <div className="container mx-auto bg-white shadow rounded-lg p-4 sm:p-6">
       <div className="bg-gray-100 p-5 rounded-lg space-y-3">
@@ -87,11 +88,13 @@ export default function RecentOrders() {
   {/* Search Input with Icon */}
   <div className="relative w-full sm:w-60">
     <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-    <input
-      type="text"
-      placeholder="Search Transaction..."
-      className="pl-10 pr-3 py-2 border border-[#E5E7EB] rounded-md w-[180px] placeholder:text-[#6E6B7B] focus:outline-none"
-    />
+   <input
+  type="text"
+  placeholder="Search Transaction..."
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  className="pl-10 pr-3 py-2 border border-[#E5E7EB] rounded-md w-44 placeholder:text-[#6E6B7B] focus:outline-none"
+/>
   </div>
 
   {/* Filters and Export */}

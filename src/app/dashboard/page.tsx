@@ -57,14 +57,13 @@ case "Vendor Website Setup":
       return <Transactions />;
     case "Account Transactions":
       return <AccountTransactions />;
-    case "Current Promotion":
+    case "Promotion Analytics":
       return <Promotion />;
     case "Promotion":
       return <Promotion />;
     case "Create Promotion":
       return <CreatePromotion />;
-    case "Current Promotion":
-      return <Promotion />;
+  
       case "Support":
       return <Support/>;
    case "Settings":

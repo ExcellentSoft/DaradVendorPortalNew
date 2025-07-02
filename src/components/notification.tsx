@@ -90,7 +90,7 @@ export default function NotificationPreferences() {
           </p>
 
           <button
-            className="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-lg transition"
+            className="mt-4 w-full bg-[#5F04F6] text-white hover:bg-purple-700  font-medium py-2 rounded-lg transition"
             onClick={() => alert('Preferences saved!')}
           >
             Save Preferences

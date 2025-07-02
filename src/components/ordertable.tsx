@@ -31,18 +31,7 @@ const orders = [
   { id: '#Ord-1032', product: 'Film & Video Editing For Nollywood', customer: 'Chinwe Amaechi', price: 10000, status: 'Completed' },
 ];
 
-const StatusIcon = ({ status }: { status: string }) => {
-  switch (status) {
-    case 'Completed':
-      return <div className="flex items-center justify-center gap-1 bg-[#1D9E3426] rounded-md p-2 text-[#1D9E34]">Completed</div>;
-    case 'Failed':
-      return <div className="flex items-center justify-center gap-1 bg-[#ED042326] rounded-md p-2 text-[#ED0423]">Failed</div>;
-    case 'Pending':
-      return <div className="flex items-center justify-center gap-1 bg-[#F68D2826] rounded-md p-2 text-[#F68D2B]">Pending</div>;
-    default:
-      return null;
-  }
-};
+
 
 const OrderHistoryTable: React.FC = () => {
   const [selectedOrderStatus, setSelectedOrderStatus] = useState<string | null>(null);
@@ -71,15 +60,11 @@ const OrderHistoryTable: React.FC = () => {
             <button className="flex items-center border border-gray-100 rounded-md px-3 py-1.5 text-sm text-[#121212] gap-2">
               <CalendarDays size={16} /> Date Range
             </button>
-            <select className="border border-gray-100 rounded-md px-3 py-1.5 text-sm text-[#121212]">
-              <option>Status</option>
-            </select>
+           
             <select className="border border-gray-100 rounded-md px-3 py-1.5 text-sm text-[#121212]">
               <option>Sort By</option>
             </select>
-            <select className="border border-gray-100 rounded-md px-3 py-1.5 text-sm text-[#121212]">
-              <option>Select  Category</option>
-            </select>
+          
             <button
               
               className="flex items-center gap-2 bg-[#5604F6] text-white text-sm font-medium px-4 py-1.5 rounded-md"
@@ -99,7 +84,7 @@ const OrderHistoryTable: React.FC = () => {
               <th className="p-6">Product Name</th>
               <th className="p-6">Customer Name</th>
               <th className="p-6">Total Price</th>
-              <th className="p-6">Status</th>
+            
               <th className="p-6">Action</th>
             </tr>
           </thead>
@@ -118,7 +103,7 @@ const OrderHistoryTable: React.FC = () => {
       <td className="p-6 text-[14px] text-[#121212B2]">{order.product}</td>
       <td className="p-6 text-[14px] font-semibold text-[#121212B2]">{order.customer}</td>
       <td className="p-6 text-[14px] font-bold text-[#121212B2]">₦{order.price.toLocaleString()}</td>
-      <td className="p-6"><StatusIcon status={order.status} /></td>
+     
       <td className="px-4 py-3">
         <FaEllipsisV className="text-gray-500 cursor-pointer" />
       </td>

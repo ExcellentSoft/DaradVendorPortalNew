@@ -20,7 +20,7 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
   const [hasMounted, setHasMounted] = useState(false);
   const [activePage, setPage] = useState<string>('Overview');
   const [expandedMenus, setExpandedMenus] = useState<{ [label: string]: boolean }>({});
-  const [selectedPromotionTab, setSelectedPromotionTab] = useState<string>('Current Promotion');
+  const [selectedPromotionTab, setSelectedPromotionTab] = useState<string>('Promotion Analytics');
 
   const router = useRouter();
 
@@ -79,7 +79,7 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
         {
           icon: '/promotion.svg',
           label: 'Promotion',
-          children: ['Current Promotion', 'Create Promotion'],
+          children: ['Promotion Analytics', 'Create Promotion'],
         },
       ],
     },
@@ -87,7 +87,7 @@ export default function Sidebar({ setActivePage }: { setActivePage: (page: strin
       section: 'Account And Utilities',
       items: [
         { icon: '/settingss.svg', label: 'Settings' },
-        { icon: '/utility.svg', label: 'API & Utilities' },
+        // { icon: '/utility.svg', label: 'API & Utilities' },
         { icon: '/support.svg', label: 'Support' },
       ],
     },

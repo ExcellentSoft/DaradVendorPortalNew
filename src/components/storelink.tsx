@@ -53,13 +53,13 @@ const StoreLinkClaim: React.FC = () => {
         )}
 
         <label htmlFor="custom-store-link" className="block text-gray-700 text-sm font-medium mt-6 mb-2">
-          Customize your link
+          Domain Name
         </label>
         <div className="flex items-center border border-gray-300 rounded-lg focus-within:ring-1 focus-within:ring-purple-500 focus-within:border-purple-500 transition-all duration-200">
           <input
             type="text"
             id="custom-store-link"
-            placeholder="Your unique store link"
+            placeholder="Enter your domain name"
             value={customStoreLink}
             onChange={(e) => setCustomStoreLink(e.target.value)}
             className="flex-grow bg-transparent outline-none text-gray-800 text-base py-2 px-3 rounded-lg"
@@ -75,7 +75,7 @@ const StoreLinkClaim: React.FC = () => {
       <div className="p-6 bg-gray-50 flex justify-end rounded-b-lg border-t border-gray-200">
         <button
           type="submit"
-          className="px-6 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200"
+          className="px-6 py-3 bg-[#5604F6] text-white rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200"
         >
           Save & Continue
         </button>

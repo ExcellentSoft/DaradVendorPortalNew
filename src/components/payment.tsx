@@ -7,10 +7,10 @@ export default function PaymentSettings() {
 
   return (
    <div className="min-h-screen bg-gray-100 p-4 md:p-8 font-sans w-full">
-  <div className="grid grid-cols-1 md:grid-cols-10 gap-4 w-full">
+  <div className=" gap-4 w-full">
         {/* Left Panel */}
 
-          <div className="bg-white  h-[550px] rounded-t-md md:col-span-6">
+          <div className="bg-white  h-[550px] rounded-t-md ">
         {/* Header */}
         <div className="bg-[#2E0234] rounded-t-xl  w-full max-w-lg text-white text-center p-4 mb-6">
             <h2 className="text-lg font-semibold">
@@ -80,7 +80,7 @@ export default function PaymentSettings() {
 
             <button
               type="submit"
-              className="w-full bg-purple-700 hover:bg-purple-800 text-white py-3 px-4 rounded-md text-sm font-medium"
+              className="w-full bg-[#5F04F6] text-white hover:bg-purple-800  py-3 px-4 rounded-md text-sm font-medium"
             >
               Save Changes
             </button>
@@ -88,7 +88,7 @@ export default function PaymentSettings() {
         </div>
 
         {/* Right Panel */}
-        <div className="md:col-span-4 bg-white rounded-lg px-3 py-2">
+        {/* <div className="md:col-span-4 bg-white rounded-lg px-3 py-2">
           <div className="mb-4">
             <h3 className="text-sm font-semibold text-gray-800 mb-2">Recent Payment</h3>
             <div className="flex gap-2 text-xs text-gray-600">
@@ -114,7 +114,7 @@ export default function PaymentSettings() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

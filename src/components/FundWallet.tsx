@@ -37,7 +37,7 @@ const FundWallet: React.FC = () => {
           <div className="relative w-[336px] h-[44px] mx-auto rounded-lg bg-[#FBFCFC] border border-[#121212]/20">
             <input
               type="text"
-              placeholder="Enter customer name or email......"
+              placeholder="Search by email......"
               className="w-full h-full rounded-lg bg-transparent pl-4 pr-10 focus:outline-none placeholder:font-inter placeholder:font-normal placeholder:text-sm placeholder:text-[#6E6B7B]"
             />
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">

@@ -43,8 +43,8 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
 >
   {[
   ['Total tutorials Uploaded', 25],
-    ['Available tutorials for Sale', 10],
-    ['total tutorials type name', 20],
+    ['Total Orders', 10],
+    ['Total Tutorials ', 20],
     ['Pending Customer Requests', 5],
   ].map(([label, value], index, arr) => (
     <div

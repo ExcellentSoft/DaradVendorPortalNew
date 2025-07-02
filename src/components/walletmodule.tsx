@@ -9,7 +9,6 @@ const CustomerWalletHistory: React.FC = () => {
     {
       id: 1,
       customerEmail: 'Chinedu.Okafor@Email.Com',
-      depositorName: 'Chinedu Okafor',
       amountPaid: '₦50,000',
       bankAccountName: 'Zenith Bank',
       paidFromBank: 'GTBank',
@@ -18,7 +17,6 @@ const CustomerWalletHistory: React.FC = () => {
     {
       id: 2,
       customerEmail: 'Amaka.Ade@Gmail.Com',
-      depositorName: 'Amaka Ade',
       amountPaid: '₦35,000',
       bankAccountName: 'Access Bank',
       paidFromBank: 'UBA',
@@ -27,7 +25,6 @@ const CustomerWalletHistory: React.FC = () => {
     {
       id: 3,
       customerEmail: 'Oluwaseun.Taiwo@Yahoo.Com',
-      depositorName: 'Oluwaseun Taiwo',
       amountPaid: '₦20,000',
       bankAccountName: 'First Bank',
       paidFromBank: 'Fidelity Bank',
@@ -36,7 +33,6 @@ const CustomerWalletHistory: React.FC = () => {
     {
       id: 4,
       customerEmail: 'Blessing.Udo@GMail.Com',
-      depositorName: 'Blessing Udo',
       amountPaid: '₦70,000',
       bankAccountName: 'EcoBank',
       paidFromBank: 'Zenith Bank',
@@ -45,7 +41,6 @@ const CustomerWalletHistory: React.FC = () => {
     {
       id: 5,
       customerEmail: 'Daniel.Adeleke@Hotmail.Com',
-      depositorName: 'Daniel Adeleke',
       amountPaid: '₦15,000',
       bankAccountName: 'UBA',
       paidFromBank: 'Polaris Bank',
@@ -94,7 +89,7 @@ const CustomerWalletHistory: React.FC = () => {
       className="bg-white rounded-lg gap-2 py-3 px-5 hover:bg-gray-100
                  font-[Urbanist,sans-serif] font-semibold text-sm leading-none tracking-[0.02em] capitalize text-[#5604F6] w-full md:w-auto"
     >
-      Fund Customer Wallet
+    Submitted payment
     </button>
   </header>
 
@@ -104,7 +99,7 @@ const CustomerWalletHistory: React.FC = () => {
         className="flex flex-wrap rounded border-b border-[#121212]/10 gap-3
                    pt-3 pr-5 pb-3 pl-5 bg-white max-w-full"
       >
-        {['allTransactions', 'pendingApproval', 'funded', 'deleted'].map((tab) => (
+        {['allTransactions', 'pendingApproval', 'funded', ''].map((tab) => (
           <button
             key={tab}
             onClick={() => handleTabClick(tab)}
@@ -124,7 +119,7 @@ const CustomerWalletHistory: React.FC = () => {
       <div className="relative w-full md:w-[272px] h-[44px]">
         <input
           type="text"
-          placeholder="Enter customer name or email..."
+          placeholder="Search by email..."
           className="w-full h-full rounded-lg border bg-[#FBFCFC]
                      pl-4 pr-10 pt-3 pb-3 border-[#121212]/20
                      focus:outline-none focus:ring-2 focus:ring-purple-500
@@ -157,9 +152,7 @@ const CustomerWalletHistory: React.FC = () => {
           <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left min-w-[140px]">
             Customer Email
           </th>
-          <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left min-w-[120px]">
-            Depositor Name
-          </th>
+         
           <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-center min-w-[100px]">
             <div>Amount Paid</div>
             <div>(₦)</div>
@@ -195,9 +188,7 @@ const CustomerWalletHistory: React.FC = () => {
                 </span>
               </div>
             </td>
-            <td className="px-3 py-4 whitespace-nowrap font-normal text-base leading-[100%] text-left text-[#121212]/80 min-w-[120px]" style={{ verticalAlign: 'middle' }}>
-              {transaction.depositorName}
-            </td>
+          
             <td className="px-3 py-4 whitespace-nowrap font-normal text-base leading-[100%] text-center text-[#121212]/80 min-w-[100px]" style={{ verticalAlign: 'middle' }}>
               {transaction.amountPaid}
             </td>

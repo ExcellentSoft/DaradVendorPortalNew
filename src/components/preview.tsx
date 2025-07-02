@@ -24,7 +24,7 @@ const StorePreview: React.FC = () => {
       <div className="bg-white mt-5 rounded-lg shadow-xl w-full max-w-lg overflow-hidden">
         {/* Header Section */}
         <div className="bg-[#2E0234] text-white p-6 rounded-t-lg">
-          <h1 className="text-2xl font-bold mb-2">Preview Your Store</h1>
+          <h1 className="text-2xl font-bold mb-2">Publish Your Store</h1>
           <p className="text-purple-200 text-sm">
             Enhance your brand with your default store link.
           </p>
@@ -40,9 +40,9 @@ const StorePreview: React.FC = () => {
           <button
             type="button"
             onClick={handlePublishClick}
-            className="px-6 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200"
+            className="px-6 py-3 bg-[#5604F6] text-white rounded-lg font-medium "
           >
-            Publish Store
+            Publish Website
           </button>
         </div>
       </div>

@@ -75,7 +75,7 @@ const logtypeData = [
 >
   {[
   ['Total Logs Uploaded', 25],
-    ['Available Logs For Sale', 10],
+    ['Total Order', 10],
     ['Total Log Type Name', 20],
     ['Pending Customer Requests', 5],
   ].map(([label, value], index, arr) => (
