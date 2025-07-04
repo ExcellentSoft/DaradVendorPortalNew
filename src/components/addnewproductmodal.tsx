@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function AddNewProductForm() {
   const [productName, setProductName] = useState('');
@@ -10,6 +11,84 @@ export default function AddNewProductForm() {
   const [sku, setSku] = useState('');
   const [dateAdded, setDateAdded] = useState('');
   const [mediaFile, setMediaFile] = useState<File | null>(null);
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/categories?searchText=p',
+        { headers: { accept: 'text/plain' } }
+      )
+      .then((res) => {
+        if (res.data?.status && res.data?.data) {
+          setCategories(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to fetch categories', err);
+      });
+  }, []);
+
+
+
+  
+const getCategoryIdByName = (name: string): number | null => {
+  const found = categories.find((cat) => cat.name === name);
+  return found ? found.id : null;
+};
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const categoryId = getCategoryIdByName(category);
+if (categoryId === null) {
+  alert("Please select a valid category.");
+  return;
+}
+
+const payload = {
+  name: productName,
+  description: description,
+  price: parseFloat(price),
+  categoryId: categoryId,
+  qty: parseInt(stockQuantity),
+  colors: [],
+  sizes: [],
+  stock: parseInt(stockQuantity),
+  vendorId: parseInt(localStorage.getItem('vendorId') || '0'), 
+};
+
+
+    const headers: any = {
+      'Content-Type': 'application/json',
+      Accept: 'text/plain',
+    };
+
+    // Optionally add auth header
+    const token = localStorage.getItem('authToken'); // if stored
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await axios.post(
+      'https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/create-product',
+      payload,
+      { headers }
+    );
+
+    if (response.data?.status) {
+      alert('Product created successfully!');
+      console.log(response.data);
+    } else {
+      alert('Product creation failed.');
+      console.log(response.data);
+    }
+  } catch (error) {
+    console.error('Error creating product:', error);
+    alert('An error occurred while creating the product.');
+  }
+};
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -20,21 +99,7 @@ export default function AddNewProductForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log({
-      productName,
-      description,
-      category,
-      subcategory,
-      price,
-      stockQuantity,
-      sku,
-      dateAdded,
-      mediaFile,
-    });
-    alert('Product saved! Check console for data.');
-  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 font-sans">
@@ -70,16 +135,22 @@ export default function AddNewProductForm() {
 
           <div>
             <label className="text-sm font-medium text-[#101928]">Category</label>
-            <select
-              className="w-full mt-2 border border-gray-300 rounded-md px-4 py-3 text-sm text-[#121212CC]"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">Fashion & Apparel, Electronics , Home & Kitchen</option>
-              <option value="Fashion">Fashion</option>
-              <option value="Electronics">Electronics</option>
-              <option value="Home">Home & Kitchen</option>
-            </select>
+           <div>
+  <label className="text-sm font-medium text-[#101928]">Category</label>
+  <select
+    className="w-full mt-2 border border-gray-300 rounded-md px-4 py-3 text-sm text-[#121212CC]"
+    value={category}
+    onChange={(e) => setCategory(e.target.value)}
+  >
+    <option value="">Select Category</option>
+    {categories.map((cat) => (
+      <option key={cat.id} value={cat.name}>
+        {cat.name}
+      </option>
+    ))}
+  </select>
+</div>
+
           </div>
 
           <div>
