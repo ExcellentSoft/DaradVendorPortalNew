@@ -90,14 +90,14 @@ const logtypeData = [
 </div>
 
 
-      {/* Log Product Section */}
+      
    
  
 
-        {/* Logs Table */}
+       
  {/* Logs Table */}
 {viewLogType ? (
-  // Log Type Name Table
+  
  <div className=" p-8 rounded-lg  border border-[#1212121A]">
     <div className='bg-white border rounded-lg p-4 mb-4'>
         <div className=" border p-4 rounded-md  relative">

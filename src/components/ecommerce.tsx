@@ -5,7 +5,7 @@ import bgImage from "../../public/assets/doodle.png";
 import { ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
 import { IoArrowBack } from "react-icons/io5";
 import Commerce from "../../public/assets/digital.svg";
-
+import CreateModal from "./addnewproduct";
 
 type Product = {
   id: number;
@@ -221,6 +221,7 @@ interface LogProductProps {
 const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [viewLogType, setViewLogType] = useState(false);
+const [showModal, setShowModal] = useState(false);
 
   
 
@@ -241,11 +242,11 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
             Sell E-commerce products efficiently with seamless uploads and easy management.
           </p>
         </div>
-        <div className="flex gap-2">
-          <button className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium">
-            Create E-Commerce
+        <div className="flex gap-2 cursor-pointer">
+          <button   onClick={() => setShowModal(true)} className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium">
+            Create Products
           </button>
-          <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+          <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium cursor-pointer ">
             Upload E-Commerce Products
           </button>
         </div>
@@ -431,6 +432,16 @@ const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
           </div>
         )}
       </div>
+
+      {showModal && (
+  <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+    
+     {showModal && <CreateModal onClose={() => setShowModal(false)} />}
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
