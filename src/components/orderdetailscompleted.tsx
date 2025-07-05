@@ -10,131 +10,137 @@ export default function OrderDetails() {
   };
 
   return (
-    <div className="flex flex-col min-w-full p-8 space-y-6  min-h-screen">
+    <div className="flex flex-col min-w-full p-6 space-y-6  min-h-screen justify-center items-center bg-white rounded-lg">
       {/* Header */}
-      <div className="bg-white p-6 text-center border-b">
-        <h1 className="text-[24px] text-[#000000] font-bold">Order Details – #ORD1234</h1>
-        <p className="text-[#121212CC] text-[14px] mt-1">
+      <div className="bg-white p-6 text-center border-b w-[740px] ">
+        <h1 className="font-urbanist font-semibold text-[24px] leading-[100%] text-center capitalize text-black">Order Details – #ORD1234</h1>
+        <p className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC] text-center mt-2">
           Get a clear view of your order details! Track progress, take quick actions,
-          and stay in control—seamlessly.
+          and stay in <br />control—seamlessly.
         </p>
       </div>
 
       {/* Order Overview */}
-     <div className="  w-[740px] mx-auto bg-white  rounded-lg border border-[#12121233] p-8 space-y-4">
-  <h2 className="text-lg font-semibold text-gray-800">Order Overview</h2>
+     <div className="  w-[740px] mx-auto bg-white  rounded-lg border border-[#12121233] px-6 space-y-4 mt-2 py-4">
+  <h2 className="font-urbanist font-semibold text-base leading-[160%] align-middle capitalize text-[#000000]">Order Overview</h2>
   
   <div className="flex items-center justify-between border-b pb-2">
-        <span className="text-sm text-gray-600">Order Status</span>
-    <span className="bg-green-100 text-green-700 text-sm font-medium px-3 py-1 ">Completed</span>
-    <span className="text-sm text-gray-600">The Order Has Been Fulfilled Successfully.</span>
+    <div className="w-[320px] flex justify-between items-center gap-4">
+        <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Order Status</span>
+    <span className="bg-[#1D9E341A] text-[#1D9E34] border-[0.5px] border-[#1D9E3426] text-sm font-medium px-3 py-1 rounded-sm ">Completed</span>
+    </div>
+    <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">The Order Has Been Fulfilled Successfully.</span>
   </div>
 
-  <div className="flex flex-col gap-y-4  text-sm text-gray-700 pt-2">
-    <div className="flex justify-between border-b border-gray-100 pb-2">
-    <div className="font-medium">Placed On</div>
-    <div className="font-semibold text-gray-900">March 10, 2025</div>
-
-    <div className="font-medium">Expected Delivery</div>
-    <div className="font-semibold text-gray-900">March 10, 2025</div>
+  <div className="flex flex-col gap-y-4  text-sm text-gray-700">
+    <div className="flex justify-between border-b border-gray-100">
+      <div className="w-[320px] flex justify-between items-center gap-4">
+    <div className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Placed On</div>
+    <div className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">March 10, 2025</div>
+    </div>
+<div className="w-[300px] flex justify-between items-center gap-4">
+    <div className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Expected Delivery</div>
+    <div className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">March 10, 2025</div>
+    </div>
     </div>
 
- <div className="flex justify-between mt-3 border-b border-gray-100 pb-2 text-gray-700">
-    <div className="font-medium">Date Processed</div>
-    <div className="font-semibold text-gray-900">22nd February 2025</div>
-
-    <div className="font-medium">Time Processed</div>
-    <div className="font-semibold text-gray-900">11:22pm</div>
+ <div className="flex justify-between mt-3 border-b border-gray-100 text-gray-700">
+  <div className="w-[320px] flex justify-between items-center gap-4">
+    <div className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Date Processed</div>
+    <div className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">22nd February 2025</div>
+    </div>
+<div className="w-[300px] flex justify-between items-center gap-4">
+    <div className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Time Processed</div>
+    <div className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">11:22pm</div>
+    </div>
     </div>
   </div>
 </div>
 
 
       {/* Main Info Section */}
-     <div className="flex flex-row gap-4 w-full">
- 
-   <div className="border rounded-lg ml-4  p-8 w-[360px] ">
-    <h2 className="font-semibold text-lg mb-2 text-[#000000] mb-6 mt-3">Customer Details</h2>
-    <div className="mb-6 border-b border-#1212121A flex justify-between ">
-      <span className="text-[#121212CC]">Name</span>
-      <span className="font-semibold text-[#121212]">Adekunle Johnson</span>
+<div className="flex flex-row gap-4 w-[740px] justify-between items-start mt-4">
+  <div className="border rounded-lg px-6 py-2 border-[#12121233] flex-1">
+    <h2 className="font-urbanist font-semibold text-base leading-[160%] capitalize text-[#000000] mb-4">Customer Details</h2>
+    <div className="mb-6 border-b border-[#1212121A] flex justify-between">
+      <span className="font-inter font-normal text-sm leading-[160%] text-[#121212CC]">Name</span>
+      <span className="font-medium text-sm leading-[160%] text-right capitalize font-inter text-[#121212]">Adekunle Johnson</span>
     </div>
-    <div className="mb-6 border-b border-#1212121A flex justify-between">
-      <span className="text-[#121212CC]">Phone No</span>
-      <span className="font-semibold text-[#121212CC]">09029717250</span>
+    <div className="mb-6 border-b border-[#1212121A] flex justify-between">
+      <span className="font-inter font-normal text-sm leading-[160%] text-[#121212CC]">Phone No</span>
+      <span className="font-medium text-sm leading-[160%] text-right capitalize font-inter text-[#121212]">09029717250</span>
     </div>
-    <div>
-      <div className=" flex justify-between">
-      <span className="text-[#121212CC]">Email</span>
-      <span className="font-semibold text-[#121212]">Dhemmexroxy@Gmail.Com</span>
-      </div>
+    <div className="flex justify-between">
+      <span className="font-inter font-normal text-sm leading-[160%] text-[#121212CC]">Email</span>
+      <span className="font-medium text-sm leading-[160%] text-right capitalize font-inter text-[#121212]">Dhemmexroxy@Gmail.Com</span>
     </div>
   </div>
 
- 
-  <div className="border rounded-lg  p-8 w-[360px]">
-    <h2 className="font-semibold text-lg mb-2 text-[#000000] mb-6 mt-3">Delivery Details</h2>
-    <div className="mb-6 border-b border-#1212121A  flex justify-between">
-      <span className="text-[#121212CC]"> Delivery Method:</span>
-      <span className="font-semibold text-[#121212]">Email</span>
+  <div className="border rounded-lg px-6 py-2 border-[#12121233] flex-1">
+    <h2 className="font-urbanist font-semibold text-base leading-[160%] capitalize text-[#000000] mb-4">Delivery Details</h2>
+    <div className="mb-6 border-b border-[#1212121A] flex justify-between">
+      <span className="font-inter font-normal text-sm leading-[160%] text-[#121212CC]">🚛 Delivery Method:</span>
+      <span className="font-medium text-sm leading-[160%] text-right capitalize font-inter text-[#121212]">Email</span>
     </div>
-    <div className="mb-6 border-b border-#1212121A  flex justify-between">
-      <span className="text-[#121212CC]">Tracking Number:</span>
-      <span className="font-semibold text-[#121212]">Mdd-4821X8Y72</span>
+    <div className="mb-6 border-b border-[#1212121A] flex justify-between">
+      <span className="font-inter font-normal text-sm leading-[160%] text-[#121212CC]">📍 Tracking Number:</span>
+      <span className="font-medium text-sm leading-[160%] text-right capitalize font-inter text-[#121212]">Mdd-4821X8Y72</span>
     </div>
-    <div className=" flex justify-between">
-      <span className="text-[#121212CC]">Status:</span>
-      <span className="font-semibold text-[#121212]">Delivered</span>
+    <div className="flex justify-between">
+      <span className="font-inter font-normal text-sm leading-[160%] text-[#121212CC]">Status:</span>
+      <span className="font-medium text-sm leading-[160%] text-right capitalize font-inter text-[#121212]">Delivered</span>
     </div>
   </div>
 </div>
 
 
-      {/* Product Details */}
-     <div className=" rounded-lg p-8 border border-[#12121233]  max-w-[720px] ml-4 w-full ">
-  <h2 className="font-bold text-[16px] text-gray-800 mb-4">Payment Details</h2>
 
-  <div className="mb-2 flex gap-20 items-center mb-6">
-    <span className="text-[#121212CC] mr-2">Payment Status</span>
-    <span className="font-semibold text-black flex items-center">
-      Completed
-      <svg className="w-4 h-4 ml-1 text-white bg-green-600 rounded-full" fill="currentColor" viewBox="0 0 20 20">
-        <path
-          fillRule="evenodd"
-          d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </span>
+      {/* Product Details */}
+     <div className=" w-[740px] mx-auto bg-white  rounded-lg border border-[#12121233] px-6 space-y-4 mt-2 py-3 gap-4">
+  <h2 className="font-urbanist font-semibold text-base leading-[160%] align-middle capitalize text-[#000000]">Payment Details</h2>
+
+  <div className="mb-2 flex gap-20 items-center">
+    <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Payment Status</span>
+   <span className="flex items-center font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">
+  Completed
+  <svg className="w-4 h-4 ml-1 text-white bg-green-600 rounded-full" fill="currentColor" viewBox="0 0 20 20">
+    <path
+      fillRule="evenodd"
+      d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
+      clipRule="evenodd"
+    />
+  </svg>
+</span>
+
   </div>
 
-  <div className=" flex gap-48 border-b border-#1212121A pb-3 mb-6 ">
+  <div className=" flex gap-48 border-b border-#1212121A pb-3 ">
     
-      <span className="text-[#121212CC] text-[14px]">Transaction I.D</span>
+      <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Transaction I.D</span>
       <div className="flex gap-14">
-      <span className="font-semibold text-[14px] text-[#121212]">Trx-12345</span>
+      <span className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">Trx-12345</span>
     
     
-      <span className="text-[#121212CC] text-[14px]">Payment Method</span>
-      <span className="font-semibold text-[14px] text-[#121212]">Bank Transfer</span>
+      <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Payment Method</span>
+      <span className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">Bank Transfer</span>
     </div>
   </div>
 
-  <div className="mt-2 flex justify-between">
-    <span className="text-[#121212CC]">Reasons For Failed Payment</span>
+  <div className=" flex justify-between">
+    <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Reasons For Failed Payment</span>
     
-    <span className="font-bold text-[16px] text-gray-800 block">
+    <span className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">
       Insufficient Funds, Network Error, System Issue, Etc.
     </span>
   </div>
 </div>
 
 
-      {/* Action Buttons */}
+      {/* Table */}
 <div className=" mx-auto overflow-hidden border border-gray-200  rounded-xl">
-  <table className=" w-[720px] text-sm text-left text-gray-700">
+  <table className=" w-[740px] text-sm text-left text-gray-700">
     <thead>
-      <tr className="bg-[#C2C3C580] text-gray-700 ">
+      <tr className="bg-[#C2C3C580] text-[#121212] ">
         <th className="px-4 py-3 rounded-tl-xl">Product Name</th>
         <th className="px-4 py-3">Quantity</th>
         <th className="px-4 py-3">Price</th>
@@ -164,21 +170,27 @@ export default function OrderDetails() {
 
 
 
+ {/* Action Buttons */}
+<div className="mt-6 flex justify-center items-center gap-6 w-[387px]">
+  <button
+  onClick={handlePrintInvoice}
+  className="w-full h-[41px] flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-[14px] font-urbanist font-semibold text-[#121212CC] capitalize hover:bg-gray-100 border border-[#E6E7EA] shadow-[0px_1px_2px_0px_#0520510D]"
+>
+  Print Invoice
+</button>
 
-<div className="mt-6 flex justify-center items-center gap-6">
-    <button  onClick={handlePrintInvoice} className="px-4 py-4 border border-gray-300 rounded-md text-[16px] text-[#121212CC] font-bold hover:bg-gray-100">
-      Print Invoice
-    </button>
-    <button className="flex items-center px-4 py-4 bg-[#5604F6] text-white text-[14px] font-bold rounded-md hover:bg-purple-700">
-      Reorder For Customer
- <svg className="w-4 h-4 ml-4 text-white border border-white " fill="currentColor" viewBox="0 0 20 20">
-        <path
-          fillRule="evenodd"
-          d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </button>
+  <button className="w-full h-[41px] rounded-lg px-5 py-3 bg-[#5604F6] flex items-center justify-center gap-2">
+  <span className="font-urbanist font-semibold text-[14px] leading-none tracking-[0.02em] align-middle capitalize text-white whitespace-nowrap">
+    Reorder For Customer
+  </span>
+  <svg className="w-4 h-4 text-white border border-white" fill="currentColor" viewBox="0 0 20 20">
+    <path
+      fillRule="evenodd"
+      d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
+      clipRule="evenodd"
+    />
+  </svg>
+</button>
   </div>
 {showInvoice && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">

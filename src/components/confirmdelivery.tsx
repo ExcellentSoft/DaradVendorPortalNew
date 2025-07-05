@@ -30,49 +30,61 @@ const ConfirmDeliveryModal: React.FC<ConfirmDeliveryModalProps> = ({
         </button>
       </div>
       <div className="border-b">
-        <h2 className="text-[24px] text-[#000000] font-bold mb-2">Confirm Delivery</h2>
-        <p className="text-[14px] text-[#121212CC] mb-6">
+        <h1 className="font-urbanist font-semibold text-[24px] leading-[100%] text-center capitalize text-black">Confirm Delivery</h1>
+        <p className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC] text-center mt-2 mb-4">
           Are you sure you want to mark Order <span className="font-medium">#{orderId}</span> as delivered?
-          This action will update the order status and notify the customer that their package has been received.
+          This action will <br /> update the order status and notify the customer that their package has been <br /> received.
         </p>
       </div>
 
       {/* Order Overview */}
-      <div className="mb-8 mx-auto bg-white mt-4 rounded-lg border border-[#12121233] p-8 space-y-4">
-        <h2 className="text-lg font-semibold text-gray-800">Order Overview</h2>
+      <div className="w-full mx-auto bg-white  rounded-lg border border-[#12121233] px-6 space-y-4 mt-6 py-4">
+        <h2 className="font-urbanist font-semibold text-left leading-[160%] align-middle capitalize text-[#000000]">Order Overview</h2>
 
         <div className="flex items-center justify-between border-b pb-2">
-          <span className="text-sm text-gray-600">Order ID</span>
-          <p className="text-[#121212] font-bold">{orderId}</p>
+          <div className='w-[320px] flex justify-between items-center gap-4'>
+            <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Order ID</span>
+           <p className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">{orderId}</p>
+          </div>
 
-          <p className="text-black">Name</p>
-          <p className="font-bold text-black">{customerName}</p>
+          <div className='w-[320px] flex justify-between items-center gap-4'>
+            <p className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Name</p>
+            <p className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">{customerName}</p>
+          </div>
         </div>
 
         <div className="flex items-center justify-between border-b pb-2">
-          <span className="text-sm text-gray-600">Order Status (Before)</span>
-          <p className="text-[#121212] font-bold">{previousStatus}</p>
+          <div className='w-[320px] flex justify-between items-center gap-4'>
+          <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Order Status (Before)</span>
+          <p className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">{previousStatus}</p>
+          </div>
 
-          <p className="text-black">Delivery Date</p>
-           <p className="font-bold text-black">{deliveryDate}</p>
+         <div className='w-[320px] flex justify-between items-center gap-4'>
+           <p className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">Delivery Date</p>
+           <p className="font-medium text-sm leading-[160%] text-right align-middle capitalize font-inter text-[#121212]">{deliveryDate}</p>
+          </div>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col mt-8 md:flex-row gap-6 justify-center items-center">
-        <button
-          onClick={onCancel}
-          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={onConfirm}
-          className="px-4 py-2 bg-[#5604F6] text-white rounded-md"
-        >
-          Confirm Delivery
-        </button>
-      </div>
+<div className="mt-6 flex justify-center items-center gap-6 w-[387px] mx-auto mb-4">
+  <button
+    onClick={onCancel}
+    className="w-full h-[41px] flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-[14px] font-urbanist font-semibold text-[#121212CC] capitalize hover:bg-gray-100 border border-[#E6E7EA] shadow-[0px_1px_2px_0px_#0520510D]"
+  >
+    Cancel
+  </button>
+
+  <button
+    onClick={onConfirm}
+    className="w-full h-[41px] rounded-lg px-5 py-3 bg-[#5604F6] flex items-center justify-center gap-2"
+  >
+    <span className="font-urbanist font-semibold text-[14px] leading-none tracking-[0.02em] align-middle capitalize text-white whitespace-nowrap">
+      Confirm Delivery
+    </span>
+  </button>
+</div>
+
     </div>
   );
 };
