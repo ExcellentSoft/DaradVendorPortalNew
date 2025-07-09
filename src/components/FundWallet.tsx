@@ -32,7 +32,7 @@ const FundWallet: React.FC = () => {
         </header>
 
         {/* Main Form */}
-        <div className="w-[500px] h-[605px] rounded-lg border border-[#121212]/20 relative p-10 mt-20 mx-auto">
+        <div className="w-[500px] h-[605px] rounded-2xl border border-[#121212]/20 relative p-10 mt-20 mx-auto">
           {/* Search Input with Icon */}
           <div className="relative w-[336px] h-[44px] mx-auto rounded-lg bg-[#FBFCFC] border border-[#121212]/20">
             <input
@@ -81,7 +81,7 @@ const FundWallet: React.FC = () => {
                   id="amountToCredit"
                   type="text"
                   defaultValue="75,000"
-                  className="w-full h-[43px] rounded-lg border border-[#1E0156] bg-[#FBFCFC] pl-9 pr-4 py-3 focus:outline-none text-lg text-[#121212] font-semibold"
+                  className="w-full h-[43px] rounded-lg border border-[#1E0156] bg-[#FBFCFC] pl-9 pr-4 py-3 focus:outline-none font-urbanist font-medium text-base leading-none tracking-[0.02em] align-middle capitalize text-[#121212]"
                 />
               </div>
             </div>
@@ -95,42 +95,59 @@ const FundWallet: React.FC = () => {
                 id="confirmEmail"
                 type="email"
                 defaultValue="Aymomide.Johnson@Email.Com"
-                className="w-full h-[43px] rounded-lg border border-[#1E0156] bg-[#FBFCFC] pl-4 pr-4 py-3 focus:outline-none text-base text-[#121212] font-medium"
+                className="w-full h-[43px] rounded-lg border border-[#1E0156] bg-[#FBFCFC] pl-4 pr-4 py-3 focus:outline-none font-urbanist font-medium text-base leading-none tracking-[0.02em] align-middle capitalize text-[#121212]"
               />
             </div>
 
             {/* Transfer From Options */}
-            <div className="w-[295px] h-[117px] rounded-lg flex flex-col gap-[17px] pt-2 pr-3 pb-2 pl-3 bg-[#F8F8F8] border border-[#121212]/10 mx-auto mb-6">
-              <span className="block font-inter font-normal text-xs leading-[12px] tracking-normal text-[#121212]/80">
-                Transfer From
-              </span>
-              <div className="flex flex-col gap-6">
-                <label className="inline-flex items-center text-base text-[#121212]">
-                  <input
-                    type="radio"
-                    name="transferFrom"
-                    value="accountWallet"
-                    className="form-radio text-[#5604F6] h-5 w-5 border-gray-300"
-                    defaultChecked
-                  />
-                  <span className="ml-2 font-inter font-normal text-xs text-[#121212]/80">Account Wallet</span>
-                  <span className="ml-2 font-inter font-normal text-xs text-[#121212]/80">(Current Balance: ₦120,000)</span>
-                </label>
-                <label className="inline-flex items-center text-base text-[#121212]">
-                  <input
-                    type="radio"
-                    name="transferFrom"
-                    value="onlineBanking"
-                    className="form-radio text-[#5604F6] h-5 w-5 border-gray-300"
-                  />
-                  <span className="ml-2 font-inter font-normal text-xs text-[#121212]/80">Fund from online banking</span>
-                </label>
-              </div>
-            </div>
+<div className="w-[295px] h-[117px] rounded-lg flex flex-col gap-[17px] pt-2 pr-3 pb-2 pl-3 bg-[#F8F8F8] border border-[#121212]/10 mx-auto mb-6">
+  <span className="block font-inter font-normal text-xs leading-[12px] tracking-normal text-[#121212]/80">
+    Transfer From
+  </span>
+  <div className="flex flex-col gap-6">
+    {/* Option 1 */}
+    <label className="inline-flex items-center text-base text-[#121212] cursor-pointer">
+      <input
+        type="radio"
+        name="transferFrom"
+        value="accountWallet"
+        className="hidden peer"
+        defaultChecked
+      />
+      <div className="w-5 h-5 rounded-full border-2 border-[#12121233] peer-checked:border-[#5604F6] flex items-center justify-center">
+        <div className="w-2.5 h-2.5 rounded-full bg-[#5604F6] peer-checked:scale-100 scale-0 transition-transform duration-150 ease-in-out"></div>
+      </div>
+      <span className="ml-2 font-inter font-normal text-xs text-[#121212]/80">
+        Account Wallet
+      </span>
+      <span className="ml-2 font-inter font-normal text-xs text-[#121212]/80">
+        (Current Balance: ₦120,000)
+      </span>
+    </label>
+
+    {/* Option 2 */}
+    <label className="inline-flex items-center text-base text-[#121212] cursor-pointer">
+      <input
+        type="radio"
+        name="transferFrom"
+        value="onlineBanking"
+        className="hidden peer"
+      />
+      <div className="w-5 h-5 rounded-full border-2 border-[#12121233] peer-checked:border-[#5604F6] flex items-center justify-center">
+        <div className="w-2.5 h-2.5 rounded-full bg-[#5604F6] peer-checked:scale-100 scale-0 transition-transform duration-150 ease-in-out"></div>
+      </div>
+      <span className="ml-2 font-inter font-normal text-xs text-[#121212]/80">
+        Fund from online banking
+      </span>
+    </label>
+  </div>
+</div>
+
+
 
             {/* Send Button */}
             <button
-              className="w-full h-[56px] bg-[#5604F6] text-white rounded-lg flex items-center justify-center font-urbanist font-semibold text-sm tracking-[0.02em] capitalize"
+              className="w-full h-[56px] bg-[#5604F6] text-white rounded-xl flex items-center justify-center font-urbanist font-semibold text-sm tracking-[0.02em] capitalize"
               onClick={handleSendButtonClick}
             >
               Send ₦75,000 From Account Wallet
@@ -148,7 +165,6 @@ const FundWallet: React.FC = () => {
       </div>
     </div>
     </div>
-      {showFundWalletModal && <FundWalletModal onClose={handleCloseModal} />}
     </>
   );
 };

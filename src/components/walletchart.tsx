@@ -32,6 +32,8 @@ const data = [
 const CustomTooltip = ({
   active,
   payload,
+
+
  
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
@@ -46,39 +48,79 @@ const CustomTooltip = ({
 };
 
 const BestSellingProducts: React.FC = () => {
+  const [filter, setFilter] = React.useState('This week');
   return (
-    <div className="bg-white rounded-2xl shadow p-8 w-full  mx-auto">
+    <div className="bg-white rounded-xl shadow p-4 w-full  mx-auto h-[500px]">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">Best Selling Products</h2>
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">Best Selling Products</h2>
           <p className="text-sm text-gray-500">Boost your best-sellers with targeted ads and discounts!</p>
         </div>
-        <button className="text-sm bg-gray-100 border border-gray-200 px-3 py-1 rounded-md text-gray-600">
-          This week
-        </button>
+       <div className="relative inline-block text-left">
+              <select
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                className="bg-[#ffffff] text-[#000000B3] text-sm border border-gray-200 px-3 py-1 rounded-md inline-flex items-center gap-1"
+              >
+                <option>This week</option>
+                <option>This Month</option>
+                <option>This Year</option>
+              </select>
+</div>
+
       </div>
 
       {/* Legend */}
-      <div className="flex space-x-6 mb-4 text-sm font-medium text-gray-700">
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 bg-indigo-400 rounded-full inline-block"></span>
-          <span>Lagos sneakers</span>
+      <div className="flex flex-col md:flex-row gap-4 text-[#121212CC]">
+        <div className="flex items-center space-x-2 bg-[#EEE6FE80] rounded-md px-2 py-2">
+          <span className="w-8 h-1 bg-[#6976EB] rounded-sm inline-block"></span>
+          <span className='whitespace-nowrap'>Lagos sneakers</span>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 bg-purple-700 rounded-full inline-block"></span>
-          <span>Ankara print hoodie</span>
+        <div className="flex items-center space-x-2 rounded-md px-2 py-2">
+          <span className="w-8 h-1 bg-[#ADB4F3] rounded-sm inline-block"></span>
+          <span className='whitespace-nowrap'>Ankara print hoodie</span>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 bg-gray-400 rounded-full inline-block"></span>
-          <span>Custom leather wallet</span>
+        <div className="flex items-center space-x-2 rounded-md px-2 py-2">
+          <span className="w-8 h-1 bg-[#2B3695] rounded-sm inline-bloc"></span>
+          <span className='whitespace-nowrap'>Custom leather wallet</span>
         </div>
       </div>
 
       {/* Chart */}
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={300} className="mt-8">
         <LineChart data={data}>
           <CartesianGrid stroke="#f3f4f6" strokeDasharray="3 3" />
-          <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+          <XAxis
+  dataKey="month"
+  tick={({ x, y, payload }) => {
+    const isAug = payload.value === "Aug";
+    return (
+      <g transform={`translate(${x},${y + 10})`}>
+        {isAug && (
+          <rect
+            x={-18}
+            y={-15}
+            width={40}
+            height={30}
+            rx={8} // pill shape
+            fill="#5604F6"
+          />
+        )}
+        <text
+          x={0}
+          y={0}
+          textAnchor="middle"
+          fontSize={12}
+          fill={isAug ? "#FFFFFF" : "#000000"}
+          alignmentBaseline="middle"
+        >
+          {payload.value}
+        </text>
+      </g>
+    );
+  }}
+/>
+
           <YAxis tick={{ fontSize: 12 }} />
           <Tooltip content={<CustomTooltip />} />
           <Line
@@ -108,10 +150,7 @@ const BestSellingProducts: React.FC = () => {
         </LineChart>
       </ResponsiveContainer>
 
-      {/* Highlight month */}
-      <div className="mt-4 flex justify-center">
-        <span className="bg-indigo-600 text-white text-xs px-3 py-1 rounded-full">Aug</span>
-      </div>
+
     </div>
   );
 };

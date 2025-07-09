@@ -31,8 +31,8 @@ const getSegmentProps = () => {
 const segmentProps = getSegmentProps();
 
   return (
-    <div className="h-[500px] bg-white p-5 rounded-2xl shadow-md">
-      <h2 className="text-sm font-semibold text-center text-gray-700 mb-4">
+    <div className="h-[500px] bg-white p-5 rounded-xl shadow-md">
+      <h2 className="text-lg font-semibold text-center text-[#161A41C7] mb-4">
         Account Wallet Insights
       </h2>
 

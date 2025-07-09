@@ -99,7 +99,7 @@ const CustomerWalletHistory: React.FC = () => {
   </header>
 
   <div className="p-6">
-    <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
       <div
         className="flex flex-wrap rounded border-b border-[#121212]/10 gap-3
                    pt-3 pr-5 pb-3 pl-5 bg-white max-w-full"
@@ -111,7 +111,7 @@ const CustomerWalletHistory: React.FC = () => {
             className={`
               px-4 py-3 rounded-md capitalize leading-none tracking-normal font-[Inter,sans-serif] text-base
               ${activeTab === tab
-                ? 'bg-[#5604F6] text-white font-semibold'
+                ? 'bg-[#5604F6] font-inter font-semibold text-base leading-[100%] capitalize text-white'
                 : 'text-[#121212]/80 font-normal hover:bg-gray-300'
               }
             `}
@@ -150,89 +150,73 @@ const CustomerWalletHistory: React.FC = () => {
     </div>
   </div>
 
-  <div className="mx-4 my-2 rounded-md overflow-auto border border-[#D2D1D6] bg-white max-w-full">
-    <table className="min-w-full divide-y divide-gray-200 table-fixed">
-      <thead className="bg-[#C2C3C5] h-[76px] rounded-t-lg">
-        <tr>
-          <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left min-w-[140px]">
-            Customer Email
-          </th>
-          <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left min-w-[120px]">
-            Depositor Name
-          </th>
-          <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-center min-w-[100px]">
-            <div>Amount Paid</div>
-            <div>(₦)</div>
-          </th>
-          <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left min-w-[140px]">
-            Bank Account Name
-          </th>
-          <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left min-w-[120px]">
-            Paid From Bank
-          </th>
-          <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-left min-w-[100px]">
-            Paid Date
-          </th>
-          <th className="px-3 py-3 font-[Inter,sans-serif] text-base font-medium text-[#121212] capitalize leading-none tracking-normal text-center min-w-[70px]">
-            Action
-          </th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {transactions.map((transaction) => (
-          <tr key={transaction.id}>
-            <td className="px-3 py-4 flex items-center justify-start min-w-[140px] break-words" style={{ verticalAlign: 'middle' }}>
-              <div className="flex items-center gap-3">
-                <div
-                  className="bg-white w-[28px] h-[28px] rounded-md flex items-center justify-center
-                             font-medium text-base leading-[160%] capitalize text-[#121212] flex-shrink-0"
-                  style={{ border: '0.5px solid #D2D1D6' }}
-                >
-                  {transaction.id}
-                </div>
-                <span className="font-medium text-base leading-[160%] capitalize text-[#121212] min-w-0 flex-grow break-words">
-                  {transaction.customerEmail}
-                </span>
+  <div className="mx-4 my-2 rounded-[2xl] bg-white max-w-full">
+<table className="min-w-full bg-white border rounded-[24px] text-sm overflow-hidden">
+  <thead>
+    <tr className="bg-gray-100 text-[14px] font-semibold text-[#121212] text-center">
+      <th className="p-6 rounded-tl-[24px]">Customer Email</th>
+      <th className="p-6">Depositor Name</th>
+      <th className="p-6 text-center">Amount Paid <br /> (₦)</th>
+      <th className="p-6 text-center">Bank Account <br /> Name</th>
+      <th className="p-6 text-center">Paid From <br /> Bank</th>
+      <th className="p-6 text-center">Paid Date</th>
+      <th className="p-6 rounded-tr-[24px]">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {transactions.map((transaction, index) => {
+      const isLastRow = index === transactions.length - 1;
+
+      return (
+        <tr
+          key={transaction.id}
+          className={`border-t hover:bg-gray-50 cursor-pointer ${
+            isLastRow ? "rounded-b-[24px]" : ""
+          }`}
+        >
+          <td className={`p-6 text-[14px] font-medium text-[#121212] ${isLastRow ? "rounded-bl-[24px]" : ""}`}>
+            <div className="flex items-center gap-3">
+              <div className="inline-flex items-center justify-center w-[28px] h-[28px] border border-[#D2D1D6] rounded-md text-sm font-semibold">
+                {transaction.id}
               </div>
-            </td>
-            <td className="px-3 py-4 whitespace-nowrap font-normal text-base leading-[100%] text-left text-[#121212]/80 min-w-[120px]" style={{ verticalAlign: 'middle' }}>
-              {transaction.depositorName}
-            </td>
-            <td className="px-3 py-4 whitespace-nowrap font-normal text-base leading-[100%] text-center text-[#121212]/80 min-w-[100px]" style={{ verticalAlign: 'middle' }}>
-              {transaction.amountPaid}
-            </td>
-            <td className="px-3 py-4 whitespace-nowrap font-medium text-base leading-[160%] capitalize text-[#121212] min-w-[140px] overflow-hidden text-ellipsis text-left" style={{ verticalAlign: 'middle' }}>
-              {transaction.bankAccountName}
-            </td>
-            <td className="px-3 py-4 whitespace-nowrap font-medium text-base leading-[160%] capitalize text-[#121212] min-w-[120px] overflow-hidden text-ellipsis text-left" style={{ verticalAlign: 'middle' }}>
-              {transaction.paidFromBank}
-            </td>
-            <td className="px-3 py-4 whitespace-nowrap font-medium text-base leading-[160%] capitalize text-[#121212] min-w-[100px] text-left" style={{ verticalAlign: 'middle' }}>
-              {transaction.paidDate}
-            </td>
-            <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium min-w-[70px]" style={{ verticalAlign: 'middle' }}>
-              <button className="text-gray-500 hover:text-gray-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="12" r="1"></circle>
-                  <circle cx="12" cy="5" r="1"></circle>
-                  <circle cx="12" cy="19" r="1"></circle>
-                </svg>
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+              <span className="break-words">{transaction.customerEmail}</span>
+            </div>
+          </td>
+          <td className="p-6 text-[14px] text-[#121212B2] text-center">{transaction.depositorName}</td>
+          <td className="p-6 text-[14px] font-bold text-[#121212B2] text-center">
+            {transaction.amountPaid}
+          </td>
+          <td className="p-6 text-[14px] capitalize text-[#121212B2] text-center">{transaction.bankAccountName}</td>
+          <td className="p-6 text-[14px] capitalize text-[#121212B2] text-center">{transaction.paidFromBank}</td>
+          <td className="p-6 text-[14px] capitalize text-[#121212B2]">{transaction.paidDate}</td>
+          <td className={`px-8 py-6 ${isLastRow ? "rounded-br-[24px] text-center" : ""}`}>
+            <button className="text-gray-500 hover:text-gray-700">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="12" cy="5" r="1" />
+                <circle cx="12" cy="19" r="1" />
+              </svg>
+            </button>
+          </td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+
+
+
+
   </div>
 </div>
 

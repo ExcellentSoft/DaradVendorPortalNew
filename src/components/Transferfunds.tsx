@@ -18,10 +18,10 @@ export default function ConfirmWithdrawalModal() {
         {/* Header */}
         <div className="bg-white p-2 text-center border-b border-[#1212121A]">
           <h2 className="font-semibold text-[24px] leading-[100%] text-center capitalize text-black">
-            Confirm Withdrawal Request
+            Transfer Funds
           </h2>
           <p className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC] text-center mt-2">
-            Review your withdrawal details carefully. Funds <br /> will be processed within 24 hours.
+            Move funds from your Sales Wallet to your <br /> Account Wallet.
           </p>
         </div>
 
@@ -31,32 +31,23 @@ export default function ConfirmWithdrawalModal() {
             <div className="flex items-center gap-3">
               <div className="w-0.5 h-8 bg-[#1D9E34] rounded-full" />
               <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">
-                Current Balance
+                Current Sales Wallet Balance
               </span>
             </div>
             <span className="font-inter font-medium text-[12px] leading-[145%] tracking-normal text-right align-middle capitalize text-[#121212]">
               ₦1,200,000
             </span>
           </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-0.5 h-8 bg-[#5604F6] rounded-full" />
-              <span className="font-inter font-normal text-[14px] leading-[160%] text-[#121212CC]">
-                Maximum Withdrawable
-              </span>
-            </div>
-            <span className="font-inter font-medium text-[12px] leading-[145%] tracking-normal text-right align-middle capitalize text-[#5604F6]">
-              ₦500,000
-            </span>
-          </div>
         </div>
-        <p className='ont-inter font-normal text-[12px] leading-[160%] text-black text-left mt-6 mb-4'>Enter the amount you wish to withdraw from your Sales <br />Wallet.</p>
+
+
+
+        <p className='ont-inter font-normal text-[12px] leading-[160%] text-black text-left mt-6 mb-4'>Enter the amount you wish to transfer. This will add funds <br /> to your Account Wallet for operational expenses.</p>
 
         {/* Input */}
         <div className="mb-4">
           <label className="font-inter font-medium text-[14px] leading-[100%] tracking-normal align-left capitalize text-[#101928] mb-2">
-            Withdrawal Amount (₦)
+            Transfer Amount (₦)
           </label>
           <input
             type="number"
@@ -68,7 +59,7 @@ export default function ConfirmWithdrawalModal() {
         </div>
 
         {/* Confirmation */}
-    <div className="bg-[#FEF6E6] flex gap-2 border border-[#FCE4B1] text-[#563A01] p-2 text-sm rounded-xl W-[150px] mt-6">
+    <div className="bg-[#FEF6E6] flex gap-2 border border-[#FCE4B1] text-[#563A01] p-2 text-sm rounded-xl W-[150px]  mt-6">
              <Image src="assets/info.svg" alt="Transfer" width={20} height={20} /> 
              <span className='font-inter font-normal text-[12px] leading-[160%] tracking-[0em]'>
               Review your details carefully before confirming.
@@ -87,7 +78,7 @@ export default function ConfirmWithdrawalModal() {
     onClick={handleWithdrawal}
     className="w-full sm:w-1/2 px-4 py-2 bg-[#5604F6] text-white rounded-md font-inter font-medium text-[12px] leading-[145%] capitalize hover:bg-[#4a03d1] transition"
   >
-    Confirm Withdrawal
+    Confirm Transfer
   </button>
 </div>
 

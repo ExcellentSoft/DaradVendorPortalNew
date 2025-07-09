@@ -1,453 +1,323 @@
-
-
 import React, { useState } from 'react';
+import { X, Copy, UploadCloud } from 'lucide-react';
 
-
-interface FundWalletModalProps {
-  onClose: () => void;
+interface FundWalletFormProps {
+  onClose?: () => void;
+  onProceedToPayment?: (data: {
+    paymentMethod: 'onlineBanking' | 'manualDeposit';
+    depositAmount: string;
+    selectedBank?: string;
+    transactionReference?: string;
+    uploadedFile?: File | null;
+  }) => void;
+  bankAccountName?: string;
+  bankAccountNumber?: string;
+  bankName?: string;
+  referenceCode?: string;
 }
 
+const FundWalletForm: React.FC<FundWalletFormProps> = ({
+  onClose,
+  onProceedToPayment,
+  bankAccountName = 'Naija Vendor Services',
+  bankAccountNumber = '1234567890',
+  bankName = 'GTBank',
+  referenceCode = 'GTBank',
+}) => {
+  const [paymentMethod, setPaymentMethod] = useState<'onlineBanking' | 'manualDeposit'>('onlineBanking');
+  const [depositAmount, setDepositAmount] = useState('');
+  const [selectedBank, setSelectedBank] = useState('');
+  const [transactionReference, setTransactionReference] = useState('');
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
-const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'onlineBanking' | 'manualDeposit'>('onlineBanking');
+  const banks = [
+    { value: '', label: 'Choose a bank' },
+    { value: 'bankA', label: 'Bank A' },
+    { value: 'bankB', label: 'Bank B' },
+    { value: 'bankC', label: 'Bank C' },
+  ];
 
-
-  const handleProceedToPayment = () => {
-    setShowConfirmModal(true);
+  const handleCopyClick = (text: string) => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+    document.body.removeChild(textarea);
   };
 
-
-  const handleCancelConfirm = () => {
-    setShowConfirmModal(false);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      setUploadedFile(e.target.files[0]);
+    } else {
+      setUploadedFile(null);
+    }
   };
 
-
-  const handleContinuePayment = () => {
-   
-    setShowConfirmModal(false);
-    onClose();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onProceedToPayment) {
+      onProceedToPayment({
+        paymentMethod,
+        depositAmount,
+        selectedBank: paymentMethod === 'onlineBanking' ? selectedBank : undefined,
+        transactionReference: paymentMethod === 'manualDeposit' ? transactionReference : undefined,
+        uploadedFile: paymentMethod === 'manualDeposit' ? uploadedFile : undefined,
+      });
+    }
   };
-
-
- 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-     
-      console.log('Copied to clipboard:', text);
-    }).catch(err => {
-      console.error('Failed to copy: ', err);
-    });
-  };
-
-
-
-
-  const modalContainerClasses = `bg-white shadow-lg relative rounded-2xl w-[450px]`;
-
-
-
-
-  const headerDivClasses = `pt-8 pb-6 px-8 text-center border-b border-gray-200`;
-
-
-
-
-  const titleTextClasses = `font-urbanist font-semibold text-2xl leading-[24px] tracking-normal capitalize text-black mb-2`;
-
-
- 
-  const subtitleTextClasses = `font-inter font-normal text-sm leading-[160%] tracking-normal text-[#121212]/80`;
-
-
-
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-   
-      <div className={modalContainerClasses}>
-       
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 z-10"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-
-     
-        <div className={headerDivClasses}>
-          <h2 className={titleTextClasses}>
-            Fund Your Wallet
-          </h2>
-          <p className={subtitleTextClasses}>
-            Enter the amount you wish to add and select your preferred payment method.
-          </p>
-        </div>
-
-
-        {/* Content Area */}
-        <div className="p-8 flex flex-col gap-6">
-          {/* Payment Method Section */}
-          <div>
-            <h3 className="font-inter font-medium text-sm leading-none tracking-normal capitalize text-[#101928] mb-4">Payment Method</h3>
-            <div className="flex gap-4">
-              {/* Online Banking Radio */}
-              <label
-                className={`flex-1 flex items-center justify-center py-3 px-4 rounded-lg cursor-pointer transition-colors duration-200
-                           ${selectedPaymentMethod === 'onlineBanking' ? 'bg-[#2E0234] text-white border-transparent' : 'bg-white border border-gray-300 text-[#121212]'}`}
-              >
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="onlineBanking"
-                  className="
-                    peer
-                    h-5 w-5 mr-2
-                    border-[0.4px] border-[#121212]/40 bg-transparent /* Unselected: 0.4px border #121212 40% opacity, transparent background */
-                    checked:border-white checked:bg-white /* Selected: White border, white background for the dot/fill */
-                    focus:ring-offset-0 focus:ring-0 /* Remove default focus rings */
-                  "
-                  checked={selectedPaymentMethod === 'onlineBanking'}
-                  onChange={() => setSelectedPaymentMethod('onlineBanking')}
-                />
-                <span className="font-inter font-medium text-sm">Online Banking</span>
-              </label>
-
-
-              {/* Manual Deposit Radio */}
-              <label
-                className={`flex-1 flex items-center justify-center py-3 px-4 rounded-lg cursor-pointer transition-colors duration-200
-                           ${selectedPaymentMethod === 'manualDeposit' ? 'bg-[#2E0234] text-white border-transparent' : 'bg-white border border-gray-300 text-[#121212]'}`}
-              >
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="manualDeposit"
-                  className="
-                    peer
-                    h-5 w-5 mr-2
-                    border-[0.4px] border-[#121212]/40 bg-transparent /* Unselected: 0.4px border #121212 40% opacity, transparent background */
-                    checked:border-white checked:bg-white /* Selected: White border, white background for the dot/fill */
-                    focus:ring-offset-0 focus:ring-0 /* Remove default focus rings */
-                  "
-                  checked={selectedPaymentMethod === 'manualDeposit'}
-                  onChange={() => setSelectedPaymentMethod('manualDeposit')}
-                />
-                <span className="font-inter font-medium text-sm">Manual Deposit</span>
-              </label>
-            </div>
-
-
-         
-            <div className="border-b border-gray-200 mt-8 mx-[-32px]"></div>
-
-
-       
-            {selectedPaymentMethod === 'onlineBanking' && (
-              <div className="mt-8 rounded-lg w-full h-[54px] p-6 bg-[#F8F8F8] border-[0.5px] border-[#121212]/10 flex items-center">
-                <p className="font-inter font-normal text-[15px] text-gray-700 text-center">
-                  Securely complete your transaction via your bank&apos;s online service.
-                </p>
-              </div>
-            )}
-
-
-            {selectedPaymentMethod === 'manualDeposit' && (
-              <div className="mt-8 rounded-lg w-full h-[88px] p-[10px] bg-[#F8F8F8] border-[0.5px] border-[#121212]/10 flex items-center">
-                <p className="font-inter font-normal text-[12px] leading-[145%] text-[#121212]/80 text-center">
-                  To fund your wallet via manual deposit, please transfer the desired amount to our bank account. Once completed, enter the deposit details below for verification.
-                </p>
-              </div>
-            )}
-          </div>
-     
-        <div className="flex flex-col gap-6">
-
-
-         
-            {selectedPaymentMethod === 'onlineBanking' && (
-         
-            <>
-             
-              <div>
-                  <label htmlFor="depositAmountOnline" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
-                    Deposit Amount (₦)
-                  </label>
-                  <input
-                    id="depositAmountOnline"
-                    type="text"
-                    placeholder="enter the amount to fund"
-                    className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-[#5604F6]
-                                font-inter font-normal text-sm leading-[145%] tracking-normal placeholder-[#98A2B3]"
-                  />
-              </div>
-              <div>
-                  <label htmlFor="selectBank" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
-                  Select Your Bank
-                  </label>
-                  <div className="relative">
-                  <select
-                      id="selectBank"
-                      className="w-full h-12 px-4 rounded-lg border border-gray-300 appearance-none bg-white
-                              focus:outline-none focus:border-[#5604F6]
-                              font-inter font-normal text-sm leading-[145%] tracking-normal text-[#98A2B3]
-                              pr-10"
-                  >
-                      <option
-                      value=""
-                      className="w-[99px] h-[20px] text-[#98A2B3] font-inter font-normal text-sm leading-[145%] tracking-normal"
-                      >
-                      Choose a bank
-                      </option>
-                     
-                      <option value="bank1">Bank A</option>
-                      <option value="bank2">Bank B</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#98A2B3]">
-                      <svg
-                      className="fill-current h-4 w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      >
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 6.757 7.586 5.343 9z" />
-                      </svg>
-                  </div>
-                  </div>
-              </div>
-            </>
-            )}
-
-
-            {selectedPaymentMethod === 'manualDeposit' && (
-            <>
-             
-
-
-           
-                <div className="flex flex-col space-y-[24px]">
-
-
-                    <div>
-                      <h3 className="font-inter font-medium text-sm leading-none tracking-normal capitalize text-[#101928] mb-4">Bank Account Details</h3>
-                      <div className="border border-gray-200 rounded-lg p-4 space-y-3">
-                        {/* Account Name */}
-                        <div className="flex justify-between items-center text-[#121212] w-full pt-2 pr-4 pb-2 pl-4 border-l-[0.5px] border-[#5604F6]">
-                          <span className="font-inter font-normal text-sm w-1/3">Account Name</span>
-                          <span className="font-inter font-semibold text-sm text-right flex-1 mr-2">Naija Vendor Services</span>
-                          <button onClick={() => copyToClipboard('Naija Vendor Services')} className="text-gray-400 hover:text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v1.006a1.125 1.125 0 01-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75m1.5 0h.75m-1.5 0H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V7.875c0-.621-.504-1.125-1.125-1.125z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h.008v.008h-.008V6zm2.25 0h.008v.008h-.008V6zm2.25 0h.008v.008h-.008V6zM15 9h.008v.008H15V9zm2.25 0h.008v.008h-.008V9zm2.25 0h.008v.008h-.008V9zM15 12h.008v.008H15V12zm2.25 0h.008v.008h-.008V12zm2.25 0h.008v.008h-.008V12zM15 15h.008v.008H15V15zm2.25 0h.008v.008h-.008V15zm2.25 0h.008v.008h-.008V15z" />
-                            </svg>
-                          </button>
-                        </div>
-                        {/* Account Number */}
-                        <div className="flex justify-between items-center text-[#121212] w-full pt-2 pr-4 pb-2 pl-4 border-l-[0.5px] border-[#5604F6]">
-                          <span className="font-inter font-normal text-sm w-1/3">Account Number</span>
-                          <span className="font-inter font-semibold text-sm text-right flex-1 mr-2">1234567890</span>
-                          <button onClick={() => copyToClipboard('1234567890')} className="text-gray-400 hover:text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v1.006a1.125 1.125 0 01-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75m1.5 0h.75m-1.5 0H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V7.875c0-.621-.504-1.125-1.125-1.125z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h.008v.008h-.008V6zm2.25 0h.008v.008h-.008V6zm2.25 0h.008v.008h-.008V6zM15 9h.008v.008H15V9zm2.25 0h.008v.008h-.008V9zm2.25 0h.008v.008h-.008V9zM15 12h.008v.008H15V12zm2.25 0h.008v.008h-.008V12zm2.25 0h.008v.008h-.008V12zM15 15h.008v.008H15V15zm2.25 0h.008v.008h-.008V15zm2.25 0h.008v.008h-.008V15z" />
-                            </svg>
-                          </button>
-                        </div>
-                        {/* Bank Name */}
-                        <div className="flex justify-between items-center text-[#121212] w-full pt-2 pr-4 pb-2 pl-4 border-l-[0.5px] border-[#5604F6]">
-                          <span className="font-inter font-normal text-sm w-1/3">Bank Name</span>
-                          <span className="font-inter font-semibold text-sm text-right flex-1 mr-2">GTBank</span>
-                          <button onClick={() => copyToClipboard('GTBank')} className="text-gray-400 hover:text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v1.006a1.125 1.125 0 01-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75m1.5 0h.75m-1.5 0H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V7.875c0-.621-.504-1.125-1.125-1.125z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h.008v.008h-.008V6zm2.25 0h.008v.008h-.008V6zm2.25 0h.008v.008h-.008V6zM15 9h.008v.008H15V9zm2.25 0h.008v.008h-.008V9zm2.25 0h.008v.008h-.008V9zM15 12h.008v.008H15V12zm2.25 0h.008v.008h-.008V12zm2.25 0h.008v.008h-.008V12zM15 15h.008v.008H15V15zm2.25 0h.008v.008h-.008V15zm2.25 0h.008v.008h-.008V15z" />
-                            </svg>
-                          </button>
-                        </div>
-                         {/* New Reference Code Div */}
-                        <div className="flex justify-between items-center text-[#121212] w-full pt-2 pr-4 pb-2 pl-4 border-l-[0.5px] border-[#5604F6]">
-                          <span className="font-inter font-normal text-sm w-1/3">Reference code</span>
-                          <span className="font-inter font-semibold text-sm text-right flex-1 mr-2">GTBank</span>
-                          <button onClick={() => copyToClipboard('GTBank')} className="text-gray-400 hover:text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v1.006a1.125 1.125 0 01-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75m1.5 0h.75m-1.5 0H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V7.875c0-.621-.504-1.125-1.125-1.125z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h.008v.008h-.008V6zm2.25 0h.008v.008h-.008V6zm2.25 0h.008v.008h-.008V6zM15 9h.008v.008H15V9zm2.25 0h.008v.008h-.008V9zm2.25 0h.008v.008h-.008V9zM15 12h.008v.008H15V12zm2.25 0h.008v.008h-.008V12zm2.25 0h.008v.008h-.008V12zM15 15h.008v.008H15V15zm2.25 0h.008v.008h-.008V15zm2.25 0h.008v.008h-.008V15z" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                    <p className="font-inter font-normal text-[12px] leading-[145%] tracking-normal text-[#F68D2B]">
-                      <span className="font-semibold">Important:</span> Use the reference code provided to you for easier tracking.
-                    </p>
-                </div>
-
-
-             
-                <div className="flex flex-col space-y-[18px]">
-                   
-                    <div>
-                        <label htmlFor="depositAmountManual" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
-                          Deposit Amount (₦)
-                        </label>
-                        <input
-                          id="depositAmountManual"
-                          type="text"
-                          placeholder="enter the amount to fund"
-                          className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-[#5604F6]
-                                      font-inter font-normal text-sm leading-[145%] tracking-normal placeholder-[#98A2B3]"
-                        />
-                    </div>
-
-
-                   
-                    <div>
-                      <label htmlFor="transactionReference" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
-                        Transaction Reference
-                      </label>
-                      <input
-                        id="transactionReference"
-                        type="text"
-                        placeholder="Enter your bank transaction reference"
-                        className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-[#5604F6]
-                                   font-inter font-normal text-sm leading-[145%] tracking-normal placeholder-[#98A2B3]"
-                      />
-                    </div>
-
-
-               
-                    <div>
-                      <label htmlFor="uploadProof" className="block font-inter font-semibold text-sm text-[#101928] mb-2">
-                        Upload Proof (Optional)
-                      </label>
-                      <div className="relative">
-                        <input
-                          id="uploadProof"
-                          type="text"
-                          placeholder="click to upload your deposit slip"
-                          className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-[#5604F6]
-                                     font-inter font-normal text-sm leading-[145%] tracking-normal placeholder-[#98A2B3] pr-10"
-                          readOnly
-                        />
-                        <div className="absolute inset-y-0 right-0 flex items-center px-2 text-[#98A2B3] cursor-pointer">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-18-8.25L12 1.5l9 6.75M9.75 1.5v12" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-
-            </>
-            )}
-        </div>
- 
-        <div className="p-8 pt-0">
-          {selectedPaymentMethod === 'onlineBanking' && (
-            <button
-              onClick={handleProceedToPayment}
-              className="w-full h-[56px] bg-[#5604F6] text-white font-urbanist font-semibold text-base rounded-lg
-                         hover:bg-[#4a03e0] active:text-[#2E0234] transition-colors duration-200"
-            >
-              Proceed To Payment
-            </button>
-          )}
-          {selectedPaymentMethod === 'manualDeposit' && (
-            <div className="flex justify-center gap-4">
+     <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center p-4 font-inter">
+          <div className="w-full max-w-md bg-white rounded-2xl border border-[#121212]/10 p-6 sm:p-8 relative">
+            {onClose && (
               <button
                 onClick={onClose}
-                className="w-full h-[44px] bg-white border-[1px] border-[#E6E7EA] shadow-[0px_1px_2px_0px_#0520510D] text-[#121212]/80 font-urbanist font-semibold text-base leading-[24px] tracking-normal capitalize rounded-lg
-                           hover:bg-gray-100 transition-colors duration-200"
+                className="absolute top-4 right-4 p-1 text-[#12121280] hover:text-[#121212]"
+                aria-label="Close"
               >
-                Cancel
+                <X size={20} />
               </button>
-              <button
-               
-                className="w-full h-[44px] bg-[#5604F6] text-white font-urbanist font-semibold text-sm leading-none tracking-[0.02em] capitalize rounded-lg
-                           hover:bg-[#4a03e0] active:text-[#2E0234] transition-colors duration-200"
-              >
-                Submit Deposit
-              </button>
+            )}
+    
+            <div className="text-center mb-6 mt-2 border-b border-[#D2D1D6] pb-4">
+              <h2 className="font-urbanist font-semibold text-[24px] leading-[100%] tracking-normal text-center capitalize text-[#000000]">
+                Fund Your Wallet
+              </h2>
+              <p className="font-inter font-normal text-sm leading-[160%] tracking-normal text-center text-[#121212CC] mt-4">
+                Enter the amount you wish to add and select your <br /> preferred payment method.
+              </p>
             </div>
-          )}
-        </div>
-      </div>
-
-
-   
-      {showConfirmModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-[12px] shadow-lg w-[500px] h-[280px] relative">
-           
-            <button
-              onClick={handleCancelConfirm}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-
-           
-            <div className="w-[490px] h-[209px] pt-6 pr-5 pb-3 pl-5 gap-6 absolute top-[35.5px] left-[5px] flex flex-col justify-center items-center">
-           
-              <div className="text-center w-full">
-                <h2 className="font-urbanist font-semibold text-2xl leading-[24px] tracking-normal capitalize text-black mb-2">
-                  Confirm Online Payment
-                </h2>
-                <p className="font-inter font-normal text-sm text-[#121212]/80 text-center leading-[160%] w-[450px] h-[66px] mx-auto">
-                  You are about to be redirected to your bank&apos;s secure online portal to
-                  complete your payment of ₦5,000. Please ensure you have your
-                  bank login credentials ready.
-                </p>
+    
+            <form onSubmit={handleSubmit}>
+              <div className="mb-6">
+                <label className="font-inter font-medium text-sm text-[#101928] mb-3">Payment Method</label>
+                <div className="flex gap-3">
+                  {[
+                    { label: "Online Banking", value: "onlineBanking" },
+                    { label: "Manual Deposit", value: "manualDeposit" },
+                  ].map(({ label, value }) => (
+                    <label
+                      key={value}
+                      className={`flex-1 rounded-lg px-4 py-3 text-xs font-medium flex mt-2 items-center justify-center gap-2 cursor-pointer transition-colors duration-200 ${
+                        paymentMethod === value
+                          ? "bg-[#2E0234] text-white border border-[#D0D5DD]"
+                          : "bg-[#FFFFFF] text-[#121212CC] hover:bg-[#EDEDED] border border-[#D0D5DD]"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value={value}
+                        checked={paymentMethod === value}
+                        onChange={() => setPaymentMethod(value as 'onlineBanking' | 'manualDeposit')}
+                        className="hidden peer"
+                      />
+                      <span className="w-4 h-4 rounded-full border-2 flex items-center justify-center border-current">
+                        <span className={`w-2 h-2 rounded-full bg-current transition-all ${paymentMethod === value ? 'scale-100' : 'scale-0'}`} />
+                      </span>
+                      {label}
+                    </label>
+                  ))}
+                </div>
               </div>
-
-
-             
-              <div className="w-[338px] h-[44px] flex justify-center gap-6">
+    
+              
+                        {/* Conditional Content based on Payment Method */}
+                        {paymentMethod === 'onlineBanking' ? (
+                          <>
+                            <div className="mb-5 px-2 py-2 bg-[#F4F4F4] font-inter font-normal text-[14px] leading-[145%] tracking-normal text-center align-middle text-[#121212CC] rounded-lg">
+                              Securely complete your transaction via your bank's <br /> online service.
+                            </div>
+              
+                            {/* Deposit Amount Input */}
+                            <div className="mb-5">
+                              <label htmlFor="depositAmount" className="font-inter font-medium text-sm leading-[100%] tracking-normal align-middle capitalize text-[#101928] mb-3">
+                                Deposit Amount (₦)
+                              </label>
+                              <input
+                                type="text"
+                                id="depositAmount"
+                                value={depositAmount}
+                                onChange={(e) => setDepositAmount(e.target.value)}
+                                placeholder="enter the amount to fund"
+                                className="w-full px-4 py-3 rounded-lg border border-[#D2D1D6] text-sm text-[#121212] placeholder-[#12121266] focus:outline-none mt-2"
+                              />
+                            </div>
+              
+                            {/* Select Your Bank Dropdown */}
+                            <div className="mb-8">
+                              <label htmlFor="selectBank" className="font-inter font-medium text-sm leading-[100%] tracking-normal align-middle capitalize text-[#101928] mb-3">
+                                Select Your Bank
+                              </label>
+                              <div className="relative">
+                                <select
+                                  id="selectBank"
+                                  value={selectedBank}
+                                  onChange={(e) => setSelectedBank(e.target.value)}
+                                  className="block w-full appearance-none px-4 py-3 rounded-lg border border-[#D2D1D6] text-sm text-[#121212] bg-white focus:outline-none mt-2"
+                                >
+                                  {banks.map((bank) => (
+                                    <option key={bank.value} value={bank.value} disabled={bank.value === ''}>
+                                      {bank.label}
+                                    </option>
+                                  ))}
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                  </svg>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="mb-6 px-2 py-2 bg-[#F4F4F4] font-inter font-normal text-[14px] leading-[145%] tracking-normal text-center align-middle text-[#121212CC] rounded-lg">
+                              To fund your wallet via manual deposit, please transfer the desired amount to our bank account. Once
+                              completed, enter the deposit details below for verification.
+                            </div>
+              
+                            {/* Bank Account Details */}
+              
+                              <h3 className="font-urbanist font-semibold text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black mb-2">Bank Account Details</h3>
+                            <div className="mb-6 border border-[#1212121A] rounded-xl py-4 px-2">
+                              <div className="space-y-3 pl-3 gap-8">
+                                <div className="flex justify-between items-center border-l-[0.5px] border-[#5604F6] px-2 h-[33px]">
+                                  <span className="font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black">Account Name</span>
+                                  <span className="flex items-center font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black">
+                                    {bankAccountName}
+                                    <button type="button" onClick={() => handleCopyClick(bankAccountName || '')} className="ml-2 font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black hover:text-gray-700 focus:outline-none">
+                                      <Copy size={16} />
+                                    </button>
+                                  </span>
+                                </div>
+                                <div className="flex justify-between items-center border-l-[0.5px] border-[#5604F6] px-2 h-[33px]">
+                                  <span className="font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black">Account Number</span>
+                                  <span className="flex items-center font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black">
+                                    {bankAccountNumber}
+                                    <button type="button" onClick={() => handleCopyClick(bankAccountNumber || '')} className="ml-2 font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black hover:text-gray-700 focus:outline-none">
+                                      <Copy size={16} />
+                                    </button>
+                                  </span>
+                                </div>
+                                <div className="flex justify-between items-center border-l-[0.5px] border-[#5604F6] px-2 h-[33px]">
+                                  <span className="font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black">Bank Name</span>
+                                  <span className="flex items-center font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black">
+                                    {bankName}
+                                    <button type="button" onClick={() => handleCopyClick(bankName || '')} className="ml-2 font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black hover:text-gray-700 focus:outline-none">
+                                      <Copy size={16} />
+                                    </button>
+                                  </span>
+                                </div>
+                                <div className="flex justify-between items-center border-l-[0.5px] border-[#5604F6] px-2 h-[33px]">
+                                  <span className="font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black">Reference Code</span>
+                                  <span className="flex items-center font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black">
+                                    {referenceCode}
+                                    <button type="button" onClick={() => handleCopyClick(referenceCode || '')} className="ml-2 font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle capitalize text-black hover:text-gray-700 focus:outline-none">
+                                      <Copy size={16} />
+                                    </button>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+              
+                            <p className="font-inter font-normal text-[14px] leading-[145%] tracking-normal align-middle text-[#F68D2B] mb-6">
+                              Important: Use the reference code provided to you for easier tracking.
+                            </p>
+              
+                            {/* Deposit Amount Input (for manual deposit) */}
+                            <div className="mb-6">
+                              <label htmlFor="depositAmountManual" className="font-inter font-medium text-sm leading-[100%] tracking-normal align-middle capitalize text-[#101928] mb-3">
+                                Deposit Amount (₦)
+                              </label>
+                              <input
+                                type="text"
+                                id="depositAmountManual"
+                                value={depositAmount}
+                                onChange={(e) => setDepositAmount(e.target.value)}
+                                placeholder="enter the amount to fund"
+                                className="w-full px-4 py-3 rounded-lg border border-[#D2D1D6] text-sm text-[#121212] placeholder-[#12121266] focus:outline-none mt-2"
+                              />
+                            </div>
+              
+                            {/* Transaction Reference Input */}
+                            <div className="mb-6">
+                              <label htmlFor="transactionReference" className="font-inter font-medium text-sm leading-[100%] tracking-normal align-middle capitalize text-[#101928] mb-3">
+                                Transaction Reference
+                              </label>
+                              <input
+                                type="text"
+                                id="transactionReference"
+                                value={transactionReference}
+                                onChange={(e) => setTransactionReference(e.target.value)}
+                                placeholder="Enter your bank transaction reference"
+                                className="w-full px-4 py-3 rounded-lg border border-[#D2D1D6] text-sm text-[#121212] placeholder-[#12121266] focus:outline-none mt-2"
+                              />
+                            </div>
+              
+                            {/* Upload Proof (Optional) */}
+                            <div className="mb-8">
+                              <label htmlFor="uploadProof" className="font-inter font-medium text-sm leading-[100%] tracking-normal align-middle capitalize text-[#101928] mb-3">
+                                Upload Proof (Optional)
+                              </label>
+                              <div className="relative">
+                                <input
+                                  type="file"
+                                  id="uploadProof"
+                                  onChange={handleFileChange}
+                                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                  aria-label="Upload deposit slip"
+                                />
+                                <div className="flex items-center justify-between w-full px-4 py-3 rounded-lg border border-[#D2D1D6] text-sm text-[#12121266] focus:outline-none mt-2">
+                                  <span className="truncate pr-2">
+                                    {uploadedFile ? uploadedFile.name : 'Click to upload your deposit slip'}
+                                  </span>
+                                  <UploadCloud size={20} className="text-gray-500 flex-shrink-0" />
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )}
+    
+              {/* Render Online Banking or Manual Deposit specific fields (omitted here for brevity) */}
+    
+              <div className="flex flex-col sm:flex-row gap-4 w-[338px] mx-auto">
+                {paymentMethod === 'manualDeposit' && onClose && (
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="flex-1 px-6 py-3 border border-[#E6E7EA] text-[#121212CC] bg-white rounded-lg font-urbanist font-semibold text-[14px] leading-[100%] tracking-[0.02em] capitalize shadow-[0px_1px_2px_0px_#0520510D] hover:bg-[#EDEDED]"
+                  >
+                    Cancel
+                  </button>
+                )}
                 <button
-                  onClick={handleCancelConfirm}
-                  className="w-[157px] h-[44px] py-[10px] px-4 rounded-[8px] bg-white border-[1px] border-[#E6E7EA] shadow-[0px_1px_2px_0px_#0520510D] text-[#121212]/80 font-urbanist font-semibold text-base leading-[24px] tracking-normal capitalize hover:bg-gray-100 transition-colors duration-200"
+                  type="submit"
+                  className="flex-1 px-6 py-3 bg-[#5604F6] text-white rounded-lg font-urbanist font-semibold text-[14px] leading-[100%] tracking-[0.02em] capitalize transition hover:bg-[#4601d2]"
                 >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleContinuePayment}
-                  className="w-[157px] h-[41px] py-[12px] px-5 rounded-[8px] bg-[#5604F6] text-white font-urbanist font-semibold text-sm leading-none tracking-[0.02em] capitalize hover:bg-[#4a03e0] active:text-[#2E0234] transition-colors duration-200"
-                >
-                  Continue
+                  {paymentMethod === 'onlineBanking' ? 'Proceed To Payment' : 'Submit Deposit'}
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
-      )}
-    </div>
-  </div>
   );
 };
 
+const App: React.FC = () => (
+  <FundWalletForm
+    onClose={() => console.log('Close button clicked')}
+    onProceedToPayment={(data) => console.log('Submit:', data)}
+    bankAccountName="Naija Vendor Services"
+    bankAccountNumber="1234567890"
+    bankName="GTBank"
+    referenceCode="GTBank"
+  />
+);
 
-export default FundWalletModal;
+export default App;
