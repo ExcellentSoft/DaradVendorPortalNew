@@ -20,7 +20,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row w-full min-h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row w-full min-h-screen bg-gray-100 gap-x-8 items-start">
       {/* Sidebar Card */}
       <aside className="w-full md:w-[350px] p-4">
         <div className="bg-white rounded-xl shadow p-8 space-y-6">
@@ -47,21 +47,21 @@ export default function ContactForm() {
       <main className="">
         {/* Contact Us Tab */}
         {activeTab === "Contact Us" && (
-          <main className="w-full md:w-[750px] flex-1 bg-white">
+          <main className="w-full md:w-[750px] flex-1 bg-white pb-30">
             {/* Header */}
             <div className="bg-[#2E0234] text-white p-6 text-center rounded-t-lg">
-              <h1 className="text-[24px] font-semibold flex justify-center gap-4">
+              <h1 className="font-urbanist font-bold text-[24px] leading-[100%] tracking-[0.02em] capitalize text-white flex justify-center gap-4">
                 <FiPhoneCall color="#d3d3d3" size={24} />
                 Contact Us
               </h1>
-              <p className="text-[14px] mt-2">Need help? Get in touch with our support team.</p>
+              <p className="font-inter font-normal text-[14px] leading-[160%] tracking-normal mt-2">Need help? Get in touch with our support team.</p>
             </div>
 
             {/* Form */}
             <div className="mt-10 md:mt-20 flex items-center justify-center px-4">
               <form className="p-6 space-y-6 w-full max-w-xl">
                 <div>
-                  <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Full Name</label>
+                  <label className="block mb-2 font-inter font-medium text-[14px] leading-[100%] tracking-normal align-middle text-[#101928]">Full Name</label>
                   <input
                     type="text"
                     className="w-full text-[#98A2B3] border border-[#D0D5DD] rounded-lg p-4"
@@ -70,7 +70,7 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Email Address</label>
+                  <label className="block mb-2 font-inter font-medium text-[14px] leading-[100%] tracking-normal align-middle text-[#101928]">Email Address</label>
                   <input
                     type="email"
                     className="w-full text-[#98A2B3] border border-[#D0D5DD] rounded-lg p-4"
@@ -79,8 +79,8 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Message Subject</label>
-                  <select className="w-full text-[#101928] border border-[#D0D5DD] rounded-lg p-4">
+                  <label className="block mb-2 font-inter font-medium text-[14px] leading-[100%] tracking-normal align-middle text-[#101928]">Message Subject</label>
+                  <select className="w-full text-[#98A2B3] border border-[#D0D5DD] rounded-lg p-4">
                     <option>Select a Subject</option>
                     <option>Support</option>
                     <option>Feedback</option>
@@ -89,7 +89,7 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="block mb-1 text-[#101928] text-[16px] font-semibold">Message</label>
+                  <label className="block mb-2 font-inter font-medium text-[14px] leading-[100%] tracking-normal align-middle text-[#101928]">Message</label>
                   <textarea
                     className="w-full text-[#98A2B3] border border-[#D0D5DD] rounded-lg p-4"
                     placeholder="Type your message here..."
@@ -132,10 +132,10 @@ export default function ContactForm() {
                   </p>
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center w-full mt-20">
                   <button
                     type="submit"
-                    className="bg-[#5604F6] w-full md:w-[300px] text-white px-8 py-4 rounded-lg "
+                    className="bg-[#5604F6] w-full text-white px-8 py-4 rounded-lg "
                   >
                     Submit Request
                   </button>
@@ -144,34 +144,34 @@ export default function ContactForm() {
             </div>
 
             {/* Support Info */}
-            <div className="border-t-2 border-dashed border-purple-500 mb-6 mt-10"></div>
-            <div className="pt-4 text-sm px-4">
-              <div className="bg-white rounded-lg shadow p-6 space-y-4 max-w-md mx-auto">
+            <div className="border-t-1 border-dashed border-[#5604F6] mb-6 mt-10"></div>
+            <div className="pt-4 text-sm px-4 ">
+              <div className="bg-white rounded-lg shadow p-6 space-y-4 max-w-md mx-auto mt-8">
                 {/* Phone Support */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Image src="assets/phonecall.svg" alt="phone icon" width={40} height={40} />
-                    <span className="text-[#101928] font-medium">Phone Support</span>
+                    <Image src="assets/phonecall.svg" alt="phone icon" width={30} height={30} />
+                    <span className="font-inter font-normal text-[16px] leading-[100%] tracking-normal align-middle capitalize text-[#101928]">Phone Support</span>
                   </div>
-                  <span className="text-[#101928] font-semibold">+234 812 345 6789</span>
+                  <span className="font-inter font-medium text-[14px] leading-[100%] tracking-normal align-middle text-[#101928]">+234 812 345 6789</span>
                 </div>
 
                 {/* Email Support */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Image src="assets/email.svg" alt="envelope icon" width={40} height={40} />
-                    <span className="text-[#101928] font-medium">Email Support</span>
+                    <Image src="assets/email.svg" alt="envelope icon" width={30} height={30} />
+                    <span className="font-inter font-normal text-[16px] leading-[100%] tracking-normal align-middle capitalize text-[#101928]">Email Support</span>
                   </div>
-                  <span className="text-[#101928] font-semibold">support@mydarads.com</span>
+                  <span className="font-inter font-medium text-[14px] leading-[100%] tracking-normal align-middle text-[#101928]">support@mydarads.com</span>
                 </div>
 
                 {/* WhatsApp Support */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Image src="assets/whatsapp.svg" alt="whatsapp icon" width={40} height={40} />
-                    <span className="text-[#101928] font-medium">Whatsapp</span>
+                    <Image src="assets/whatsapp.svg" alt="whatsapp icon" width={30} height={30} />
+                    <span className="font-inter font-normal text-[16px] leading-[100%] tracking-normal align-middle capitalize text-[#101928]">Whatsapp</span>
                   </div>
-                  <button className="text-[#5604F6] border border-[#EEE6FE] bg-[#EEE6FE] rounded px-6 py-2 text-md">
+                  <button className="text-[#5604F6] border border-[#CBB1FC] bg-[#EEE6FE] rounded-lg px-6 py-2 font-inter font-medium text-[12px] leading-[100%] tracking-normal align-middle capitalize">
                     Start Chat
                   </button>
                 </div>

@@ -40,20 +40,20 @@ const promotionDashboard = () => {
  
 
   return (
-    <div className="p-6 space-y-6  min-h-screen">
+    <div className="p-6 space-y-6  min-h-screen bg-white">
       {/* Header */}
-      <div className="p-6 bg-white rounded-lg shadow-md max-w-[1200px] mx-auto">
-  <div className="flex justify-between items-center mb-6">
+      <div className="p-6 bg-white rounded-lg max-w-[1200px] mx-auto">
+  <div className="flex justify-between items-center mb-6 mt-2 border-b border-[#1212121A] pb-4">
     <div>
-      <h2 className="text-[24px] font-bold text-[#121212]">Promotion Analytics</h2>
-      <p className="text-[14px] text-[#121212CC]">Monitor engagement and revenue from your promotional campaigns.</p>
+      <h2 className="font-urbanist font-bold text-[24px] leading-[100%] tracking-[0.02em] capitalize text-[#121212]">Promotion Analytics</h2>
+      <p className="font-inter font-normal text-[14px] leading-[160%] tracking-[0%] text-[#121212CC] mt-4">Monitor engagement and revenue from your promotional campaigns.</p>
     </div>
     <button className="px-4 py-2 bg-[#5604F6]  text-white text-sm font-medium rounded-md">
       Create Promotions
     </button>
   </div>
 
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 w-full">
      <div className="border border-[#12121233] p-4 rounded-lg text-center">
           <div className="flex gap-4 mb-1">
             <Image src="/view.png" alt="Wallet Icon" width={40} height={40} />
@@ -105,12 +105,12 @@ const promotionDashboard = () => {
 
 
       {/* Breakdown Section */}
-   <div className="grid grid-cols-3 gap-6 max-h-[600px] overflow-y-auto">
+   <div className="grid grid-cols-3 gap-6">
   {/* Left Side - 2/3 width */}
-  <div className="col-span-2 ">
+  <div className="col-span-2 border border-[#12121233] rounded-xl">
   <RevenuePromotion/>
 </div>
-<div className="col-span-1">
+<div className="col-span-1 border border-[#12121233] rounded-xl w-full">
   {/* Right Side - 1/3 width */}
   <CustomerConversion/>
   

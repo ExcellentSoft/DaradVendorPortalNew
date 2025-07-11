@@ -53,12 +53,12 @@ const TermsAndConditions: React.FC = () => {
          
    
          {/* Main Content */}
-        <main className="w-full md:w-[750px] flex-1 bg-white">
+        <main className="w-full md:w-[750px] flex-1 bg-white pb-30">
            {/* Contact Us Tab */}
           
                <div className="bg-[#2E0234] text-white p-6 text-center rounded-t-lg">
-                  <h2 className="text-2xl font-semibold">Privacy Policy</h2>
-          <p className="text-sm ">
+                  <h2 className="font-urbanist font-bold text-[24px] leading-[100%] tracking-[0.02em] capitalize text-white flex justify-center gap-4">Privacy Policy</h2>
+          <p className="text-sm font-inter font-normal text-[14px] leading-[160%] tracking-normal mt-2">
             Your data security is our priority.
           </p>
                </div>
@@ -80,13 +80,13 @@ const TermsAndConditions: React.FC = () => {
       ) : (
         <ChevronDown className="w-6 h-6 text-gray-800 border border-gray-100" />
       )}
-      <span className='text-[#121212] text-[20px] font-semibold'>
+      <span className='font-inter font-medium text-[16px] leading-[100%] tracking-normal align-middle capitalize text-[#121212]'>
       {section.title}
       </span>
       </span>
     </button>
     {openIndex === index && (
-      <div className="px-10 pb-4 text-[#121212] text-[18px] font-medium">
+      <div className="px-10 pb-4 font-inter font-normal text-[14px] leading-[160%] tracking-normal align-middle text-[#121212]">
         {section.content}
       </div>
     )}
@@ -95,14 +95,14 @@ const TermsAndConditions: React.FC = () => {
 
 
              
-                     <div className="mt-6 flex gap-6 justify-center">
-                       <button className="  text-black border border-[#E6E7EA] px-16 py-2 rounded-md">
+                     <div className="mt-20 flex gap-6 justify-center">
+                       <button className="font-urbanist font-semibold text-[16px] leading-[24px] tracking-normal align-middle capitalize text-[#121212CC] border border-[#E6E7EA] px-16 py-2 rounded-md">
                          ❌ Decline
                        </button>
           
-  <button className="bg-[#5604F6] flex items-center gap-4 text-white px-8 py-3 rounded-lg">
+  <button className="bg-[#5604F6] flex items-center gap-4 font-urbanist font-semibold text-[16px] leading-[24px] tracking-normal align-middle capitalize text-white px-8 py-2 rounded-lg">
     <span className="bg-green-600 text-white rounded p-2">
-      <FaCheck size={12} />
+      <FaCheck size={8} />
     </span>
     Accept & Continue
   </button>
