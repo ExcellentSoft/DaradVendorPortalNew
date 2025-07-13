@@ -103,7 +103,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     }
 
     try {
-      const url = new URL(`${baseUrl}/api/Vendor/Resend-Code`);
+             const url = new URL("https://daradsvendorapi-h9cpe0fzhrb4cqa7.eastus-01.azurewebsites.net/api/VendorVendor/Resend-Code");
       url.searchParams.set("UserId", userId);
 
       const response = await fetch(url.toString(), {

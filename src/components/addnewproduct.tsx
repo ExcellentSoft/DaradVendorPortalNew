@@ -11,7 +11,6 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [subcategory, setSubcategory] = useState('');
   const [price, setPrice] = useState('');
   const [stockQuantity, setStockQuantity] = useState('');
   const [sku, setSku] = useState('');
@@ -47,6 +46,7 @@ useEffect(() => {
 
 
 
+
   
 const getCategoryIdByName = (name: string): number | null => {
   const found = categories.find((cat) => cat.name === name);
@@ -57,36 +57,28 @@ const getCategoryIdByName = (name: string): number | null => {
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
+  if (!category) {
+    alert("Please select a valid category.");
+    return;
+  }
+
+  const payload = {
+    name: productName,
+    description: description,
+    price: parseFloat(price),
+    categoryId: parseInt(category),  // Now category is ID (string), convert to int
+    qty: parseInt(stockQuantity),
+    colors: [],
+    sizes: [],
+    stock: parseInt(stockQuantity),
+    vendorId: parseInt(localStorage.getItem('vendorId') || '0'),
+  };
+
   try {
-    const categoryId = getCategoryIdByName(category);
-if (categoryId === null) {
-  alert("Please select a valid category.");
-  return;
-}
-
-const payload = {
-  name: productName,
-  description: description,
-  price: parseFloat(price),
-  categoryId: categoryId,
-  qty: parseInt(stockQuantity),
-  colors: [],
-  sizes: [],
-  stock: parseInt(stockQuantity),
-  vendorId: parseInt(localStorage.getItem('vendorId') || '0'), 
-};
-
-
     const headers: any = {
       'Content-Type': 'application/json',
       Accept: 'text/plain',
     };
-
-    // Optionally add auth header
-    // const token = localStorage.getItem('authToken'); 
-    // if (token) {
-    //   headers['Authorization'] = `Bearer ${token}`;
-    // }
 
     const response = await axios.post(
       'https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/create-product',
@@ -106,6 +98,7 @@ const payload = {
     alert('An error occurred while creating the product.');
   }
 };
+
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -159,10 +152,11 @@ const payload = {
   isLoading={loadingCategories}
   options={categories.map((cat) => ({ label: cat.name, value: cat.id }))}
   onInputChange={(inputValue) => setSearchTerm(inputValue)}
-  onChange={(selectedOption) => {
-    setSelectedCategory(selectedOption?.label || '');
-    setCategory(selectedOption?.label || '');
-  }}
+ onChange={(selectedOption) => {
+  setSelectedCategory(selectedOption?.label || '');
+  setCategory(String(selectedOption?.value || ''));  
+}}
+
   placeholder="Search and select category"
   isClearable
   className="mt-2"
@@ -210,27 +204,9 @@ const payload = {
             />
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-[#101928]">SKU / Product Code</label>
-            <input
-              type="text"
-              placeholder="NM-AIR90-2023"
-              className="w-full mt-2 border border-gray-300 rounded-md px-4 py-3 text-sm text-[#121212CC]"
-              value={sku}
-              onChange={(e) => setSku(e.target.value)}
-            />
-          </div>
+       
 
-          <div>
-            <label className="text-sm font-medium text-[#101928]">Date Added</label>
-            <input
-              type="text"
-              placeholder="12-march-2025"
-              className="w-full mt-2 border border-gray-300 rounded-md px-4 py-3 text-sm text-[#121212CC]"
-              value={dateAdded}
-              onChange={(e) => setDateAdded(e.target.value)}
-            />
-          </div>
+         
 
           {/* Upload Section */}
      <div className="bg-[#FFFFFF] p-4 rounded-xl shadow-[0px_4px_6px_0px_#2121210A,_0px_4px_50px_0px_#21212114] mt-8">
