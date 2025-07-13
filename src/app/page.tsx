@@ -63,8 +63,9 @@ useEffect(() => {
     }
   
     try {
-      const response = await axios.post(
-        `https://daradsvendorapi-h9cpe0fzhrb4cqa7.eastus-01.azurewebsites.net/api/Vendor/Vendor-Log`,
+const response = await axios.post(
+  `${process.env.NEXT_PUBLIC_LOGIN_API}/api/Vendor/Vendor-Log`,
+
         {
           email,
           passWord: password,

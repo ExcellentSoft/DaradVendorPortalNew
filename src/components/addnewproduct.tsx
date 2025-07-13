@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import Select from 'react-select';
 
 interface CreateModalProps {
   onClose: () => void;
@@ -17,23 +17,33 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose }) => {
   const [sku, setSku] = useState('');
   const [dateAdded, setDateAdded] = useState('');
   const [mediaFile, setMediaFile] = useState<File | null>(null);
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
 
-  useEffect(() => {
-    axios
-      .get(
-        'https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/categories?searchText=p',
+const [searchTerm, setSearchTerm] = useState(''); // For search input
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>(''); 
+const [loadingCategories, setLoadingCategories] = useState(false);
+
+useEffect(() => {
+  const fetchCategories = async () => {
+    setLoadingCategories(true);
+    try {
+      const response = await axios.get(
+        `https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/categories?searchText=${searchTerm}`,
         { headers: { accept: 'text/plain' } }
-      )
-      .then((res) => {
-        if (res.data?.status && res.data?.data) {
-          setCategories(res.data.data);
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to fetch categories', err);
-      });
-  }, []);
+      );
+      if (response.data?.status && response.data?.data) {
+        setCategories(response.data.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch categories', error);
+    } finally {
+      setLoadingCategories(false);
+    }
+  };
+
+  fetchCategories();
+}, [searchTerm]);
+
 
 
 
@@ -42,6 +52,7 @@ const getCategoryIdByName = (name: string): number | null => {
   const found = categories.find((cat) => cat.name === name);
   return found ? found.id : null;
 };
+
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -72,10 +83,10 @@ const payload = {
     };
 
     // Optionally add auth header
-    const token = localStorage.getItem('authToken'); // if stored
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
+    // const token = localStorage.getItem('authToken'); 
+    // if (token) {
+    //   headers['Authorization'] = `Bearer ${token}`;
+    // }
 
     const response = await axios.post(
       'https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/create-product',
@@ -140,38 +151,42 @@ const payload = {
             />
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-[#101928]">Category</label>
-           <div>
+  
+
+<div>
   <label className="text-sm font-medium text-[#101928]">Category</label>
-  <select
-    className="w-full mt-2 border border-gray-300 rounded-md px-4 py-3 text-sm text-[#121212CC]"
-    value={category}
-    onChange={(e) => setCategory(e.target.value)}
-  >
-    <option value="">Select Category</option>
-    {categories.map((cat) => (
-      <option key={cat.id} value={cat.name}>
-        {cat.name}
-      </option>
-    ))}
-  </select>
+<Select
+  isLoading={loadingCategories}
+  options={categories.map((cat) => ({ label: cat.name, value: cat.id }))}
+  onInputChange={(inputValue) => setSearchTerm(inputValue)}
+  onChange={(selectedOption) => {
+    setSelectedCategory(selectedOption?.label || '');
+    setCategory(selectedOption?.label || '');
+  }}
+  placeholder="Search and select category"
+  isClearable
+  className="mt-2"
+  styles={{
+    option: (provided, state) => ({
+      ...provided,
+      color: 'black',
+      backgroundColor: state.isFocused ? '#f3f3f3' : 'white',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: 'black',
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: 'black',
+    }),
+  }}
+/>
+
 </div>
 
-          </div>
 
-          <div>
-            <label className="text-sm font-medium text-[#101928]">Subcategory</label>
-            <select
-              className="w-full mt-2 border border-gray-300 rounded-md px-4 py-3 text-sm text-[#121212CC]"
-              value={subcategory}
-              onChange={(e) => setSubcategory(e.target.value)}
-            >
-              <option value="">Footwear, Accessories</option>
-              <option value="Footwear">Footwear</option>
-              <option value="Accessories">Accessories</option>
-            </select>
-          </div>
+         
 
           <div>
             <label className="text-sm font-medium text-[#101928]">Price Per Unit</label>

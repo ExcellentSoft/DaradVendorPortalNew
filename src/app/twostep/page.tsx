@@ -18,7 +18,7 @@ export default function LoginPage() {
   const isOtpEntered = otp.trim() !== "";
 
   useEffect(() => {
-    // Check sessionStorage for stored OTP when the component loads
+ 
     const storedOtp = sessionStorage.getItem("otp");
     if (storedOtp) {
       setOtp(storedOtp);
@@ -31,63 +31,65 @@ export default function LoginPage() {
     return () => clearTimeout(timer);
   }, [resendCooldown]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setMessage("");
     setLoading(true);
-  
-    console.log("OTP entered:", otp); // Log OTP
-  
+
+    console.log("OTP entered:", otp); 
+
     if (otp.length !== 6) {
-      setError("OTP must be exactly 6 digits.");
-      setLoading(false);
-      console.log("Validation Error: OTP must be exactly 6 digits.");
-      return;
+        setError("OTP must be exactly 6 digits.");
+        setLoading(false);
+        console.log("Validation Error: OTP must be exactly 6 digits.");
+        return;
     }
-  
+
     const userId = sessionStorage.getItem("userId");
     console.log("User ID from sessionStorage:", userId);
-  
+
     if (!userId) {
-      setError("User ID not found. Please log in again.");
-      setLoading(false);
-      console.log("Error: User ID not found.");
-      return;
+        setError("User ID not found. Please log in again.");
+        setLoading(false);
+        console.log("Error: User ID not found.");
+        return;
     }
-  
+
     try {
-      const url = new URL(`${baseUrl}/api/Vendor/Verify-two-factor`);
-      url.searchParams.set("UserId", userId);
-      url.searchParams.set("code", otp);
-  
-      console.log("Verification URL:", url.toString());
-  
-      const response = await fetch(url.toString(), {
-        method: "POST",
-        headers: {
-          "Accept": "text/plain",
-        },
-      });
-  
-      const data = await response.json();
-      console.log("Response from verification:", data);
-  
-      if (response.ok && data?.status) {
-        setMessage("OTP verified successfully!");
-        console.log("OTP verification successful.");
-        router.push("/dashboard");
-      } else {
-        setError(data?.message || "Verification failed. Please try again.");
-        console.log("OTP verification failed:", data?.message);
-      }
+       
+        const url = new URL("https://daradsvendorapi-h9cpe0fzhrb4cqa7.eastus-01.azurewebsites.net/api/Vendor/Verify-two-factor");
+        url.searchParams.set("UserId", userId);
+        url.searchParams.set("code", otp);
+
+        console.log("Verification URL:", url.toString());
+
+        const response = await fetch(url.toString(), {
+            method: "POST",
+            headers: {
+                "Accept": "text/plain",
+            },
+        });
+
+        const data = await response.json();
+        console.log("Response from verification:", data);
+
+        if (response.ok && data?.status) {
+            setMessage("OTP verified successfully!");
+            console.log("OTP verification successful.");
+            router.push("/dashboard");
+        } else {
+            setError(data?.message || "Verification failed. Please try again.");
+            console.log("OTP verification failed:", data?.message);
+        }
     } catch (err) {
-      console.error("Error during OTP verification:", err);
-      setError("An error occurred while verifying the OTP.");
+        console.error("Error during OTP verification:", err);
+        setError("An error occurred while verifying the OTP.");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
+
   
   const handleResendCode = async () => {
     if (resendCooldown > 0) return;
@@ -107,7 +109,7 @@ export default function LoginPage() {
       const response = await fetch(url.toString(), {
         method: "POST",
         headers: {
-          "Accept": "text/plain", // Corrected header
+          "Accept": "text/plain", 
         },
       });
 
