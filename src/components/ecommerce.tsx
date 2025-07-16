@@ -1,11 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import bgImage from "../../public/assets/doodle.png";
-import { ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronDown, ChevronRight, ChevronLeft, MoreVertical } from "lucide-react";
 import { IoArrowBack } from "react-icons/io5";
 import CreateModal from "./addnewproduct";
 
-// Define product interface
 interface ApiProduct {
   productId: number;
   name: string;
@@ -25,9 +24,14 @@ interface LogProductProps {
 
 const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [openActionMenu, setOpenActionMenu] = useState<number | null>(null);
+
   const [viewLogType, setViewLogType] = useState(false); 
   const [searchText, setSearchText] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<ApiProduct | null>(null);
+const [isEdit, setIsEdit] = useState(false);
+
   const [apiProducts, setApiProducts] = useState<ApiProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +41,20 @@ const [stats, setStats] = useState({
   totalCategories: 0,
   customerRequests: 0,
 });
+
+
+const handleEdit = (product: ApiProduct) => {
+  console.log("Edit product:", product);
+  setSelectedProduct(product);
+  setIsEdit(true);
+  setShowModal(true);
+};
+
+
+const handleDelete = (productId: number) => {
+  console.log("Delete productId:", productId);
+  // Implement delete logic here
+};
 
   // Fetch both product lists and merge results
   useEffect(() => {
@@ -134,7 +152,7 @@ useEffect(() => {
 
       fetchSearchResults();
     }
-  }, 500); // debounce delay
+  }, 500); 
 
   return () => clearTimeout(delayDebounce);
 }, [searchText]);
@@ -155,7 +173,7 @@ useEffect(() => {
         <div>
           <h1 className="text-xl font-bold text-gray-800">E-Commerce</h1>
           <p className="text-sm text-gray-500">
-            Sell E-commerce products efficiently with seamless uploads and easy management.
+            Sell E-commerce products efficiently with seamless.
           </p>
         </div>
         <div className="flex gap-2 cursor-pointer">
@@ -165,9 +183,8 @@ useEffect(() => {
           >
             Create Products
           </button>
-          <button className="bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium cursor-pointer ">
-            Upload  Products
-          </button>
+      
+
         </div>
       </div>
 
@@ -310,29 +327,72 @@ useEffect(() => {
                     <th className="px-4 py-3">Category</th>
                     <th className="px-4 py-3">Price</th>
                     <th className="px-4 py-3">Stock</th>
+                    <th className="px-4 py-3">Action</th>
                   </tr>
                 </thead>
-                <tbody className="text-[#121212]">
-{apiProducts.map((product, index) => (
-  <tr key={product.productId ?? `product-${index}`} className="border-b border-[#D2D1D6]">
+               <tbody className="text-[#121212]">
+  {apiProducts.map((product, index) => (
+    <tr
+      key={product.productId ?? `product-${index}`}
+      className="border-b border-[#D2D1D6]"
+    >
+      <td className="px-4 py-3">{index + 1}</td>
+      <td className="px-4 py-3 flex items-center gap-3 relative">
+        {product.images?.[0]?.imageUrl && (
+          <img
+            src={product.images[0].imageUrl}
+            alt={product.name}
+            className="w-10 h-10 rounded object-cover"
+          />
+        )}
+        <span>{product.name}</span>
 
-                      <td className="px-4 py-3">{index + 1}</td>
-                      <td className="px-4 py-3 flex items-center gap-3">
-                        {product.images?.[0]?.imageUrl && (
-                          <img
-                            src={product.images[0].imageUrl}
-                            alt={product.name}
-                            className="w-10 h-10 rounded object-cover"
-                          />
-                        )}
-                        <span>{product.name}</span>
-                      </td>
-                      <td className="px-4 py-3">{product.categoryName || "N/A"}</td>
-                      <td className="px-4 py-3">₦{parseFloat(String(product.price)).toFixed(2)}</td>
-                      <td className="px-4 py-3">{product.stock}</td>
-                    </tr>
-                  ))}
-                </tbody>
+        {/* Action Menu */}
+        
+      </td>
+
+      <td className="px-4 py-3">{product.categoryName || "N/A"}</td>
+      <td className="px-4 py-3">
+        ₦{parseFloat(String(product.price)).toFixed(2)}
+      </td>
+      <td className="px-4 py-3">{product.stock}</td>
+
+      <td className="px-4 py-3">
+  <div className="ml-auto relative">
+    <button
+      onClick={() =>
+        setOpenActionMenu(
+          openActionMenu === product.productId ? null : product.productId
+        )
+      }
+      className="p-1 rounded-full hover:bg-gray-100"
+    >
+      <MoreVertical size={18} />
+    </button>
+
+    {openActionMenu === product.productId && (
+      <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+        <button
+          onClick={() => handleEdit(product)}
+          className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => handleDelete(product.productId)}
+          className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 text-red-500"
+        >
+          Delete
+        </button>
+      </div>
+    )}
+  </div>
+</td>
+
+    </tr>
+  ))}
+</tbody>
+
               </table>
             )}
           </div>
@@ -342,11 +402,23 @@ useEffect(() => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
-            <CreateModal onClose={() => setShowModal(false)} />
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl  relative">
+           <CreateModal
+  onClose={() => {
+    setShowModal(false);
+    setSelectedProduct(null);
+    setIsEdit(false);
+  }}
+  isEdit={isEdit}
+  productData={selectedProduct}
+/>
+
           </div>
         </div>
       )}
+
+
+
     </div>
   );
 };
