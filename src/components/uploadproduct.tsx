@@ -2,11 +2,10 @@
 
 import React, { useState } from 'react';
 
-interface UploadModalProps {
-  onClose: () => void;
-}
 
-const UploadModal: React.FC<UploadModalProps> = ({ onClose }) => {
+
+const UploadModal: React.FC = () => {
+
   const [logType, setLogType] = useState('');
   const [logName, setLogName] = useState('');
   const [logPrice, setLogPrice] = useState('');

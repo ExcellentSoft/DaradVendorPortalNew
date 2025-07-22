@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function LoginPage() {
   const [otp, setOtp] = useState("");
@@ -74,14 +73,26 @@ const handleSubmit = async (e: React.FormEvent) => {
         const data = await response.json();
         console.log("Response from verification:", data);
 
-        if (response.ok && data?.status) {
-            setMessage("OTP verified successfully!");
-            console.log("OTP verification successful.");
-            router.push("/dashboard");
-        } else {
-            setError(data?.message || "Verification failed. Please try again.");
-            console.log("OTP verification failed:", data?.message);
-        }
+     if (response.ok && data?.status) {
+    const authToken = data?.data?.authToken;
+
+if (authToken) {
+    localStorage.setItem("authToken", authToken);
+    console.log("Auth token saved:", authToken);
+} else {
+    console.warn("No valid authToken found in response", data);
+}
+
+
+
+    setMessage("OTP verified successfully!");
+    console.log("OTP verification successful.");
+    router.push("/dashboard");
+} else {
+    setError(data?.message || "Verification failed. Please try again.");
+    console.log("OTP verification failed:", data?.message);
+}
+
     } catch (err) {
         console.error("Error during OTP verification:", err);
         setError("An error occurred while verifying the OTP.");
@@ -91,7 +102,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 };
 
   
-  const handleResendCode = async () => {
+const handleResendCode = async () => {
     if (resendCooldown > 0) return;
     setError("");
     setMessage("");
@@ -103,34 +114,40 @@ const handleSubmit = async (e: React.FormEvent) => {
     }
 
     try {
-             const url = new URL("https://daradsvendorapi-h9cpe0fzhrb4cqa7.eastus-01.azurewebsites.net/api/VendorVendor/Resend-Code");
+      const url = new URL("https://daradsvendorapi-h9cpe0fzhrb4cqa7.eastus-01.azurewebsites.net/api/Vendor/Resend-Code");
       url.searchParams.set("UserId", userId);
 
       const response = await fetch(url.toString(), {
         method: "POST",
         headers: {
-          "Accept": "text/plain", 
+          "Accept": "text/plain",
         },
       });
 
-      const data = response.headers.get("content-type")?.includes("application/json")
-        ? await response.json()
-        : { message: await response.text() };
+      // Handling the response
+      if (response.ok) {
+        const data = await response.json();
 
-      if (response.ok && data.status) {
-        setMessage("Code resent successfully.");
-        setResendCooldown(30);
+        if (data.status) {
+          setMessage(data.message || "Code resent successfully.");
+          setResendCooldown(30);
+        } else {
+          setError(data.message || "Failed to resend OTP. Please try again.");
+        }
       } else {
-        setError(data?.message || "Failed to resend code.");
+      
+        const errorText = await response.text();
+        setError(errorText || "An error occurred while resending the OTP.");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Error during OTP resend:", err);
       setError("An error occurred.");
     }
   };
 
+
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, ""); // allow digits only
+    const value = e.target.value.replace(/\D/g, ""); 
     setOtp(value);
     sessionStorage.setItem("otp", value);
   };

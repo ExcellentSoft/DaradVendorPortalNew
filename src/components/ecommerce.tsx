@@ -4,18 +4,22 @@ import bgImage from "../../public/assets/doodle.png";
 import { ChevronDown, ChevronRight, ChevronLeft, MoreVertical } from "lucide-react";
 import { IoArrowBack } from "react-icons/io5";
 import CreateModal from "./addnewproduct";
-
+import ConfirmationModal from './confirmdelete';
+import Image from 'next/image';
 interface ApiProduct {
   productId: number;
   name: string;
-  categoryName?: string;
-  price: string | number;
+  description: string;
+   dateCreated: string;
+  dateUpdated: string;
+  price: string;        
+  topRating: number;
+  categoryId: number;
+  categoryName: string;
   stock: number;
-  images?: { imageUrl: string }[];
-  vendorName?: string;
-  description?: string;
-  dateCreated?: string;
+  images: { imageId: number; imageUrl: string }[] | null;
 }
+
 
 
 interface LogProductProps {
@@ -25,13 +29,13 @@ interface LogProductProps {
 const LogProductComponent: React.FC<LogProductProps> = ({ onGoBack }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [openActionMenu, setOpenActionMenu] = useState<number | null>(null);
-
   const [viewLogType, setViewLogType] = useState(false); 
   const [searchText, setSearchText] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<ApiProduct | null>(null);
+ const [selectedProduct, setSelectedProduct] = useState<ApiProduct | undefined>(undefined);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 const [isEdit, setIsEdit] = useState(false);
-
+  const [deleteProductId, setDeleteProductId] = useState<number | null>(null); 
   const [apiProducts, setApiProducts] = useState<ApiProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,6 +45,7 @@ const [stats, setStats] = useState({
   totalCategories: 0,
   customerRequests: 0,
 });
+  
 
 
 const handleEdit = (product: ApiProduct) => {
@@ -51,83 +56,101 @@ const handleEdit = (product: ApiProduct) => {
 };
 
 
+
+  
+
+
 const handleDelete = (productId: number) => {
-  console.log("Delete productId:", productId);
-  // Implement delete logic here
-};
+    setDeleteProductId(productId);
+    setIsModalOpen(true); // Open the confirmation modal
+  };
 
-  // Fetch both product lists and merge results
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        setLoading(true);
-        const [res1, res2] = await Promise.all([
-          fetch(
-            "https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/get-all-products"
-          ),
-          fetch(
-            "https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/get-all-products-details"
-          ),
-        ]);
+  const confirmDelete = async () => {
+    if (deleteProductId === null) return;
 
-        if (!res1.ok || !res2.ok) {
-          throw new Error("One or both API calls failed.");
-        }
-
-        const data1 = await res1.json();
-        const data2 = await res2.json();
-
-        const products1 = data1?.data?.records ?? [];
-        const products2 = data2?.data?.records ?? [];
-
-
-         // ✅ Store vendorId from the first product if available
-      if (products2.length > 0 && products2[0].vendorId) {
-        localStorage.setItem("vendorId", String(products2[0].vendorId));
-      }
-        // Merge and deduplicate by productId
-        const mergedMap = new Map<number, ApiProduct>();
-        products1.forEach((p: ApiProduct) => mergedMap.set(p.productId, p));
-        products2.forEach((p: ApiProduct) => mergedMap.set(p.productId, { ...mergedMap.get(p.productId), ...p }));
-
-        setApiProducts(Array.from(mergedMap.values()));
-      } catch (err: any) {
-        console.error("Fetch error:", err);
-        setError(err.message || "Something went wrong");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAllData();
-  }, []);
-
-useEffect(() => {
-  const fetchStats = async () => {
     try {
-      const storedVendorId = localStorage.getItem("vendorId");
-      if (!storedVendorId) {
-        console.warn("Vendor ID not found in localStorage.");
-        return;
-      }
-
-      const res = await fetch(
-        `https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/StatisticCount/${storedVendorId}`
+      const response = await fetch(
+        `https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/delete-product/${deleteProductId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'accept': 'text/plain',
+          },
+        }
       );
 
-      if (!res.ok) throw new Error("Failed to fetch stats");
-
-      const result = await res.json();
-      if (result?.status) {
-        setStats(result.data);
+      if (response.ok) {
+        setApiProducts((prevProducts) => prevProducts.filter(p => p.productId !== deleteProductId));
+        console.log(`Product ${deleteProductId} deleted successfully`);
+      } else {
+        console.error(`Failed to delete product ${deleteProductId}`);
       }
-    } catch (err: any) {
-      console.error("Failed to fetch product stats:", err.message);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    } finally {
+      setIsModalOpen(false);
+      setDeleteProductId(null); 
     }
   };
 
-  fetchStats();
+  const cancelDelete = () => {
+    setIsModalOpen(false); 
+    setDeleteProductId(null);
+  };
+
+
+  useEffect(() => {
+  const fetchAllData = async () => {
+    try {
+      setLoading(true);
+      const [res1, res2] = await Promise.all([
+        fetch("https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/get-all-products"),
+        fetch("https://daradsapi-dedghra9bga3bscr.eastus-01.azurewebsites.net/api/Vendor/Products/get-all-products-details"),
+      ]);
+
+      if (!res1.ok || !res2.ok) {
+        throw new Error("One or both API calls failed.");
+      }
+
+      const data1 = await res1.json();
+      const data2 = await res2.json();
+
+      console.log('Data1:', data1);
+      console.log('Data2:', data2);
+
+      const products1 = data1?.data?.records ?? [];
+      const products2 = data2?.data?.records ?? [];
+
+      if (products2.length > 0 && products2[0].vendorId) {
+        localStorage.setItem("vendorId", String(products2[0].vendorId));
+      }
+
+      // Merge and deduplicate by productId
+      const mergedMap = new Map<number, ApiProduct>();
+      products1.forEach((p: ApiProduct) => mergedMap.set(p.productId, p));
+      products2.forEach((p: ApiProduct) => mergedMap.set(p.productId, { ...mergedMap.get(p.productId), ...p }));
+
+      setApiProducts(Array.from(mergedMap.values()));
+      setLoading(false); // Set loading to false after successful data fetch
+
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Fetch error:", err.message);
+        setError(err.message || "Something went wrong");
+      } else {
+        console.error("Fetch error:", err);
+        setError("Something went wrong");
+      }
+      setLoading(false); 
+    }
+  };
+
+  fetchAllData();
 }, []);
+
+
+
+
 
 
   useEffect(() => {
@@ -142,12 +165,16 @@ useEffect(() => {
 
           const result = await res.json();
           setApiProducts(result?.data?.records || []);
-        } catch (err: any) {
-          console.error("Search error:", err);
-          setError("Failed to fetch search results.");
-        } finally {
-          setLoading(false);
-        }
+        } catch (err: unknown) {
+  if (err instanceof Error) {
+    console.error("Search error:", err.message);
+    setError("Failed to fetch search results.");
+  } else {
+    console.error("Search error:", err);
+    setError("Failed to fetch search results.");
+  }
+}
+
       };
 
       fetchSearchResults();
@@ -159,6 +186,7 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen p-6">
+
       {/* Header */}
       <button
         onClick={onGoBack}
@@ -170,6 +198,12 @@ useEffect(() => {
 
       {/* Top section */}
       <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-md">
+        <ConfirmationModal 
+        isOpen={isModalOpen} 
+        onClose={cancelDelete} 
+        onConfirm={confirmDelete} 
+        message="Are you sure you want to delete this product?" 
+      />
         <div>
           <h1 className="text-xl font-bold text-gray-800">E-Commerce</h1>
           <p className="text-sm text-gray-500">
@@ -177,12 +211,17 @@ useEffect(() => {
           </p>
         </div>
         <div className="flex gap-2 cursor-pointer">
-          <button
-            onClick={() => setShowModal(true)}
-            className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium"
-          >
-            Create Products
-          </button>
+        <button
+  onClick={() => {
+    setShowModal(true);
+    setSelectedProduct(undefined);
+    setIsEdit(false);
+  }}
+  className="bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-md text-sm font-medium"
+>
+  Create Products
+</button>
+
       
 
         </div>
@@ -339,11 +378,13 @@ useEffect(() => {
       <td className="px-4 py-3">{index + 1}</td>
       <td className="px-4 py-3 flex items-center gap-3 relative">
         {product.images?.[0]?.imageUrl && (
-          <img
-            src={product.images[0].imageUrl}
-            alt={product.name}
-            className="w-10 h-10 rounded object-cover"
-          />
+         <Image
+  src={product.images[0].imageUrl}
+  alt={product.name}
+  width={40}
+  height={40}
+  className="rounded object-cover"
+/>
         )}
         <span>{product.name}</span>
 
@@ -403,15 +444,28 @@ useEffect(() => {
       {showModal && (
         <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl  relative">
-           <CreateModal
+<CreateModal
   onClose={() => {
     setShowModal(false);
-    setSelectedProduct(null);
+    setSelectedProduct(undefined);
     setIsEdit(false);
   }}
   isEdit={isEdit}
-  productData={selectedProduct}
+  productData={selectedProduct ? {
+    id: selectedProduct.productId,      
+    name: selectedProduct.name,
+    description: selectedProduct.description,
+    categoryId: selectedProduct.categoryId,
+    price: selectedProduct.price !== undefined
+      ? (typeof selectedProduct.price === 'string'
+          ? parseFloat(selectedProduct.price)
+          : selectedProduct.price)
+      : undefined,
+    stock: selectedProduct.stock,
+  } : undefined}
 />
+
+
 
           </div>
         </div>

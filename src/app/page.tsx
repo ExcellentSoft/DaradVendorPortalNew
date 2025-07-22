@@ -62,72 +62,73 @@ useEffect(() => {
       return;
     }
   
-    try {
-const response = await axios.post(
-  `${process.env.NEXT_PUBLIC_LOGIN_API}/api/Vendor/Vendor-Log`,
-
-        {
-          email,
-          passWord: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-        }
-      );
-  
-      console.log("Full API response:", response.data);
-  
-      const resData = response.data?.data;
-      const isAuthCodeSent = resData?.isAuthCodeSent;
-      const token = resData?.authToken;
-      const userId = resData?.aspNetUser?.id;
-  
-      console.log("Extracted userId:", userId);
-  
-      sessionStorage.setItem("userId", userId);
-  
-      const userEmail = resData?.aspNetUser?.email || email;
-  
-      if (isAuthCodeSent) {
-        setSuccessMessage("Login successful");
-        localStorage.setItem("token", token);
-        sessionStorage.setItem("userEmail", userEmail);
-        sessionStorage.setItem("userId", userId);
-  
-        console.log("User email saved:", userEmail);
-        console.log("Token saved:", token);
-  
-        setTimeout(() => {
-          router.push("/twostep");
-        }, 1500);
-      } else {
-        setError("Authentication failed or code not sent.");
-        console.log("Auth code not sent.");
-      }
-  
-    } catch (error: unknown) {
-      console.error("Login error:", error);
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          if (error.response.status === 401) {
-            setError("Invalid email or password. Please try again.");
-          } else if (error.response.data?.message) {
-            setError(error.response.data.message);
-          } else {
-            setError("An error occurred, please try again later.");
-          }
-        } else {
-          setError("Network error. Please check your connection.");
-        }
-      } else {
-        setError("An unexpected error occurred.");
-      }
-    } finally {
-      setLoading(false);
+  try {
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_LOGIN_API}/api/Vendor/Vendor-Log`,
+    {
+      email,
+      passWord: password,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
     }
+  );
+
+  console.log("Full API response:", JSON.stringify(response.data, null, 2));
+
+  const resData = response.data?.data;
+
+  if (!resData) {
+    setError("Unexpected server response. Please try again.");
+    return;
+  }
+
+  const isAuthCodeSent = resData?.isAuthCodeSent;
+  const token = resData?.authToken;
+  const userId = resData?.aspNetUser?.id;
+  const userEmail = resData?.userEmail || resData?.aspNetUser?.email || email;
+
+  if (userId) sessionStorage.setItem("userId", userId);
+  if (userEmail) sessionStorage.setItem("userEmail", userEmail);
+  
+  console.log("User email saved:", userEmail);
+  
+
+  if (isAuthCodeSent) {
+    setSuccessMessage("Login successful");
+
+    setTimeout(() => {
+      router.push("/twostep");
+    }, 1500);
+  } else {
+    setError("Authentication failed or code not sent.");
+    console.log("Auth code not sent.");
+  }
+
+} catch (error: unknown) {
+  console.error("Login error:", error);
+  if (axios.isAxiosError(error)) {
+    if (error.response) {
+      if (error.response.status === 401) {
+        setError("Invalid email or password. Please try again.");
+      } else if (error.response.data?.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("An error occurred, please try again later.");
+      }
+    } else {
+      setError("Network error. Please check your connection.");
+    }
+  } else {
+    setError("An unexpected error occurred.");
+  }
+} finally {
+  setLoading(false);
+}
+
   };
   
   

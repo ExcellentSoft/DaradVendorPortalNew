@@ -4,11 +4,25 @@ import axios from 'axios';
 import Select from 'react-select';
 import { Video } from 'lucide-react';
 
+
+
+interface ProductData {
+  id?: number;         
+  name?: string;
+  description?: string;
+  categoryId?: number;
+  price?: number;
+  stock?: number;
+}
+
+
+
 interface CreateModalProps {
   onClose: () => void;
   isEdit?: boolean;
-  productData?: any; 
+  productData?: ProductData | null;
 }
+
 
 const CreateModal: React.FC<CreateModalProps> = ({ onClose, isEdit = false, productData }) => {
   const [productName, setProductName] = useState('');
@@ -22,7 +36,12 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, isEdit = false, prod
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
- useEffect(() => {
+useEffect(() => {
+  if (isEdit && !productData) {
+    console.warn('productData is undefined for edit mode');
+    return;
+  }
+
   if (isEdit && productData) {
     setProductName(productData.name || '');
     setDescription(productData.description || '');
@@ -31,6 +50,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, isEdit = false, prod
     setStockQuantity(productData.stock?.toString() || '');
   }
 }, [isEdit, productData]);
+
 
 
   useEffect(() => {
@@ -62,18 +82,21 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, isEdit = false, prod
       return;
     }
 
-    const payload = {
-      name: productName,
-      description,
-      price: parseFloat(price),
-     categoryId: category !== null ? category : 0,
-      qty: parseInt(stockQuantity),
-      colors: [],
-      sizes: [],
-      stock: parseInt(stockQuantity),
-      vendorId: parseInt(localStorage.getItem('vendorId') || '0'),
-      ...(isEdit && productData?.id ? { id: productData.id } : {}),
-    };
+   const productId = isEdit && productData?.id ? productData.id : undefined;
+
+const payload = {
+  name: productName,
+  description,
+  price: parseFloat(price),
+  categoryId: category !== null ? category : 0,
+  qty: parseInt(stockQuantity),
+  colors: [],
+  sizes: [],
+  stock: parseInt(stockQuantity),
+  vendorId: parseInt(localStorage.getItem('vendorId') || '0'),
+  ...(productId ? { id: productId } : {}),
+};
+
 
     try {
       const headers = {
@@ -88,7 +111,9 @@ const CreateModal: React.FC<CreateModalProps> = ({ onClose, isEdit = false, prod
       const response = await axios[isEdit ? 'put' : 'post'](url, payload, { headers });
 
       if (response.data?.status) {
-        const productId = isEdit ? productData.id : response.data.data?.id;
+const productId = isEdit && (productData as ProductData)?.id ? (productData as ProductData).id : undefined;
+setCategory((productData as ProductData)?.categoryId ?? null);
+
         setResponseMessage(isEdit ? 'Product updated successfully!' : 'Product created successfully! Uploading image...');
 
         if (mediaFile && productId) {
