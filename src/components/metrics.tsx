@@ -1,6 +1,6 @@
 
 "use client";
-import {  useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 
@@ -30,6 +30,9 @@ interface VendorOverview {
   promotion: Promotion;
 }
 
+
+
+
 export default function Home() {
 const [overviewData, setOverviewData] = useState<VendorOverview | null>(null);
 
@@ -37,6 +40,46 @@ const [overviewData, setOverviewData] = useState<VendorOverview | null>(null);
 
 
 
+
+
+useEffect(() => {
+  const fetchVendorOverview = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No auth token found');
+      }
+
+      const response = await fetch(
+        'https://daradsvendorapi-h9cpe0fzhrb4cqa7.eastus-01.azurewebsites.net/api/Vendor/GetVendorOverview',
+        {
+          method: 'GET',
+          headers: {
+  'Accept': 'application/json',
+  'Authorization': `Bearer ${token}`,
+}
+
+        }
+      );
+
+      const data = await response.json();
+      console.log("Vendor Overview Data:", data);
+
+      if (response.ok && data?.status) {
+    setOverviewData(data.data);
+  } else {
+    console.error('API Error:', data?.message || 'Unknown error');
+    throw new Error(data?.message || 'Failed to fetch metrics');
+  }
+} catch (error) {
+  console.error('Fetch error:', error); 
+} finally {
+  setLoading(false);
+}
+  };
+
+  fetchVendorOverview();
+}, []);
 
 
 

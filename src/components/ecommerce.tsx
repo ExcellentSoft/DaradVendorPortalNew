@@ -39,7 +39,7 @@ const [isEdit, setIsEdit] = useState(false);
   const [apiProducts, setApiProducts] = useState<ApiProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-const [stats, setStats] = useState({
+const [stats] = useState({
   totalProducts: 0,
   totalOrders: 0,
   totalCategories: 0,
@@ -62,7 +62,7 @@ const handleEdit = (product: ApiProduct) => {
 
 const handleDelete = (productId: number) => {
     setDeleteProductId(productId);
-    setIsModalOpen(true); // Open the confirmation modal
+    setIsModalOpen(true); 
   };
 
   const confirmDelete = async () => {

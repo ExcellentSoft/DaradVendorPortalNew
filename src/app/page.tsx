@@ -87,7 +87,6 @@ useEffect(() => {
   }
 
   const isAuthCodeSent = resData?.isAuthCodeSent;
-  const token = resData?.authToken;
   const userId = resData?.aspNetUser?.id;
   const userEmail = resData?.userEmail || resData?.aspNetUser?.email || email;
 
